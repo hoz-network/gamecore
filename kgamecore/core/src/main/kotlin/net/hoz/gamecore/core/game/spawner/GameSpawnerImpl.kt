@@ -5,6 +5,8 @@ import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoGameSpawner
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.spawner.GameSpawner
+import net.hoz.gamecore.api.game.spawner.GameSpawnerBuilder
+import net.hoz.gamecore.api.game.spawner.GameSpawnerSettings
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.api.game.upgrade.Upgrade
@@ -40,7 +42,7 @@ class GameSpawnerImpl(
         TODO("Not yet implemented")
     }
 
-    override fun toBuilder(): DataResultable<GameSpawner.Builder> {
+    override fun toBuilder(): DataResultable<GameSpawnerBuilder> {
         TODO("Not yet implemented")
     }
 

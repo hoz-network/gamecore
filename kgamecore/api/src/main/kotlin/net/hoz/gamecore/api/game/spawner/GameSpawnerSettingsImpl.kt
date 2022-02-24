@@ -31,7 +31,7 @@ internal data class GameSpawnerSettingsImpl(
         return timeUnit
     }
 
-    override fun toBuilder(): GameSpawnerSettings.Builder {
+    override fun toBuilder(): GameSpawnerSettingsBuilder {
         return GameSpawnerSettingsBuilder(spread, max, amount, period, timeUnit)
     }
 

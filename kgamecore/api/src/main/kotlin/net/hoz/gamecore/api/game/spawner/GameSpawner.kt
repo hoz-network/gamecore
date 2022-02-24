@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.spawner
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameSpawner
@@ -17,7 +16,7 @@ import java.util.*
 /**
  * Spawner for resources. This basically yeets resources from nowhere to the game world.
  */
-interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawner.Builder>, Upgradeable {
+interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBuilder>, Upgradeable {
     /**
      * ID of this spawner.
      *
@@ -288,109 +287,5 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawner.Bu
          * Replaces the management for item spawning.
          */
         fun items(items: Items)
-    }
-
-    /**
-     * Builder of the spawner.
-     */
-    interface Builder {
-        /**
-         * ID of this builder.
-         * This ID will be used as the Spawner ID when saved.
-         *
-         * @return [UUID] id.
-         */
-        fun uuid(): UUID
-
-        /**
-         * Team of this spawner.
-         * Teams are not required to be used on Spawners.
-         *
-         * @return [GameTeam] if present.
-         */
-        fun team(): GameTeam?
-
-        /**
-         * Sets new team for this spawner.
-         *
-         * @param team new team to set
-         * @return this builder
-         */
-        fun team(team: GameTeam): Builder
-
-        /**
-         * Location of where the resources are yeeted to.
-         *
-         * @return location of the spawner
-         */
-        fun location(): LocationHolder?
-
-        /**
-         * Sets new location for this spawner.
-         *
-         * @param location new location to set
-         * @return this builder
-         */
-        fun location(location: LocationHolder): Builder
-
-        /**
-         * Checks if this spawner uses [Hologram] holograms.
-         *
-         * @return true if the spawner uses holograms.
-         */
-        fun hologram(): Boolean
-
-        /**
-         * Sets new hologram mode for this spawner.
-         *
-         * @param useHologram new hologram mode for the spawner.
-         * @return this builder
-         */
-        fun hologram(useHologram: Boolean): Builder
-
-        /**
-         * Access point for multiple types that can be spawned using this spawner.
-         *
-         * @return types management
-         */
-        fun types(): List<GameSpawnerType>
-
-        /**
-         * Adds new type for this spawner.
-         *
-         * @param type new type to add
-         * @return this builder
-         */
-        fun type(type: GameSpawnerType): Builder
-
-        /**
-         * Adds new types for this spawner.
-         *
-         * @param types new types to add
-         * @return this builder
-         */
-        fun types(vararg types: GameSpawnerType): Builder
-
-        /**
-         * Adds new types for this spawner.
-         *
-         * @param types new types to add
-         * @return this builder
-         */
-        fun types(types: Collection<GameSpawnerType>): Builder
-
-        /**
-         * Removes all spawner types that are currently set.
-         *
-         * @return this builder.
-         */
-        fun clearTypes(): Builder
-
-        /**
-         * Builds the actual [GameSpawner].
-         *
-         * @return result of the operation.
-         */
-        fun build(): DataResultable<GameSpawner>
     }
 }

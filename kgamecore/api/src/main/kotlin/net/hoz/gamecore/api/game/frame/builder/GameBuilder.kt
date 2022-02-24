@@ -3,7 +3,7 @@ package net.hoz.gamecore.api.game.frame.builder
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.game.frame.GameFrame
-import net.hoz.gamecore.api.game.team.GameTeam
+import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.service.GameManager
 import org.jetbrains.annotations.ApiStatus
 import org.screamingsandals.lib.utils.Nameable
@@ -80,6 +80,6 @@ interface GameBuilder : Nameable {
          *
          * @param builder input for the hologram
          */
-        fun teamHologram(builder: GameTeam.Builder)
+        fun teamHologram(builder: GameTeamBuilder)
     }
 }

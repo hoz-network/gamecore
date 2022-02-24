@@ -111,7 +111,7 @@ interface GameTeam : Nameable, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
     /**
      * Converts this team to builder
      */
-    fun toBuilder(): DataResultable<Builder>
+    fun toBuilder(): DataResultable<GameTeamBuilder>
 
     /**
      * Access point for unsafe API.
@@ -163,92 +163,5 @@ interface GameTeam : Nameable, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
          * @param frame new frame
          */
         fun frame(frame: GameFrame?)
-    }
-
-    /**
-     * Builder of the team
-     */
-    interface Builder : Nameable {
-        /**
-         * Sets new name for this team
-         *
-         * @param name new name
-         */
-        fun name(name: String): Builder
-
-        /**
-         * Gets the color of this team.
-         *
-         * @return [NamedTextColor] color.
-         */
-        fun color(): NamedTextColor?
-
-        /**
-         * Colored name of this team
-         *
-         * @return [Component] name [Builder.name] with [Builder.color]
-         */
-        fun coloredName(): Component
-
-        /**
-         * Sets new color for this team.
-         *
-         * @param color new color
-         */
-        fun color(color: NamedTextColor): Builder
-
-        /**
-         * Gets spawn point of this team
-         *
-         * @return [LocationHolder] if present.
-         */
-        fun spawn(): LocationHolder?
-
-        /**
-         * Sets new spawn point of this team
-         *
-         * @param spawn new spawn point
-         */
-        fun spawn(spawn: LocationHolder): Builder
-
-        /**
-         * Gets target point of this team
-         * Target == something to destroy by other teams.
-         *
-         * @return [LocationHolder] if present.
-         */
-        fun target(): LocationHolder?
-
-        /**
-         * Sets new target point of this team
-         *
-         * @param target new target point
-         */
-        fun target(target: LocationHolder): Builder
-
-        /**
-         * Gets max players that this team can have.
-         *
-         * @return max players of this team
-         */
-        fun maxPlayers(): Int?
-
-        /**
-         * Sets new max players that this team can have.
-         *
-         * @param maxPlayers new max players
-         */
-        fun maxPlayers(maxPlayers: Int): Builder
-
-        /**
-         * Creates new [GameTeam] from this builder.
-         *
-         *
-         * NOTE: the team NEEDS to have all properties set, otherwise it is not possible to save the team.
-         * NOTE: this method WILL be called by the GameBuilder, you don't need to do it.
-         *
-         * @return [DataResultable] result of this operation.
-         */
-        fun build(): DataResultable<GameTeam>
     }
 }

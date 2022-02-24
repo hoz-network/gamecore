@@ -48,25 +48,7 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
      *
      * @return builder
      */
-    fun toBuilder(): Builder
-
-    /**
-     * Builder for spawner settings.
-     */
-    interface Builder {
-        fun spread(spread: Double): Builder
-        fun max(maxSpawned: Int): Builder
-        fun amount(amount: Int): Builder
-        fun period(period: Int): Builder
-        fun timeUnit(time: TaskerTime?): Builder
-
-        /**
-         * Builds the [GameSpawnerSettings]
-         *
-         * @return
-         */
-        fun build(): GameSpawnerSettings
-    }
+    fun toBuilder(): GameSpawnerSettingsBuilder
 
     companion object {
         /**
@@ -74,8 +56,10 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
          *
          * @return new builder.
          */
-        fun builder(): Builder {
-            return GameSpawnerSettingsBuilder()
+        fun builder(builder: GameSpawnerSettingsBuilder.() -> Unit): GameSpawnerSettings {
+            val data = GameSpawnerSettingsBuilder()
+            builder.invoke(data)
+            return data.build()
         }
 
         /**
@@ -84,14 +68,14 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
          * @param settings settings to create from.
          * @return new builder.
          */
-        fun builder(settings: ProtoSpawnerSettings): Builder {
+        fun convert(settings: ProtoSpawnerSettings): GameSpawnerSettings {
             return GameSpawnerSettingsBuilder(
                 settings.spread,
                 settings.maxSpawnAmount,
                 settings.spawnAmount,
                 settings.spawnPeriod,
                 TaskerTime.from(settings.spawnTime)
-            )
+            ).build()
         }
     }
 }

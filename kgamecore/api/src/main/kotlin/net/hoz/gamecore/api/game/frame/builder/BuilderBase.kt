@@ -39,14 +39,7 @@ interface BuilderBase<B, R, ID> {
      *
      * @return false if the instance already exists
      */
-    fun add(id: ID, builder: B): BuilderBase<B, R, ID>
-
-    /**
-     * Adds new instance to this builder.
-     *
-     * @return false if the instance already exists
-     */
-    fun add(id: ID, builder: (B) -> Unit): BuilderBase<B, R, ID>
+    fun add(id: ID, builder: B.() -> Unit): B
 
     /**
      * Removes given instance from this builder.

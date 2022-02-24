@@ -5,56 +5,21 @@ import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.world.LocationHolder
 import java.util.*
 
-internal class GameSpawnerBuilder : GameSpawner.Builder {
-    override fun uuid(): UUID {
-        TODO("Not yet implemented")
-    }
+/**
+ * Builder of GameSpawner
+ */
+abstract class GameSpawnerBuilder(
+    val id: UUID,
+    var team: GameTeam?,
+    var location: LocationHolder?,
+    var useHolograms: Boolean = true,
+    var types: MutableList<GameSpawnerType> = mutableListOf(),
+) {
 
-    override fun team(): GameTeam? {
-        TODO("Not yet implemented")
-    }
-
-    override fun team(team: GameTeam): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun location(): LocationHolder? {
-        TODO("Not yet implemented")
-    }
-
-    override fun location(location: LocationHolder): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun hologram(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun hologram(useHologram: Boolean): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun types(): List<GameSpawnerType> {
-        TODO("Not yet implemented")
-    }
-
-    override fun types(vararg types: GameSpawnerType): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun types(types: Collection<GameSpawnerType>): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun type(type: GameSpawnerType): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun clearTypes(): GameSpawner.Builder {
-        TODO("Not yet implemented")
-    }
-
-    override fun build(): DataResultable<GameSpawner> {
-        TODO("Not yet implemented")
-    }
+    /**
+     * Builds the actual [GameSpawner].
+     *
+     * @return result of the operation.
+     */
+    abstract fun build(): DataResultable<GameSpawner>
 }
