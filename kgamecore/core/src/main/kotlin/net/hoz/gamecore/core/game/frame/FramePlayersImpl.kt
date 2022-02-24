@@ -12,7 +12,7 @@ import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.core.util.GConfig
 import net.kyori.adventure.audience.Audience
-import org.screamingsandals.lib.event.EventManager
+import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.player.gamemode.GameModeHolder
 import java.util.*
 
@@ -38,12 +38,12 @@ open class FramePlayersImpl(
         }
 
         if (frame.manage().isWaiting()) {
-            if (EventManager.fire(GamePlayerPreJoinedGameEvent(player, frame)).cancelled()) {
+            if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - GamePlayerPreJoinedGameEvent cancelled joining.", playerId)
                 return Resultable.fail("cancelled by event") //TODO
             }
         } else {
-            if (EventManager.fire(SpectatorPreJoinGameEvent(player, frame)).cancelled()) {
+            if (SpectatorPreJoinGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - SpectatorPreJoinGameEvent cancelled joining.", playerId)
                 return Resultable.fail("cancelled by event") //TODO
             }
@@ -53,11 +53,11 @@ open class FramePlayersImpl(
         players[playerId] = player
 
         if (frame.manage().isWaiting()) {
-            EventManager.fire(GamePlayerJoinedGameEvent(player, frame))
+            GamePlayerJoinedGameEvent(player, frame).fire()
             return toLobby(player)
         }
 
-        EventManager.fire(SpectatorJoinedGameEvent(player, frame))
+        SpectatorJoinedGameEvent(player, frame).fire()
         return toSpectator(player)
     }
 

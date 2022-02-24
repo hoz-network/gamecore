@@ -6,7 +6,7 @@ import net.hoz.gamecore.api.event.game.GameTickEvent
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.GameFrame
-import org.screamingsandals.lib.event.EventManager
+import org.screamingsandals.lib.kotlin.fire
 
 abstract class CyclePhaseImpl(
     protected val cycle: GameCycle,
@@ -83,7 +83,7 @@ abstract class CyclePhaseImpl(
         }
 
         log.debug("Doing cycle tick!")
-        EventManager.fire(GameTickEvent(frame, cycle, this))
+        GameTickEvent(frame, cycle, this).fire()
 
         elapsedTicks++
         finished = isCountdownFinished()

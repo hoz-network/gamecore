@@ -107,9 +107,11 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBui
 
         fun add(type: GameSpawnerType): Resultable
 
-        fun remove(type: GameSpawnerType): Resultable
+        fun add(types: List<GameSpawnerType>): Resultable
 
-        fun remove(name: String): Resultable
+        fun remove(type: GameSpawnerType): Boolean
+
+        fun remove(name: String): Boolean
 
         /**
          * Tries to find if this spawner contains [GameSpawnerType] by the name.
@@ -153,6 +155,8 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBui
          * @return [Resultable] result of this operation.
          */
         fun stop(): Resultable
+
+        fun isRunning(): Boolean
 
         /**
          * Resets all statistics and settings to default, removes upgrades, etc.

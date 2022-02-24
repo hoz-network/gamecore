@@ -54,7 +54,7 @@ internal data class WorldDataImpl(
         return builder.build()
     }
 
-    override fun toBuilder(): DataResultable<WorldData.Builder> {
+    override fun toBuilder(builder: WorldData.Builder.() -> Unit): WorldData.Builder {
         val builder = BuilderImpl(border1, border2, spawn, spectator, type)
         builder.regenerator(regenerator)
 

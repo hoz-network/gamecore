@@ -1,6 +1,5 @@
 package net.hoz.gamecore.core.game.frame
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.GameConfig
@@ -135,7 +134,7 @@ class GameFrameImpl(
         return builder.build()
     }
 
-    override fun toBuilder(): DataResultable<GameBuilder> {
+    override fun toBuilder(builder: GameBuilder.() -> Unit): GameBuilder {
         return gameManager.builders().from(this)
     }
 }

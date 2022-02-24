@@ -1,7 +1,5 @@
 package net.hoz.gamecore.api
 
-import com.iamceph.resulter.core.DataResultable
-
 /**
  * Something that can be turned into a builder.
  *
@@ -13,5 +11,5 @@ interface Buildable<B> {
      *
      * @return builder with values from this instance.
      */
-    fun toBuilder(): DataResultable<B>
+    fun toBuilder(builder: B.() -> Unit): B
 }

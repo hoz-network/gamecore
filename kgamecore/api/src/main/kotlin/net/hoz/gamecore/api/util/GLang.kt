@@ -3,6 +3,7 @@ package net.hoz.gamecore.api.util
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoWorldData
 import net.hoz.gamecore.api.game.spawner.GameSpawner
+import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.game.store.GameStore
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.netapi.client.lang.NLang
@@ -77,7 +78,13 @@ interface GLang {
                 .getFor(player)
         }
 
-        fun SPAWNER_TYPE(player: CommandSenderWrapper?, type: GameSpawner): Component {
+        fun SPAWNER_TYPE(player: CommandSenderWrapper?, spawner: GameSpawner): Component {
+            //TODO
+            return Component.empty()
+            //return Message.of(type.()).getForJoined(player).color(type.color())
+        }
+
+        fun SPAWNER_TYPE(player: CommandSenderWrapper?, type: GameSpawnerType): Component {
             //TODO
             return Component.empty()
             //return Message.of(type.()).getForJoined(player).color(type.color())

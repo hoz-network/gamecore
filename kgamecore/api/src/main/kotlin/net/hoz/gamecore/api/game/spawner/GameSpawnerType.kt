@@ -3,10 +3,10 @@ package net.hoz.gamecore.api.game.spawner
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.ProtoSpawnerType
+import net.hoz.gamecore.api.util.GUtil
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.item.Item
 import org.screamingsandals.lib.item.ItemTypeHolder
-import org.screamingsandals.lib.item.builder.ItemFactory
 import org.screamingsandals.lib.lang.Translation
 import org.screamingsandals.lib.player.PlayerWrapper
 import org.screamingsandals.lib.utils.Nameable
@@ -78,5 +78,37 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
      */
     fun item(target: PlayerWrapper?): Item {
         return item(1, target)
+    }
+
+    companion object {
+        fun of(
+            nameTranslation: Translation,
+            name: String,
+            material: ItemTypeHolder,
+            color: NamedTextColor,
+            gameType: GameType,
+            settings: GameSpawnerSettings,
+            enabled: Boolean
+        ): GameSpawnerType =
+            GameSpawnerTypeImpl(
+                nameTranslation,
+                name,
+                material,
+                color,
+                gameType,
+                settings,
+                enabled
+            )
+
+        fun of(type: ProtoSpawnerType): GameSpawnerType =
+            GameSpawnerTypeImpl(
+                Translation.of(type.nameTranslation),
+                type.name,
+                ItemTypeHolder.of(type.material),
+                GUtil.fromProtoColor(type.color),
+                type.type,
+                GameSpawnerSettings.of(type.settings),
+                true //TODO
+            )
     }
 }

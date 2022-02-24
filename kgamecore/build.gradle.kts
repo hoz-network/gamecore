@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "1.6.20-M1" apply false
 
@@ -26,5 +24,9 @@ subprojects {
 
     dependencies {
         implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.20")
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }
 }

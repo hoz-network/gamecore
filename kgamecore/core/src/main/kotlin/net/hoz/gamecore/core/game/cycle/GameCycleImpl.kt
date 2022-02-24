@@ -11,7 +11,7 @@ import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.core.util.GConfig
-import org.screamingsandals.lib.event.EventManager
+import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
@@ -19,12 +19,12 @@ open class GameCycleImpl(
     protected var frame: GameFrame
 ) : GameCycle {
     private val log = KotlinLogging.logger { GameCycle::javaClass.name }
-    protected val phases: MutableMap<GamePhase, CyclePhase> = mutableMapOf()
+    open val phases: MutableMap<GamePhase, CyclePhase> = mutableMapOf()
 
-    protected var nextPhase: GamePhase = GamePhase.LOADING
-    protected var currentPhase: CyclePhase? = null
-    protected var previousPhase: CyclePhase? = null
-    protected var cycleTask: TaskerTask? = null
+    open var nextPhase: GamePhase = GamePhase.LOADING
+    open var currentPhase: CyclePhase? = null
+    open var previousPhase: CyclePhase? = null
+    open var cycleTask: TaskerTask? = null
 
     override fun phases(): Map<GamePhase, CyclePhase> {
         return phases
@@ -60,7 +60,7 @@ open class GameCycleImpl(
             return
         }
 
-        val event = EventManager.fire(GamePreTickEvent(frame, this, currentPhase))
+        val event = GamePreTickEvent(frame, this, currentPhase).fire()
         if (event.cancelled() || !currentPhase.shouldTick()) {
             log.debug("Pre-tick failed for phase [${currentPhase.phaseType()}], skipping.")
             return
@@ -156,7 +156,7 @@ open class GameCycleImpl(
                     return
                 }
 
-                if (EventManager.fire(GamePrePhaseChangeEvent(frame, currentPhase, toSwitch)).cancelled()) {
+                if (GamePrePhaseChangeEvent(frame, currentPhase, toSwitch).fire().cancelled()) {
                     log.debug("Cannot change phase, cancelled by event.")
                     return
                 }
@@ -175,7 +175,7 @@ open class GameCycleImpl(
                     previousPhase.reset()
                 }
 
-                EventManager.fire(GamePhaseChangedEvent(frame, currentPhase, previousPhase))
+                GamePhaseChangedEvent(frame, currentPhase, previousPhase).fire()
             }
             else -> {
                 log.warn("Unexpected phase [{}], stopping the game {}", nextPhase, frame.name())

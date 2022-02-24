@@ -68,14 +68,13 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
          * @param settings settings to create from.
          * @return new builder.
          */
-        fun convert(settings: ProtoSpawnerSettings): GameSpawnerSettings {
-            return GameSpawnerSettingsBuilder(
+        fun of(settings: ProtoSpawnerSettings): GameSpawnerSettings =
+            GameSpawnerSettingsBuilder(
                 settings.spread,
                 settings.maxSpawnAmount,
                 settings.spawnAmount,
                 settings.spawnPeriod,
                 TaskerTime.from(settings.spawnTime)
             ).build()
-        }
     }
 }

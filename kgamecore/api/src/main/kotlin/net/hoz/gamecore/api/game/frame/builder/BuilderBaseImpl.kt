@@ -1,27 +1,22 @@
 package net.hoz.gamecore.api.game.frame.builder
 
-abstract class BuilderBaseImpl<T, ID>(
-    protected val instances: MutableMap<ID, T> = mutableMapOf()
-) : BuilderBase<T, ID> {
+abstract class BuilderBaseImpl<T, R, ID>(
+    protected val builders: MutableMap<ID, T> = mutableMapOf()
+) : BuilderBase<T, R, ID> {
     override fun all(): Map<ID, T> {
-        return instances
+        return builders
     }
 
     override fun remove(id: ID): Boolean {
-        return instances.remove(id) != null
-    }
-
-    override fun add(id: ID, builder: T): BuilderBase<T, ID> {
-        instances[id] = builder
-        return this
+        return builders.remove(id) != null
     }
 
     override fun has(id: ID): Boolean {
-        return instances.containsKey(id)
+        return builders.containsKey(id)
     }
 
     override fun find(id: ID): T? {
-        return instances[id]
+        return builders[id]
     }
 
 }

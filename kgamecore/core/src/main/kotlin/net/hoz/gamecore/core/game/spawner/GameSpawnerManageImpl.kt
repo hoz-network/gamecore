@@ -15,6 +15,10 @@ class GameSpawnerManageImpl(
         TODO("Not yet implemented")
     }
 
+    override fun isRunning(): Boolean {
+        TODO("Not yet implemented")
+    }
+
     override fun restart(): Resultable {
         TODO("Not yet implemented")
     }

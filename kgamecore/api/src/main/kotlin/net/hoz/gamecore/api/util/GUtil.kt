@@ -19,8 +19,6 @@ interface GUtil {
             return textColor
         }
 
-        fun toProtoColor(color: NamedTextColor): MinecraftColor {
-            return MinecraftColor.valueOf(color.toString())
-        }
+        fun toProtoColor(color: NamedTextColor): MinecraftColor = MinecraftColor.valueOf(color.toString())
     }
 }

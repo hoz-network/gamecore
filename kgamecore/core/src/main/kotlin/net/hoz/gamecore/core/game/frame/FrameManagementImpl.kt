@@ -11,7 +11,7 @@ import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.FrameManagement
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.service.GameManager
-import org.screamingsandals.lib.event.EventManager
+import org.screamingsandals.lib.kotlin.fire
 
 open class FrameManagementImpl(
     protected val manager: GameManager,
@@ -44,7 +44,7 @@ open class FrameManagementImpl(
     }
 
     override fun start(): Resultable {
-        if (EventManager.fire(GamePreStartEvent(frame)).cancelled()) {
+        if (GamePreStartEvent(frame).fire().cancelled()) {
             return Resultable.fail("Cancelled by event.")
         }
 
@@ -65,7 +65,7 @@ open class FrameManagementImpl(
             return startResult
         }
 
-        EventManager.fire(GameStartedEvent(frame))
+        GameStartedEvent(frame).fire()
         return startResult
     }
 
@@ -79,10 +79,10 @@ open class FrameManagementImpl(
             //TODO
             if (cycle.isRunning()) {
                 log.warn("Fuckup happened, GameCycle is still running.. Trying to kill it now!")
-                EventManager.fire(GameDisabledEvent(frame))
+                GameDisabledEvent(frame).fire()
                 return cycle.stop()
             }
-            EventManager.fire(GameDisabledEvent(frame))
+            GameDisabledEvent(frame).fire()
 
             return result
         } catch (e: Exception) {

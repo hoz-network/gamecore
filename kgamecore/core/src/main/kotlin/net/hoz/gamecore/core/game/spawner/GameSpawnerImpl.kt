@@ -1,12 +1,10 @@
 package net.hoz.gamecore.core.game.spawner
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoGameSpawner
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.spawner.GameSpawnerBuilder
-import net.hoz.gamecore.api.game.spawner.GameSpawnerSettings
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.api.game.upgrade.Upgrade
@@ -22,6 +20,7 @@ class GameSpawnerImpl(
     private var manage: GameSpawner.Manage = GameSpawnerManageImpl(this)
     private var types: GameSpawner.Types = GameSpawnerTypesImpl(this)
     private var items: GameSpawner.Items = GameSpawnerItemsImpl(this)
+    private var unsafe: GameSpawner.Unsafe = UnsafeImpl(this)
     private var frame: GameFrame? = null
     private var team: GameTeam? = null
 
@@ -33,17 +32,29 @@ class GameSpawnerImpl(
     override fun types(): GameSpawner.Types = types
     override fun manage(): GameSpawner.Manage = manage
     override fun items(): GameSpawner.Items = items
-
-    override fun unsafe(): GameSpawner.Unsafe {
-        TODO("Not yet implemented")
-    }
+    override fun unsafe(): GameSpawner.Unsafe = unsafe
 
     override fun asProto(): ProtoGameSpawner {
-        TODO("Not yet implemented")
+        return ProtoGameSpawner.newBuilder()
+            .setUuid(id.toString())
+            .setLocation(location.asProto())
+            .setSpawnerTypeName("") //TODO
+            .setWithHologram(holograms)
+            .build()
     }
 
-    override fun toBuilder(): DataResultable<GameSpawnerBuilder> {
-        TODO("Not yet implemented")
+    override fun toBuilder(builder: GameSpawnerBuilder.() -> Unit): GameSpawnerBuilder {
+        val data = GameSpawnerBuilderImpl(
+            id,
+            team,
+            location,
+            holograms,
+            types.all()
+                .values
+                .toMutableList()
+        )
+        builder.invoke(data)
+        return data
     }
 
     override fun upgradeType(): Upgradeable.Type {
@@ -92,16 +103,16 @@ class GameSpawnerImpl(
 
         override fun removeType(type: GameSpawnerType): Resultable {
             spawner.manage.stop()
-            val result = spawner.types.remove(type)
-            spawner.manage.start()
-            return result
+            spawner.types.remove(type)
+
+            return spawner.manage.start()
         }
 
         override fun removeType(name: String): Resultable {
             spawner.manage.stop()
-            val result = spawner.types.remove(name)
-            spawner.manage.start()
-            return result
+            spawner.types.remove(name)
+
+            return spawner.manage.start()
         }
 
         override fun types(types: GameSpawner.Types) {

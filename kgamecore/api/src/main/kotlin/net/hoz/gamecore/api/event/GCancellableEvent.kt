@@ -10,6 +10,5 @@ open class GCancellableEvent : SCancellableEvent {
 
     override fun cancelled(cancel: Boolean) {
         this.cancel = cancel
-
     }
 }
