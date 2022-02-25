@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.10" apply false
+    kotlin("jvm") version "1.6.20-M1" apply false
 
     id("org.screamingsandals.plugin-builder") version "1.0.67"
 }
@@ -23,6 +23,10 @@ subprojects {
     }
 
     dependencies {
-        api("net.hoz.netapi", "client", "1.0.0-SNAPSHOT")
+        implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.20")
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }
 }
