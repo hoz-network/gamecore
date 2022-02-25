@@ -13,6 +13,7 @@ abstract class GameSpawnerBuilder(
     var team: GameTeam?,
     var location: LocationHolder?,
     var useHolograms: Boolean = true,
+    var useGlobalValues: Boolean = true,
     var types: MutableList<GameSpawnerType> = mutableListOf(),
 ) {
 

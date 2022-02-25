@@ -61,7 +61,11 @@ interface GConfig {
             return frame.config().spawners.stopIfTeamIsDead
         }
 
-        fun SPAWNERS_ADD_ITEMS_TO_INVENTORY(frame: GameFrame): Boolean {
+        fun SPAWNERS_ADD_ITEMS_TO_INVENTORY(frame: GameFrame?): Boolean {
+            if (frame == null) {
+                //TODO
+                return false
+            }
             return frame.config().spawners.addItemsToInventory
         }
 

@@ -44,7 +44,9 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBui
      *
      * @return true if the spawner uses holograms.
      */
-    fun holograms(): Boolean
+    fun useHolograms(): Boolean
+
+    fun useGlobalValues(): Boolean
 
     /**
      * Access point for multiple types that can be spawned using this spawner.
@@ -181,7 +183,7 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBui
          *
          * @return immutable list of spawned entities.
          */
-        fun all(): List<EntityItem>
+        fun all(): Map<GameSpawnerType, List<EntityItem>>
 
         /**
          * Spawns an item from given [GameSpawnerType]

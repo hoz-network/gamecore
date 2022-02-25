@@ -13,8 +13,9 @@ class GameSpawnerBuilderImpl(
     team: GameTeam?,
     location: LocationHolder?,
     useHolograms: Boolean = true,
+    useGlobalValues: Boolean = true,
     types: MutableList<GameSpawnerType> = mutableListOf()
-) : GameSpawnerBuilder(id, team, location, useHolograms, types) {
+) : GameSpawnerBuilder(id, team, location, useHolograms, useGlobalValues, types) {
 
     override fun build(): DataResultable<GameSpawner> {
         if (types.size < 1) {
@@ -22,7 +23,7 @@ class GameSpawnerBuilderImpl(
         }
         val location = this.location ?: return DataResultable.fail("Location is not specified.")
 
-        val spawner = GameSpawnerImpl(id, location, useHolograms)
+        val spawner = GameSpawnerImpl(id, location, useHolograms, useGlobalValues)
         spawner.types().add(types)
 
         return DataResultable.ok(spawner)

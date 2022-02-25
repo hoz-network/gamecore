@@ -15,20 +15,23 @@ import java.util.*
 class GameSpawnerImpl(
     private val id: UUID,
     private var location: LocationHolder,
-    private var holograms: Boolean
+    private var useHolograms: Boolean,
+    private var useGlobalValues: Boolean
 ) : GameSpawner {
     private var manage: GameSpawner.Manage = GameSpawnerManageImpl(this)
     private var types: GameSpawner.Types = GameSpawnerTypesImpl(this)
     private var items: GameSpawner.Items = GameSpawnerItemsImpl(this)
     private var unsafe: GameSpawner.Unsafe = UnsafeImpl(this)
-    private var frame: GameFrame? = null
-    private var team: GameTeam? = null
+    internal var frame: GameFrame? = null
+    internal var team: GameTeam? = null
 
     override fun id(): UUID = id
     override fun team(): GameTeam? = team
 
     override fun location(): LocationHolder = location
-    override fun holograms(): Boolean = holograms
+    override fun useHolograms(): Boolean = useHolograms
+    override fun useGlobalValues(): Boolean = useGlobalValues
+
     override fun types(): GameSpawner.Types = types
     override fun manage(): GameSpawner.Manage = manage
     override fun items(): GameSpawner.Items = items
@@ -39,7 +42,7 @@ class GameSpawnerImpl(
             .setUuid(id.toString())
             .setLocation(location.asProto())
             .setSpawnerTypeName("") //TODO
-            .setWithHologram(holograms)
+            .setWithHologram(useHolograms)
             .build()
     }
 
@@ -48,7 +51,8 @@ class GameSpawnerImpl(
             id,
             team,
             location,
-            holograms,
+            useHolograms,
+            useGlobalValues,
             types.all()
                 .values
                 .toMutableList()
@@ -77,7 +81,7 @@ class GameSpawnerImpl(
 
         override fun hologram(enabled: Boolean) {
             spawner.manage.stop()
-            spawner.holograms = enabled
+            spawner.useHolograms = enabled
             spawner.manage.start()
         }
 
