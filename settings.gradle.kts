@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "kgamecore"
+rootProject.name = "gamecore"
 
 include("api")
 include("core")
