@@ -5,6 +5,7 @@ import net.hoz.api.data.game.ProtoGameTeam
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
+import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.util.GUtil
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -42,17 +43,14 @@ class GameTeamImpl(
 
     override fun frame(): GameFrame? = frame
 
-    override fun toBuilder(): DataResultable<GameTeam.Builder> {
-        val builder = GameTeamBuilderImpl(name)
-            .color(color)
-            .spawn(spawn)
-            .maxPlayers(maxPlayers)
-
-        val target = this.target
-        if (target != null) {
-            builder.target(target)
-        }
-
+    override fun toBuilder(): DataResultable<GameTeamBuilder> {
+        val builder = GameTeamBuilderImpl(
+            name,
+            color,
+            spawn,
+            target,
+            maxPlayers,
+        )
         return DataResultable.ok(builder)
     }
 

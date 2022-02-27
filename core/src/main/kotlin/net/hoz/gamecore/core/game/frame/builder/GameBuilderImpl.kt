@@ -5,7 +5,7 @@ import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.BuilderTeams
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
-import net.hoz.gamecore.api.game.team.GameTeam
+import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.service.GameManager
 import reactor.core.publisher.Mono
 import java.util.*
@@ -44,7 +44,7 @@ class GameBuilderImpl(
 
     class UnsafeImpl(builder: GameBuilderImpl) : GameBuilder.Unsafe {
         //TODO
-        override fun teamHologram(builder: GameTeam.Builder) {
+        override fun teamHologram(builder: GameTeamBuilder) {
             TODO("Not yet implemented")
         }
 

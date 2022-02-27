@@ -5,9 +5,11 @@ import mu.KotlinLogging
 import net.hoz.api.data.game.*
 import net.hoz.api.data.game.StoreUpgrade.Tier
 import net.hoz.gamecore.api.event.store.*
+import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.store.GameStore
 import net.hoz.gamecore.api.game.store.StoreInventory
+import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.item.Item
 import org.screamingsandals.lib.item.builder.ItemFactory
 import org.screamingsandals.lib.item.meta.EnchantmentHolder
@@ -29,7 +31,9 @@ import org.spongepowered.configurate.ConfigurationNode
 
 class StoreInventoryImpl(
     private val viewer: GamePlayer,
-    private var holder: StoreHolder
+    private val frame: GameFrame,
+    private var holder: StoreHolder,
+    private var team: GameTeam?
 ) : StoreInventory {
     private val log = KotlinLogging.logger { }
     private val upgrades: MutableMap<String, Pair<StoreUpgrade, GenericItemInfo>> = mutableMapOf()

@@ -135,6 +135,8 @@ class GameFrameImpl(
     }
 
     override fun toBuilder(builder: GameBuilder.() -> Unit): GameBuilder {
-        return gameManager.builders().from(this)
+        val data = gameManager.builders().from(this)
+        builder.invoke(data)
+        return data
     }
 }

@@ -1,5 +1,6 @@
 package net.hoz.gamecore.core.game.store
 
+import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoGameStore
 import net.hoz.api.data.game.StoreHolder
 import net.hoz.gamecore.api.game.frame.GameFrame
@@ -15,54 +16,38 @@ class GameStoreImpl(
     val name: String,
     val location: LocationHolder,
     val entityType: EntityTypeHolder,
-    val gameFrame: GameFrame,
+    val frame: GameFrame,
     var holder: StoreHolder,
     var team: GameTeam? = null,
 ) : GameStore {
     private val inventories: MutableMap<GamePlayer, StoreInventoryImpl> = mutableMapOf()
     private var storeEntity: EntityLiving? = null
 
-    override fun holder(): StoreHolder {
-        TODO("Not yet implemented")
-    }
+    override fun name(): String = name
+    override fun location(): LocationHolder = location
+    override fun entityType(): EntityTypeHolder = entityType
+    override fun frame(): GameFrame = frame
+    override fun holder(): StoreHolder = holder
+    override fun team(): GameTeam? = team
 
-    override fun team(): GameTeam? {
-        TODO("Not yet implemented")
-    }
-
-    override fun frame(): GameFrame? {
-        TODO("Not yet implemented")
-    }
-
-    override fun location(): LocationHolder {
-        TODO("Not yet implemented")
-    }
-
-    override fun entityType(): EntityTypeHolder {
-        TODO("Not yet implemented")
-    }
-
-    override fun open(player: GamePlayer) {
-        TODO("Not yet implemented")
-    }
+    override fun open(player: GamePlayer): Resultable = storeInventory(player).open()
 
     override fun storeInventory(player: GamePlayer): StoreInventory {
-        TODO("Not yet implemented")
+        val inventory = inventories[player]
+        if (inventory != null) {
+            return inventory
+        }
+
+        val newInventory = StoreInventoryImpl(player, frame, holder, team)
+        inventories[player] = newInventory
+        return newInventory
     }
 
-    override fun players(): List<GamePlayer> {
-        TODO("Not yet implemented")
-    }
+    override fun players(): List<GamePlayer> = inventories.keys.toList()
 
-    override fun hasPlayer(player: GamePlayer): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun hasPlayer(player: GamePlayer): Boolean = inventories.containsKey(player)
 
     override fun unsafe(): GameStore.Unsafe {
-        TODO("Not yet implemented")
-    }
-
-    override fun name(): String {
         TODO("Not yet implemented")
     }
 

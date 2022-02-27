@@ -26,7 +26,7 @@ internal data class GameWorldImpl(
     }
 
     override fun toBuilder(builder: GameWorld.Builder.() -> Unit): GameWorld.Builder {
-        return DataResultable.ok(BuilderImpl(arenaWorld, lobbyWorld, customWorlds.toMutableMap()))
+        return BuilderImpl(arenaWorld, lobbyWorld, customWorlds.toMutableMap())
     }
 
     override fun asProto(): ProtoGameWorld {

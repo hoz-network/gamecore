@@ -13,10 +13,10 @@ import java.util.*
 
 interface GameManager : Controlled {
     fun backend(): NetGameProvider
-    fun games(): Games
+    fun frames(): Frames
     fun builders(): Builders
 
-    interface Games {
+    interface Frames {
         fun all(): List<GameFrame>
         fun register(frame: GameFrame): Resultable
         fun save(frame: GameFrame): Mono<Resultable>
@@ -27,6 +27,7 @@ interface GameManager : Controlled {
         }
 
         fun find(uuid: UUID): GameFrame?
+        fun find(name: String): GameFrame?
         fun load(uuid: UUID): Mono<DataResultable<GameFrame>>
         fun load(name: String): Mono<DataResultable<GameFrame>>
         fun build(data: ProtoGameFrame): Mono<DataResultable<GameFrame>>
@@ -36,6 +37,8 @@ interface GameManager : Controlled {
     interface Builders {
         fun create(name: String, configName: String): DataResultable<GameBuilder>
         fun from(data: ProtoGameFrame): DataResultable<GameBuilder>
-        fun from(frame: GameFrame): DataResultable<GameBuilder>
+        fun from(frame: GameFrame): GameBuilder
+
+        fun find(name: String): GameBuilder?
     }
 }

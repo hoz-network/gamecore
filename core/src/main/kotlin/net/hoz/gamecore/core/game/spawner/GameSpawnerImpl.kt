@@ -39,10 +39,11 @@ class GameSpawnerImpl(
 
     override fun asProto(): ProtoGameSpawner {
         return ProtoGameSpawner.newBuilder()
-            .setUuid(id.toString())
+            .setId(id.toString())
             .setLocation(location.asProto())
-            .setSpawnerTypeName("") //TODO
-            .setWithHologram(useHolograms)
+            .addAllTypes(types.all().keys) //TODO: do not discard custom types
+            .setUseHolograms(useHolograms)
+            .setUseGlobalValues(useGlobalValues)
             .build()
     }
 

@@ -1,5 +1,6 @@
 package net.hoz.gamecore.api.game.store
 
+import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameStore
 import net.hoz.api.data.game.StoreHolder
@@ -37,7 +38,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
     /**
      * Frame of this tore
      */
-    fun frame(): GameFrame?
+    fun frame(): GameFrame
 
     /**
      * Gets all players that joined this store.
@@ -60,7 +61,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
 
     fun storeInventory(player: GamePlayer): StoreInventory
 
-    fun open(player: GamePlayer)
+    fun open(player: GamePlayer): Resultable
 
     /**
      * Access point for unsafe API.
