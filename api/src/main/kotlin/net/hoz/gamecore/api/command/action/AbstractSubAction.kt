@@ -4,10 +4,10 @@ import cloud.commandframework.Command
 import cloud.commandframework.context.CommandContext
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
-abstract class AbstractSubAction(
-    protected val parentAction: AbstractAction
-) {
+abstract class AbstractSubAction(parentAction: AbstractAction) {
     protected val gameManager = parentAction.gameManager
+    protected val commandManager = parentAction.commandManager
+    protected val mainCommandBuilder = parentAction.mainCommandBuilder
 
     abstract fun build(builder: Command.Builder<CommandSenderWrapper>)
 

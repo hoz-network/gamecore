@@ -35,9 +35,17 @@ interface GameManager : Controlled {
     }
 
     interface Builders {
+        fun all(): List<GameBuilder>
+
         fun create(name: String, configName: String): DataResultable<GameBuilder>
         fun from(data: ProtoGameFrame): DataResultable<GameBuilder>
         fun from(frame: GameFrame): GameBuilder
+
+        fun remove(uuid: UUID): Boolean
+        fun has(uuid: UUID): Boolean
+        fun has(name: String): Boolean {
+            return all().any { it.name().equals(name) }
+        }
 
         fun find(name: String): GameBuilder?
     }

@@ -9,6 +9,14 @@ interface GUtil {
     companion object {
         private val log = KotlinLogging.logger { }
 
+        fun findMatchingOrAvailable(input: String, available: List<String>): List<String> =
+            findMatchingOrAvailable(input, available, "none found")
+
+        fun findMatchingOrAvailable(input: String, available: List<String>, ifEmpty: String): List<String> {
+            if (available.isEmpty()) return listOf(ifEmpty)
+            return available.sortedBy { input.startsWith(it) }
+        }
+
         fun fromProtoColor(minecraftColor: MinecraftColor): NamedTextColor {
             val textColor = NamedTextColor.NAMES.value(minecraftColor.name)
             if (textColor == null) {

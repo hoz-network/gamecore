@@ -6,7 +6,7 @@ import net.hoz.gamecore.api.service.GameManager
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
 abstract class AbstractAction(
-    val mainBuilder: Command.Builder<CommandSenderWrapper>,
+    val mainCommandBuilder: Command.Builder<CommandSenderWrapper>,
     val commandManager: CommandManager<CommandSenderWrapper>,
     val gameManager: GameManager
 ) {
