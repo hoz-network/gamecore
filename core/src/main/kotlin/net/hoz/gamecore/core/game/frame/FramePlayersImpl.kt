@@ -105,7 +105,7 @@ open class FramePlayersImpl(
     override fun find(name: String): GamePlayer? {
         return players
             .values
-            .first { it.name == name }
+            .firstOrNull { it.name == name }
     }
 
     override fun all(): Map<UUID, GamePlayer> {

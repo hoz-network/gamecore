@@ -33,6 +33,8 @@ interface GameBuilder : Nameable {
      */
     fun teams(): BuilderTeams
 
+    fun spawners(): BuilderSpawners
+
     /**
      * Management of this builder
      *

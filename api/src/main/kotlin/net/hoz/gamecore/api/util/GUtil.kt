@@ -9,12 +9,19 @@ interface GUtil {
     companion object {
         private val log = KotlinLogging.logger { }
 
-        fun findMatchingOrAvailable(input: String, available: List<String>): List<String> =
+        fun findMatchingOrAvailable(input: String, available: List<String>): MutableList<String> =
             findMatchingOrAvailable(input, available, "none found")
 
-        fun findMatchingOrAvailable(input: String, available: List<String>, ifEmpty: String): List<String> {
-            if (available.isEmpty()) return listOf(ifEmpty)
-            return available.sortedBy { input.startsWith(it) }
+        fun findMatchingOrAvailable(
+            input: String,
+            available: List<String>,
+            ifEmpty: String
+        ): MutableList<String> {
+            if (available.isEmpty()) return mutableListOf(ifEmpty)
+            return available.filter { input.startsWith(it) }
+                .takeWhile { input.startsWith(it) }
+                .ifEmpty { available }
+                .toMutableList()
         }
 
         fun fromProtoColor(minecraftColor: MinecraftColor): NamedTextColor {

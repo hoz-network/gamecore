@@ -137,7 +137,7 @@ class StoreInventoryImpl(
 
     private fun onRender(event: ItemRenderEvent) {
         val itemInfo = event.item ?: return
-        if (itemInfo.properties.isEmpty()) {
+        if (!itemInfo.hasProperties()) {
             log.debug { "No properties found for event: $event" }
             return
         }
