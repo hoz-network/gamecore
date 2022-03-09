@@ -8,7 +8,7 @@ import cloud.commandframework.kotlin.extension.senderType
 import net.hoz.gamecore.api.command.COMMAND_CONFIG_FIELD
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.findArenaName
-import net.hoz.gamecore.api.command.findOrUnknown
+import net.hoz.gamecore.api.command.getOrNull
 import net.hoz.gamecore.api.util.GLangKeys
 import net.hoz.gamecore.api.util.GUtil
 import org.screamingsandals.lib.lang.Message
@@ -46,7 +46,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
     private fun doHandle(context: CommandContext<CommandSenderWrapper>) {
         val sender = context.sender
         val arenaName = context.findArenaName()
-        val configName = context.findOrUnknown(COMMAND_CONFIG_FIELD)
+        val configName = context.getOrNull(COMMAND_CONFIG_FIELD)
 
         if (gameManager.frames().has(arenaName) || gameManager.builders().has(arenaName)) {
             Message.of(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_ALREADY_EXISTS)
@@ -55,7 +55,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
             return
         }
 
-        if (gameManager.backend().oneConfig(configName).isFail) {
+        if (configName == null || gameManager.backend().oneConfig(configName).isFail) {
             Message.of(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_FAILED_CREATING)
                 .placeholder("error", "Invalid config identifier $configName")
                 .placeholder("name", arenaName)

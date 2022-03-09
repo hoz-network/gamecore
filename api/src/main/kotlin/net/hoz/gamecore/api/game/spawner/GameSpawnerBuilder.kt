@@ -1,7 +1,6 @@
 package net.hoz.gamecore.api.game.spawner
 
 import com.iamceph.resulter.core.DataResultable
-import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.world.LocationHolder
 import java.util.*
 
@@ -10,7 +9,7 @@ import java.util.*
  */
 abstract class GameSpawnerBuilder(
     val id: UUID,
-    var team: GameTeam?,
+    var team: String?,
     var location: LocationHolder?,
     var useHolograms: Boolean = true,
     var useGlobalValues: Boolean = true,

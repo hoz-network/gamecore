@@ -8,6 +8,7 @@ import cloud.commandframework.captions.CaptionVariable
 import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
+import cloud.commandframework.keys.CloudKey
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.service.GameManager
 import net.hoz.gamecore.api.util.GUtil
@@ -73,10 +74,6 @@ class GameSpawnerTypeArgument<C>(
                 .allSpawners()
                 .map { it.name }
 
-            if (types.isEmpty()) {
-                return mutableListOf("No spawner type found!")
-            }
-
             return GUtil.findMatchingOrAvailable(input, types, "No spawner type found!")
         }
     }
@@ -88,16 +85,22 @@ class GameSpawnerTypeArgument<C>(
     ) : ParserException(SpawnerTypeParser::class.java, context, errorCaption, *captionVariables)
 
     companion object {
-        fun <C> newBuilder(name: String, gameManager: GameManager): CommandArgument.Builder<C, GameSpawnerType> {
-            return Builder(name, gameManager)
+        fun <C : Any, T : Any> newBuilder(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument.Builder<C, GameSpawnerType> {
+            return Builder(key.name, gameManager)
         }
 
-        fun <C : Any> of(name: String, gameManager: GameManager): CommandArgument<C, GameSpawnerType> {
-            return newBuilder<C>(name, gameManager).asRequired().build()
+        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameSpawnerType> {
+            return newBuilder<C, T>(key, gameManager).asRequired().build()
         }
 
-        fun <C : Any> optional(name: String, gameManager: GameManager): CommandArgument<C, GameSpawnerType> {
-            return newBuilder<C>(name, gameManager).asOptional().build()
+        fun <C : Any, T : Any> optional(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument<C, GameSpawnerType> {
+            return newBuilder<C, T>(key, gameManager).asOptional().build()
         }
     }
 }

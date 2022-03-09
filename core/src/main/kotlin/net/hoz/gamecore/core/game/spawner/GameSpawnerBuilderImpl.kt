@@ -4,13 +4,12 @@ import com.iamceph.resulter.core.DataResultable
 import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.spawner.GameSpawnerBuilder
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
-import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.world.LocationHolder
 import java.util.*
 
 class GameSpawnerBuilderImpl(
     id: UUID,
-    team: GameTeam?,
+    team: String?,
     location: LocationHolder?,
     useHolograms: Boolean = true,
     useGlobalValues: Boolean = true,
