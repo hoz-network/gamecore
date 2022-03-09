@@ -16,7 +16,8 @@ import java.util.*
 /**
  * Spawner for resources. This basically yeets resources from nowhere to the game world.
  */
-interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBuilder>, Upgradeable {
+interface GameSpawner
+    : Buildable<GameSpawner, GameSpawnerBuilder>, ProtoWrapper<ProtoGameSpawner>, Upgradeable {
     /**
      * ID of this spawner.
      *
@@ -181,7 +182,7 @@ interface GameSpawner : ProtoWrapper<ProtoGameSpawner>, Buildable<GameSpawnerBui
         /**
          * Gets all spawned entities by this spawner.
          *
-         * @return immutable list of spawned entities.
+         * @return immutable copy of spawned entities.
          */
         fun all(): Map<GameSpawnerType, List<EntityItem>>
 

@@ -2,6 +2,7 @@ package net.hoz.gamecore.api.game.frame.builder
 
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
+import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.service.GameManager
@@ -13,7 +14,7 @@ import java.util.*
 /**
  * Entry point for building [GameFrame]s.
  */
-interface GameBuilder : Nameable {
+interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
     /**
      * [UUID] of this builder.
      *

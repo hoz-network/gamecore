@@ -1,6 +1,7 @@
 package net.hoz.gamecore.api.game.team
 
 import com.iamceph.resulter.core.DataResultable
+import net.hoz.gamecore.api.Buildable
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.utils.Nameable
 import org.screamingsandals.lib.world.LocationHolder
@@ -29,7 +30,7 @@ abstract class GameTeamBuilder(
      * Max players available
      */
     var maxPlayers: Int?
-) : Nameable {
+) : Nameable, Buildable.Builder<GameTeam> {
 
     override fun name(): String = name
 
@@ -42,5 +43,5 @@ abstract class GameTeamBuilder(
      *
      * @return [DataResultable] result of this operation.
      */
-    abstract fun build(): DataResultable<GameTeam>
+    abstract override fun build(): DataResultable<GameTeam>
 }

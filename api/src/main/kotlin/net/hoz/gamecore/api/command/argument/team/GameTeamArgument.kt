@@ -9,8 +9,8 @@ import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
+import net.hoz.gamecore.api.command.COMMAND_GAME_BUILDER_FIELD
 import net.hoz.gamecore.api.command.argument.game.GameFrameArgument
-import net.hoz.gamecore.api.command.findGameBuilder
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.service.GameManager
 import net.hoz.gamecore.api.util.GUtil
@@ -52,13 +52,14 @@ class GameTeamArgument<C>(
             context: CommandContext<C>,
             inputQueue: Queue<String>
         ): ArgumentParseResult<GameTeamBuilder> {
-            val builder = context.findGameBuilder(gameManager)
-                ?: return ArgumentParseResult.failure(
+            if (context.contains(COMMAND_GAME_BUILDER_FIELD)) {
+                return ArgumentParseResult.failure(
                     GameFrameArgument.GameFrameParseException(
                         context,
                         Caption.of("Builder not found!")
-                    )
-                )
+                    ))
+            }
+            val builder = context[COMMAND_GAME_BUILDER_FIELD]
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(GameFrameParser::class.java, context))
 
@@ -79,9 +80,11 @@ class GameTeamArgument<C>(
         }
 
         override fun suggestions(context: CommandContext<C>, input: String): MutableList<String> {
-            val builder = context.findGameBuilder(gameManager)
-                ?: return mutableListOf("Builder not found!")
+            if (context.contains(COMMAND_GAME_BUILDER_FIELD)) {
+                return mutableListOf("Builder not found!")
+            }
 
+            val builder = context[COMMAND_GAME_BUILDER_FIELD]
             val available = builder.teams()
                 .all()
                 .keys

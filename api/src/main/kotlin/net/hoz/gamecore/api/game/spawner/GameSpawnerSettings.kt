@@ -1,5 +1,6 @@
 package net.hoz.gamecore.api.game.spawner
 
+import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoSpawnerSettings
 import org.screamingsandals.lib.tasker.TaskerTime
@@ -56,7 +57,7 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
          *
          * @return new builder.
          */
-        fun builder(builder: GameSpawnerSettingsBuilder.() -> Unit): GameSpawnerSettings {
+        fun builder(builder: GameSpawnerSettingsBuilder.() -> Unit): DataResultable<GameSpawnerSettings> {
             val data = GameSpawnerSettingsBuilder()
             builder.invoke(data)
             return data.build()
@@ -68,7 +69,7 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
          * @param settings settings to create from.
          * @return new builder.
          */
-        fun of(settings: ProtoSpawnerSettings): GameSpawnerSettings =
+        fun of(settings: ProtoSpawnerSettings): DataResultable<GameSpawnerSettings> =
             GameSpawnerSettingsBuilder(
                 settings.spread,
                 settings.maxSpawnAmount,

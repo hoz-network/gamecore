@@ -50,7 +50,7 @@ class GameSpawnerImpl(
     override fun toBuilder(builder: GameSpawnerBuilder.() -> Unit): GameSpawnerBuilder {
         val data = GameSpawnerBuilderImpl(
             id,
-            team,
+            team?.name(),
             location,
             useHolograms,
             useGlobalValues,
@@ -58,7 +58,9 @@ class GameSpawnerImpl(
                 .values
                 .toMutableList()
         )
+
         builder.invoke(data)
+
         return data
     }
 

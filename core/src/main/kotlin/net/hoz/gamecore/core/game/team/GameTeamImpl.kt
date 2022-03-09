@@ -1,6 +1,5 @@
 package net.hoz.gamecore.core.game.team
 
-import com.iamceph.resulter.core.DataResultable
 import net.hoz.api.data.game.ProtoGameTeam
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
@@ -43,15 +42,18 @@ class GameTeamImpl(
 
     override fun frame(): GameFrame? = frame
 
-    override fun toBuilder(): DataResultable<GameTeamBuilder> {
-        val builder = GameTeamBuilderImpl(
+    override fun toBuilder(builder: GameTeamBuilder.() -> Unit): GameTeamBuilder {
+        val data = GameTeamBuilderImpl(
             name,
             color,
             spawn,
             target,
             maxPlayers,
         )
-        return DataResultable.ok(builder)
+
+        builder.invoke(data)
+
+        return data
     }
 
     override fun unsafe(): GameTeam.Unsafe = unsafe

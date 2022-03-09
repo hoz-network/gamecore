@@ -3,6 +3,7 @@ package net.hoz.gamecore.core.game.frame.builder
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.game.frame.GameFrame
+import net.hoz.gamecore.api.game.frame.builder.BuilderSpawners
 import net.hoz.gamecore.api.game.frame.builder.BuilderTeams
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
@@ -21,9 +22,17 @@ class GameBuilderImpl(
     private val unsafe: GameBuilder.Unsafe = UnsafeImpl(this)
 
     override fun name(): String = name
+    override fun build(): DataResultable<GameFrame> {
+        TODO("Not yet implemented")
+    }
+
     override fun id(): UUID = id
     override fun gameManager(): GameManager = gameManager
     override fun teams(): BuilderTeams = teams
+    override fun spawners(): BuilderSpawners {
+        TODO("Not yet implemented")
+    }
+
     override fun manage(): GameBuilder.Manage = manage
     override fun unsafe(): GameBuilder.Unsafe = unsafe
 

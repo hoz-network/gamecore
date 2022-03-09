@@ -18,7 +18,7 @@ import java.util.*
  *
  * @since 2.0.0
  */
-interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameBuilder> {
+interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFrame, GameBuilder> {
     /**
      * Gets [UUID] of this frame.
      *

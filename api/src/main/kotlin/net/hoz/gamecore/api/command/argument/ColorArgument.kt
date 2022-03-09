@@ -28,6 +28,8 @@ class ColorArgument<C>(
     NamedTextColor::class.java,
     suggestionsProvider
 ) {
+    //Idk why this happens, nullability is OK.
+    @Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
     class Builder<C>(name: String) : CommandArgument.Builder<C, NamedTextColor>(NamedTextColor::class.java, name) {
 
         override fun build(): CommandArgument<C, NamedTextColor> {
@@ -40,6 +42,8 @@ class ColorArgument<C>(
         }
     }
 
+    //Idk why this happens, nullability is OK.
+    @Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
     class ColorParser<C> : ArgumentParser<C, NamedTextColor> {
         override fun parse(
             context: CommandContext<C>,

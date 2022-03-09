@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.world
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameWorld
@@ -12,7 +11,7 @@ import org.screamingsandals.lib.world.LocationHolder
 /**
  * Contains information about all required points to run the game.
  */
-interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld.Builder> {
+interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWorld.Builder> {
     /**
      * Gets a [WorldData] for arena world.
      *
@@ -48,7 +47,7 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld.Builder>
     /**
      * The builder of the [GameWorld].
      */
-    interface Builder {
+    interface Builder: Buildable.Builder<GameWorld> {
         /**
          * Gets arena world.
          *
@@ -110,13 +109,6 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld.Builder>
          * @return [WorldData] world if present.
          */
         fun customWorld(name: String): WorldData?
-
-        /**
-         * Built GameWorld data.
-         *
-         * @return result of the operation.
-         */
-        fun build(): DataResultable<GameWorld>
     }
 
     companion object {

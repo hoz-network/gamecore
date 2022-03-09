@@ -1,12 +1,11 @@
 package net.hoz.gamecore.api.game.frame.builder
 
 import com.iamceph.resulter.core.DataResultable
-import net.hoz.gamecore.api.game.team.GameTeam
 
 /**
  * Base for building spawners, teams, etc.
  *
- * @param <B> instance for what to build
+ * @param <B> builder
  * @param <R> result
  * @param <ID> ID of the instance
  */
@@ -28,7 +27,7 @@ interface BuilderBase<B, R, ID> {
 
     /**
      * Checks if this builder has an instance with given name.
-     *
+     *0
      * @param id id to find for
      * @return true if the builder has an instance
      */
@@ -49,5 +48,5 @@ interface BuilderBase<B, R, ID> {
      */
     fun remove(id: ID): Boolean
 
-    fun build(): Map<ID, DataResultable<GameTeam>>
+    fun build(): Map<ID, DataResultable<R>>
 }

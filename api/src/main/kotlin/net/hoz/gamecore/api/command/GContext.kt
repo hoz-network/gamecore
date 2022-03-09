@@ -14,19 +14,22 @@ import org.screamingsandals.lib.player.PlayerWrapper
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
 val COMMAND_CONFIG_FIELD: CloudKey<String> =
-    SimpleCloudKey.of("gamecore-config-name", TypeToken.get(String::class.java))
+    SimpleCloudKey.of("gamecore-config", TypeToken.get(String::class.java))
 
 val COMMAND_FRAME_FIELD: CloudKey<GameFrame> =
-    SimpleCloudKey.of("gamecore-frame-name", TypeToken.get(GameFrame::class.java))
+    SimpleCloudKey.of("gamecore-frame", TypeToken.get(GameFrame::class.java))
+
+val COMMAND_ARENA_NAME_FIELD: CloudKey<String> =
+    SimpleCloudKey.of("gamecore-arena-name", TypeToken.get(String::class.java))
 
 val COMMAND_GAME_BUILDER_FIELD: CloudKey<GameBuilder> =
-    SimpleCloudKey.of("gamecore-frame-builder-name", TypeToken.get(GameBuilder::class.java))
+    SimpleCloudKey.of("gamecore-frame-builder", TypeToken.get(GameBuilder::class.java))
 
 val COMMAND_SPAWNER_TYPE_FIELD: CloudKey<GameSpawnerType> =
-    SimpleCloudKey.of("gamecore-spawner-type-name", TypeToken.get(GameSpawnerType::class.java))
+    SimpleCloudKey.of("gamecore-spawner-type", TypeToken.get(GameSpawnerType::class.java))
 
 val COMMAND_TEAM_BUILDER_FIELD: CloudKey<GameTeamBuilder> =
-    SimpleCloudKey.of("gamecore-team-builder-name", TypeToken.get(GameTeamBuilder::class.java))
+    SimpleCloudKey.of("gamecore-team-builder", TypeToken.get(GameTeamBuilder::class.java))
 
 fun <C, K : Any> CommandContext<C>.getOrNull(input: CloudKey<K>): K? {
     if (this.contains(input)) {

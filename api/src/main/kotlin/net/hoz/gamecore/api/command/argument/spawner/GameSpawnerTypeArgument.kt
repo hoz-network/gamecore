@@ -66,7 +66,14 @@ class GameSpawnerTypeArgument<C>(
                 )
 
             inputQueue.remove()
-            return ArgumentParseResult.success(GameSpawnerType.of(toReturn))
+            val type = GameSpawnerType.of(toReturn)
+            if (type.isFail) {
+                return ArgumentParseResult.failure(
+                    SpawnerTypeParseException(context, Caption.of("Error creating type: " + type.message()))
+                )
+            }
+
+            return ArgumentParseResult.success(type.data())
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): MutableList<String> {

@@ -3,6 +3,7 @@ package net.hoz.gamecore.api.game.team
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameTeam
+import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.kyori.adventure.audience.Audience
@@ -16,7 +17,8 @@ import org.screamingsandals.lib.world.LocationHolder
 /**
  * A team of players.
  */
-interface GameTeam : Nameable, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
+interface GameTeam
+    : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
     /**
      * Gets the color of this team.
      *
@@ -107,11 +109,6 @@ interface GameTeam : Nameable, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
      * @return frame if present.
      */
     fun frame(): GameFrame?
-
-    /**
-     * Converts this team to builder
-     */
-    fun toBuilder(): DataResultable<GameTeamBuilder>
 
     /**
      * Access point for unsafe API.

@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.world
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoWorldData
@@ -12,7 +11,7 @@ import org.screamingsandals.lib.world.LocationMapper
 /**
  * Contains all required world data for the game.
  */
-interface WorldData : ProtoWrapper<ProtoWorldData>, Buildable<WorldData.Builder> {
+interface WorldData : ProtoWrapper<ProtoWorldData>, Buildable<WorldData, WorldData.Builder> {
     /**
      * Gets the [WorldRegenerator]
      *
@@ -63,7 +62,7 @@ interface WorldData : ProtoWrapper<ProtoWorldData>, Buildable<WorldData.Builder>
     /**
      * Builder of the world data.
      */
-    interface Builder {
+    interface Builder: Buildable.Builder<WorldData> {
         /**
          * Sets new [WorldRegenerator].
          *
@@ -141,13 +140,6 @@ interface WorldData : ProtoWrapper<ProtoWorldData>, Buildable<WorldData.Builder>
          * @param type new type
          */
         fun type(type: ProtoWorldData.WorldType)
-
-        /**
-         * Creates the [WorldData] from this builder.
-         *
-         * @return new [WorldData], if everything was OK.
-         */
-        fun build(): DataResultable<WorldData>
     }
 
     companion object {

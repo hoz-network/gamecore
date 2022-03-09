@@ -20,7 +20,7 @@ class BuilderAction(
 
     override fun mainAction0(): Command.Builder<CommandSenderWrapper> {
         //TODO: lang
-        mainCommand.literal("builder", ArgumentDescription.of("Entrypoint for creating Frames."))
+        return mainCommand.literal("builder", ArgumentDescription.of("Entrypoint for creating Frames."))
             .argument(GameBuilderArgument.of(COMMAND_FRAME_FIELD, gameManager))
     }
 }

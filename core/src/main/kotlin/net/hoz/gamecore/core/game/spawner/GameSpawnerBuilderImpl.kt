@@ -7,20 +7,20 @@ import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import org.screamingsandals.lib.world.LocationHolder
 import java.util.*
 
-class GameSpawnerBuilderImpl(
+internal class GameSpawnerBuilderImpl(
     id: UUID,
-    team: String?,
-    location: LocationHolder?,
+    team: String? = null,
+    location: LocationHolder? = null,
     useHolograms: Boolean = true,
     useGlobalValues: Boolean = true,
     types: MutableList<GameSpawnerType> = mutableListOf()
 ) : GameSpawnerBuilder(id, team, location, useHolograms, useGlobalValues, types) {
 
     override fun build(): DataResultable<GameSpawner> {
+        val location = this.location ?: return DataResultable.fail("Location is not specified.")
         if (types.size < 1) {
             return DataResultable.fail("At-least one spawner type is required!")
         }
-        val location = this.location ?: return DataResultable.fail("Location is not specified.")
 
         val spawner = GameSpawnerImpl(id, location, useHolograms, useGlobalValues)
         spawner.types().add(types)

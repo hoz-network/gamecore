@@ -1,5 +1,6 @@
 package net.hoz.gamecore.api.game.spawner
 
+import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.ProtoSpawnerType
@@ -100,15 +101,18 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
                 enabled
             )
 
-        fun of(type: ProtoSpawnerType): GameSpawnerType =
-            GameSpawnerTypeImpl(
-                Translation.of(type.nameTranslation),
-                type.name,
-                ItemTypeHolder.of(type.material),
-                GUtil.fromProtoColor(type.color),
-                type.type,
-                GameSpawnerSettings.of(type.settings),
-                true //TODO
-            )
+        fun of(type: ProtoSpawnerType): DataResultable<GameSpawnerType> =
+            GameSpawnerSettings.of(type.settings)
+                .map {
+                    GameSpawnerTypeImpl(
+                        Translation.of(type.nameTranslation),
+                        type.name,
+                        ItemTypeHolder.of(type.material),
+                        GUtil.fromProtoColor(type.color),
+                        type.type,
+                        it,
+                        true //TODO
+                    )
+                }
     }
 }
