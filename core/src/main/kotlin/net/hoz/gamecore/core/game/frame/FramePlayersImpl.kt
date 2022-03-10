@@ -27,9 +27,9 @@ open class FramePlayersImpl(
         log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
 
         if (!player.state.untracked() || player.frame != null) {
-            log.debug("Player[$playerId] already has active frame[${player.frame}], cannot join!")
+            log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid()}]" }
+            //TODO: language
             Resultable.fail("fucked")
-            //TODO: already in other game
         }
 
         if (frame.manage().isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {
@@ -40,12 +40,14 @@ open class FramePlayersImpl(
         if (frame.manage().isWaiting()) {
             if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - GamePlayerPreJoinedGameEvent cancelled joining.", playerId)
-                return Resultable.fail("cancelled by event") //TODO
+                //TODO: language
+                return Resultable.fail("cancelled by event")
             }
         } else {
             if (SpectatorPreJoinGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - SpectatorPreJoinGameEvent cancelled joining.", playerId)
-                return Resultable.fail("cancelled by event") //TODO
+                //TODO: language
+                return Resultable.fail("cancelled by event")
             }
         }
 

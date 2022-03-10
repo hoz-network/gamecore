@@ -8,7 +8,7 @@ import net.hoz.gamecore.api.command.COMMAND_ARENA_NAME_FIELD
 import net.hoz.gamecore.api.command.COMMAND_CONFIG_FIELD
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.getOrNull
-import net.hoz.gamecore.api.util.GLangKeys
+import net.hoz.gamecore.api.lang.CommandLang
 import net.hoz.gamecore.api.util.findMatchingOrAvailable
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.player.PlayerWrapper
@@ -39,14 +39,14 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                     val configName = it.getOrNull(COMMAND_CONFIG_FIELD)
 
                     if (gameManager.frames().has(arenaName) || gameManager.builders().has(arenaName)) {
-                        Message.of(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_ALREADY_EXISTS)
+                        Message.of(CommandLang.ERROR_BUILDER_ALREADY_EXISTS)
                             .resolvePrefix()
                             .send(sender)
                         return@handler
                     }
 
                     if (configName == null || gameManager.backend().oneConfig(configName).isFail) {
-                        Message.of(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_FAILED_CREATING)
+                        Message.of(CommandLang.ERROR_BUILDER_FAILED_CREATING)
                             .placeholder("error", "Invalid config identifier $configName")
                             .placeholder("name", arenaName)
                             .resolvePrefix()
@@ -56,7 +56,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
 
                     val gameBuilder = gameManager.builders().create(arenaName, configName)
                     if (gameBuilder.isFail) {
-                        Message.of(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_FAILED_CREATING)
+                        Message.of(CommandLang.ERROR_BUILDER_FAILED_CREATING)
                             .placeholder("error", gameBuilder.message())
                             .placeholder("name", arenaName)
                             .resolvePrefix()
@@ -64,7 +64,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                         return@handler
                     }
 
-                    Message.of(GLangKeys.CORE_COMMANDS_SUCCESS_BUILDER_CREATED)
+                    Message.of(CommandLang.SUCCESS_BUILDER_CREATED)
                         .placeholder("name", arenaName)
                         .resolvePrefix()
                         .send(sender)

@@ -4,7 +4,8 @@ import com.iamceph.resulter.core.GroupedResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameWorld
 import net.hoz.gamecore.api.Buildable
-import net.hoz.gamecore.api.util.GLangKeys
+import net.hoz.gamecore.api.lang.CommandLang
+import net.hoz.gamecore.api.lang.CommonLang
 import net.hoz.netapi.client.lang.LangResultable
 import org.screamingsandals.lib.world.LocationHolder
 
@@ -97,10 +98,10 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
             val border2Id = border2.world.uuid
 
             if (border1Id != locationWorldId) {
-                return LangResultable.fail(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
+                return LangResultable.fail(CommandLang.ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
             }
             if (border2Id != locationWorldId) {
-                return LangResultable.fail(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
+                return LangResultable.fail(CommandLang.ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
             }
 
             // this is some black magic copied from Misat
@@ -123,7 +124,7 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
                 && max.z >= location.z
             ) {
                 LangResultable.ok()
-            } else LangResultable.fail(GLangKeys.CORE_COMMON_LOCATION_OUTSIDE_BORDER)
+            } else LangResultable.fail(CommonLang.LOCATION_OUTSIDE_BORDER)
         }
     }
 }

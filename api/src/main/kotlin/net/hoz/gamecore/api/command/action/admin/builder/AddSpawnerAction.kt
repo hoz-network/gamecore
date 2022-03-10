@@ -14,7 +14,7 @@ import net.hoz.gamecore.api.command.argument.spawner.GameSpawnerTypeArgument
 import net.hoz.gamecore.api.command.argument.team.GameTeamArgument
 import net.hoz.gamecore.api.command.builderHandler
 import net.hoz.gamecore.api.command.getOrNull
-import net.hoz.gamecore.api.util.GLangKeys
+import net.hoz.gamecore.api.lang.CommandLang
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 import java.util.*
@@ -56,7 +56,7 @@ class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(
                     log.debug { "Created new spawner builder: $spawner" }
 
                     //TODO: lang
-                    Message.of(GLangKeys.CORE_COMMANDS_SUCCESS_BUILDER_SPAWNER_ADDED)
+                    Message.of(CommandLang.SUCCESS_BUILDER_SPAWNER_ADDED)
                         .placeholder("spawner-name", spawner.id.toString())
                         .resolvePrefix()
                         .send(sender)

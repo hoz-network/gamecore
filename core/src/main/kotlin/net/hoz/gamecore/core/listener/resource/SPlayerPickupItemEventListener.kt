@@ -4,7 +4,7 @@ import mu.KotlinLogging
 import net.hoz.gamecore.api.event.SEventHandlerFactory
 import net.hoz.gamecore.api.event.player.resource.GamePlayerResourcePickEvent
 import net.hoz.gamecore.api.game.player.GamePlayer
-import net.hoz.gamecore.api.util.GLang
+import net.hoz.gamecore.api.lang.GLang
 import org.screamingsandals.lib.event.EventPriority
 import org.screamingsandals.lib.event.player.SPlayerPickupItemEvent
 import org.screamingsandals.lib.kotlin.unwrap

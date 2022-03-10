@@ -1,4 +1,4 @@
-package net.hoz.gamecore.api.util
+package net.hoz.gamecore.api.lang
 
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoWorldData
@@ -52,7 +52,7 @@ object GLang {
 
     fun TEAM_INFO(player: CommandSenderWrapper, team: GameTeam): List<Component> {
         val spawn = team.spawn
-        return Message.of(GLangKeys.CORE_COMMON_TEAM_INFO)
+        return Message.of(CommonLang.TEAM_INFO)
             .placeholder("identifier", team.coloredName())
             .placeholder("X", NUMBER_FORMAT.format(spawn.x))
             .placeholder("Y", NUMBER_FORMAT.format(spawn.y))
@@ -65,7 +65,7 @@ object GLang {
     fun STORE_INFO(player: CommandSenderWrapper?, store: GameStore): List<Component> {
         val location = store.location()
         val team = store.team()
-        return Message.of(GLangKeys.CORE_COMMON_STORE_INFO)
+        return Message.of(CommonLang.STORE_INFO)
             .placeholder("identifier", store.name())
             .placeholder("store-data-identifier", store.holder().name)
             .placeholder("X", NUMBER_FORMAT.format(location.x))
