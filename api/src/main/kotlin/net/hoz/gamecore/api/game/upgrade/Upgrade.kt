@@ -4,9 +4,9 @@ import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.tasker.TaskerTime
 
 interface Upgrade {
-    fun team(): GameTeam?
-    fun duration(): Double
-    fun timeUnit(): TaskerTime
-    fun active(): Boolean
-    fun expired(): Boolean
+    val team: GameTeam?
+    val duration: Double
+    val timeUnit: TaskerTime
+    val active: Boolean
+    val expired: Boolean
 }

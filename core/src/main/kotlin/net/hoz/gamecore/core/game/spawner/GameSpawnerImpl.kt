@@ -16,7 +16,9 @@ class GameSpawnerImpl(
     private val id: UUID,
     private var location: LocationHolder,
     private var useHolograms: Boolean,
-    private var useGlobalValues: Boolean
+    private var useGlobalValues: Boolean,
+    override var upgradeType: Upgradeable.Type,
+    override val upgrades: MutableList<Upgrade> = mutableListOf()
 ) : GameSpawner {
     private var manage: GameSpawner.Manage = GameSpawnerManageImpl(this)
     private var types: GameSpawner.Types = GameSpawnerTypesImpl(this)
@@ -64,19 +66,13 @@ class GameSpawnerImpl(
         return data
     }
 
-    override fun upgradeType(): Upgradeable.Type {
-        TODO("Not yet implemented")
-    }
-
-    override fun upgrades(): List<Upgrade> {
-        TODO("Not yet implemented")
-    }
-
     override fun addUpgrade(upgrade: Upgrade) {
+        upgrades.add(upgrade)
         TODO("Not yet implemented")
     }
 
     override fun removeUpgrade(upgrade: Upgrade) {
+        upgrades.remove(upgrade)
         TODO("Not yet implemented")
     }
 

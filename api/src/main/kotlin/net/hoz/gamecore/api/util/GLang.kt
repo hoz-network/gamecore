@@ -51,14 +51,14 @@ object GLang {
     }
 
     fun TEAM_INFO(player: CommandSenderWrapper, team: GameTeam): List<Component> {
-        val spawn = team.spawn()
+        val spawn = team.spawn
         return Message.of(GLangKeys.CORE_COMMON_TEAM_INFO)
             .placeholder("identifier", team.coloredName())
             .placeholder("X", NUMBER_FORMAT.format(spawn.x))
             .placeholder("Y", NUMBER_FORMAT.format(spawn.y))
             .placeholder("Z", NUMBER_FORMAT.format(spawn.z))
             .placeholder("team-color", team.coloredName())
-            .placeholder("max-players", team.maxPlayers().toString())
+            .placeholder("max-players", team.maxPlayers.toString())
             .getFor(player)
     }
 

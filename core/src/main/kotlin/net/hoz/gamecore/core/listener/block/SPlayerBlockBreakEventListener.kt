@@ -49,7 +49,7 @@ class SPlayerBlockBreakEventListener
         val block = event.block()
         val blockLocation = block.location
 
-        val regenerator = world.regenerator()
+        val regenerator = world.regenerator
         if (regenerator.wasBlockAddedDuringGame(blockLocation)) {
             regenerator.removeBlock(WorldRegenerator.Type.BUILT, blockLocation)
             return

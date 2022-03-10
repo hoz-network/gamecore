@@ -124,7 +124,7 @@ open class FramePlayersImpl(
                 return toSpectator(player)
             }
 
-            val spawn = team.spawn()
+            val spawn = team.spawn
             player.teleport(spawn) { player.gameMode = GameModeHolder.of("SURVIVAL") }
             player.unsafe().state(GamePlayer.State.ALIVE)
             return Resultable.ok()
@@ -144,7 +144,7 @@ open class FramePlayersImpl(
 
         val spectatorSpawn = frame.world()
             .arenaWorld
-            .spectator()
+            .spectator
 
         if (spectatorSpawn == null) {
             //TODO: log
@@ -167,7 +167,7 @@ open class FramePlayersImpl(
 
         val spectatorSpawn = frame.world()
             .arenaWorld
-            .spectator()
+            .spectator
 
         if (spectatorSpawn == null) {
             return Resultable.fail("Spectator spawn not found.")
@@ -186,7 +186,7 @@ open class FramePlayersImpl(
 
         val lobby = frame.world()
             .lobbyWorld
-            .spawn()
+            .spawn
 
         player.teleport(lobby) { player.gameMode = GameModeHolder.of("ADVENTURE") }
         player.unsafe().state(GamePlayer.State.LOBBY)

@@ -29,14 +29,11 @@ internal class WorldRegeneratorImpl : WorldRegenerator {
     }
 
     override fun removeBlock(type: WorldRegenerator.Type, location: LocationHolder) {
-        registeredBlocks.get(type)
-            .removeIf { it.first == location }
+        registeredBlocks.get(type).removeIf { it.first == location }
     }
 
-    override fun wasBlockAddedDuringGame(holder: LocationHolder): Boolean {
-        return registeredBlocks[WorldRegenerator.Type.BUILT]
-            .any { it.first == holder }
-    }
+    override fun wasBlockAddedDuringGame(holder: LocationHolder): Boolean =
+        registeredBlocks[WorldRegenerator.Type.BUILT].any { it.first == holder }
 
     private fun loadAndReplace(location: LocationHolder, holder: BlockTypeHolder) {
         val chunk = location.chunk

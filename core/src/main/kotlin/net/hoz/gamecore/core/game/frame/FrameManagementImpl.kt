@@ -128,7 +128,6 @@ open class FrameManagementImpl(
         return frame.teams()
             .all()
             .values
-            .sumOf { it.maxPlayers() }
+            .sumOf { it.maxPlayers }
     }
-
 }

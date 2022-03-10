@@ -12,13 +12,12 @@ interface WorldRegenerator {
     fun removeBlock(type: Type, block: BlockHolder)
     fun removeBlock(type: Type, location: LocationHolder)
     fun wasBlockAddedDuringGame(holder: LocationHolder): Boolean
+
     enum class Type {
         BUILT, DESTROYED, INTERACTED
     }
 
     companion object {
-        fun regenerator(): WorldRegenerator {
-            return WorldRegeneratorImpl()
-        }
+        fun regenerator(): WorldRegenerator = WorldRegeneratorImpl()
     }
 }

@@ -31,12 +31,10 @@ abstract class GameTeamBuilder(
      */
     var maxPlayers: Int?
 ) : Nameable, Buildable.Builder<GameTeam> {
-
     override fun name(): String = name
 
     /**
      * Creates new [GameTeam] from this builder.
-     *
      *
      * NOTE: the team NEEDS to have all properties set, otherwise it is not possible to save the team.
      * NOTE: this method WILL be called by the GameBuilder, you don't need to do it.

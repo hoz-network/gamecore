@@ -1,8 +1,9 @@
 package net.hoz.gamecore.api.game.upgrade
 
 interface Upgradeable {
-    fun upgradeType(): Type
-    fun upgrades(): List<Upgrade>
+    val upgrades: List<Upgrade>
+    val upgradeType: Type
+
     fun addUpgrade(upgrade: Upgrade)
     fun removeUpgrade(upgrade: Upgrade)
 

@@ -96,10 +96,10 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
             val border1Id = border1.world.uuid
             val border2Id = border2.world.uuid
 
-            if (!border1Id.equals(locationWorldId)) {
+            if (border1Id != locationWorldId) {
                 return LangResultable.fail(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
             }
-            if (!border2Id.equals(locationWorldId)) {
+            if (border2Id != locationWorldId) {
                 return LangResultable.fail(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
             }
 

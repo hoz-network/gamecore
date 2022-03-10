@@ -18,7 +18,7 @@ class SPlayerDeathEventListener : SEventHandlerFactory<GamePlayerDeathEvent, SPl
 
         if (frame.manage().isWaiting()) {
             val world = frame.world().lobbyWorld
-            gamePlayer.teleport(world.spawn())
+            gamePlayer.teleport(world.spawn)
         }
 
         val killer = event.killer()
