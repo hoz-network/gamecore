@@ -10,7 +10,7 @@ abstract class SimpleWaitingPhase(
 ) : CyclePhaseImpl(cycle, GamePhase.WAITING, nextPhase) {
 
     override fun doTick() {
-        if (remainingTicks() == 0 && frame.players().hasEnough()) {
+        if (isLastTick() && frame.players().hasEnough()) {
             cycle.switchPhase(GamePhase.STARTING)
         }
     }

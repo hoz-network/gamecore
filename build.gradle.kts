@@ -26,8 +26,9 @@ subprojects {
     dependencies {
         implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.20")
 
+        testImplementation("org.slf4j", "slf4j-simple", "1.7.36")
         testImplementation("org.junit.jupiter", "junit-jupiter-engine", "5.8.2")
-        testImplementation("org.mockito", "mockito-kotlin", "4.0.0") {
+        testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0") {
             constraints {
                 // bump mockito-core transitive dependency
                 testImplementation("org.mockito", "mockito-core", "4.4.0")

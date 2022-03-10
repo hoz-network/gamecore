@@ -16,35 +16,19 @@ import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
 open class GameCycleImpl(
-    protected var frame: GameFrame
+    override var frame: GameFrame
 ) : GameCycle {
-    private val log = KotlinLogging.logger { GameCycle::javaClass.name }
-    open val phases: MutableMap<GamePhase, CyclePhase> = mutableMapOf()
+    private val log = KotlinLogging.logger { }
 
-    open var nextPhase: GamePhase = GamePhase.LOADING
-    open var currentPhase: CyclePhase? = null
-    open var previousPhase: CyclePhase? = null
-    open var cycleTask: TaskerTask? = null
-
-    override fun phases(): Map<GamePhase, CyclePhase> {
-        return phases
-    }
-
-    override fun nextPhase(): GamePhase {
-        return nextPhase
-    }
-
-    override fun currentPhase(): CyclePhase? {
-        return currentPhase
-    }
-
-    override fun previousPhase(): CyclePhase? {
-        return previousPhase
-    }
+    override val phases: MutableMap<GamePhase, CyclePhase> = mutableMapOf()
+    override var nextPhase: GamePhase = GamePhase.LOADING
+    override var currentPhase: CyclePhase? = null
+    override var previousPhase: CyclePhase? = null
+    override var cycleTask: TaskerTask? = null
 
     override fun switchPhase(newPhase: GamePhase): Resultable {
-        val currentPhaseName = currentPhase?.phaseType()?.name ?: "None"
-        log.debug("Switching phase from [$currentPhaseName] to [${newPhase.name}]!")
+        val currentPhaseName = currentPhase?.phaseType?.name ?: "None"
+        log.debug { "Switching phase from[$currentPhaseName] to[${newPhase.name}]" }
 
         nextPhase = newPhase
         //TODO: visuals manager
@@ -62,7 +46,7 @@ open class GameCycleImpl(
 
         val event = GamePreTickEvent(frame, this, currentPhase).fire()
         if (event.cancelled() || !currentPhase.shouldTick()) {
-            log.debug("Pre-tick failed for phase [${currentPhase.phaseType()}], skipping.")
+            log.debug("Pre-tick failed for phase [${currentPhase.phaseType}], skipping.")
             return
         }
 
@@ -70,17 +54,17 @@ open class GameCycleImpl(
     }
 
     override fun start(): Resultable {
-        val toRun: DataResultable<Tasker.TaskBuilder> = initialize()
-        if (toRun.isFail) {
-            return toRun
+        val taskToRun = build()
+        if (taskToRun.isFail) {
+            return taskToRun
         }
 
         if (cycleTask != null) {
             stop()
         }
 
-        cycleTask(toRun.data().start())
-        return toRun
+        cycleTask = taskToRun.data().start()
+        return taskToRun
     }
 
     override fun stop(): Resultable {
@@ -102,23 +86,11 @@ open class GameCycleImpl(
     }
 
     override fun isRunning(): Boolean {
-        //TODO
+        //TODO - handle this better
         return currentPhase != null
     }
 
-    override fun frame(): GameFrame {
-        return frame
-    }
-
-    override fun cycleTask(): TaskerTask? {
-        return cycleTask
-    }
-
-    override fun cycleTask(task: TaskerTask) {
-        this.cycleTask = task
-    }
-
-    override fun initialize(): DataResultable<Tasker.TaskBuilder> {
+    override fun build(): DataResultable<Tasker.TaskBuilder> {
         val tickUnit = GConfig.GAME_TICK_UNIT(frame)
         val tickSpeed = GConfig.GAME_TICK_SPEED(frame)
 
@@ -130,8 +102,8 @@ open class GameCycleImpl(
 
     private fun tickingTask() {
         val currentPhase = this.currentPhase
-        if (currentPhase != null && !currentPhase.finished()) {
-            log.debug("Current phase[{}] is not finished, preparing for tick.", currentPhase.phaseType())
+        if (currentPhase != null && !currentPhase.isFinished()) {
+            log.debug("Current phase[{}] is not finished, preparing for tick.", currentPhase.phaseType)
             if (frame.manage().isWaiting() && frame.manage().isEmpty()) {
                 log.debug("Game is waiting and no players are present, skipping tick.")
                 return
@@ -168,10 +140,10 @@ open class GameCycleImpl(
                 //change current phase to next one
                 this.currentPhase = toSwitch
                 //determine next phase available
-                this.nextPhase = toSwitch.nextPhase()
+                this.nextPhase = toSwitch.nextPhase
 
                 //do not reset starting phase
-                if (previousPhase != null && previousPhase.phaseType() != GamePhase.STARTING) {
+                if (previousPhase != null && previousPhase.phaseType != GamePhase.STARTING) {
                     previousPhase.reset()
                 }
 

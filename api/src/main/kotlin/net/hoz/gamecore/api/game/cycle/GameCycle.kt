@@ -1,17 +1,27 @@
 package net.hoz.gamecore.api.game.cycle
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.GamePhase
+import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
-interface GameCycle {
+interface GameCycle : Buildable.Builder<Tasker.TaskBuilder> {
+    /**
+     * The [GameFrame] that this cycle is used for.
+     */
+    val frame: GameFrame
+
+    /**
+     * Task that runs this cycle.
+     */
+    var cycleTask: TaskerTask?
+
     /**
      * All phases available in the GameCycle.
      */
-    fun phases(): Map<GamePhase, CyclePhase>
+    val phases: Map<GamePhase, CyclePhase>
 
     /**
      * Next phase that will be used after [GameCycle.currentPhase] finishes.
@@ -19,21 +29,21 @@ interface GameCycle {
      *
      * @return
      */
-    fun nextPhase(): GamePhase
+    val nextPhase: GamePhase
 
     /**
      * Currently running phase.
      *
      * @return currently running phase or null if none
      */
-    fun currentPhase(): CyclePhase?
+    val currentPhase: CyclePhase?
 
     /**
      * Previously ran phase.
      *
      * @return previously ran phase or null if none
      */
-    fun previousPhase(): CyclePhase?
+    val previousPhase: CyclePhase?
 
     /**
      * Changes next phase
@@ -45,18 +55,18 @@ interface GameCycle {
      */
     fun doTick()
 
+    /**
+     * Starts the GameCycle.
+     */
     fun start(): Resultable
 
+    /**
+     * Stops the GameCycle.
+     */
     fun stop(): Resultable
 
+    /**
+     * Checks if this GameCycle is running.
+     */
     fun isRunning(): Boolean
-
-    fun frame(): GameFrame
-
-    fun cycleTask(): TaskerTask?
-
-    fun cycleTask(task: TaskerTask)
-
-    fun initialize(): DataResultable<Tasker.TaskBuilder>
-
 }

@@ -67,8 +67,8 @@ interface FrameManagement {
      * @return true if the frame is waiting.
      */
     fun isWaiting(): Boolean {
-        val currentPhase = cycle().currentPhase() ?: return false
+        val currentPhase = cycle().currentPhase ?: return false
 
-        return currentPhase.phaseType() == GamePhase.WAITING
+        return currentPhase.phaseType == GamePhase.WAITING
     }
 }

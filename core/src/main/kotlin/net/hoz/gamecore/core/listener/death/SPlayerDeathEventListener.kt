@@ -14,7 +14,7 @@ class SPlayerDeathEventListener : SEventHandlerFactory<GamePlayerDeathEvent, SPl
 ) {
     override fun wrapEvent(event: SPlayerDeathEvent, priority: EventPriority): GamePlayerDeathEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
 
         if (frame.manage().isWaiting()) {
             val world = frame.world().lobbyWorld

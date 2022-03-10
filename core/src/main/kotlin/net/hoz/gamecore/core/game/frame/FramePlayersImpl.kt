@@ -26,8 +26,8 @@ open class FramePlayersImpl(
         val playerId = player.uuid
         log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
 
-        if (!player.state().untracked() || player.frame() != null) {
-            log.debug("Player[$playerId] already has active frame[${player.frame()}], cannot join!")
+        if (!player.state.untracked() || player.frame != null) {
+            log.debug("Player[$playerId] already has active frame[${player.frame}], cannot join!")
             Resultable.fail("fucked")
             //TODO: already in other game
         }
@@ -62,8 +62,8 @@ open class FramePlayersImpl(
     }
 
     override fun leave(player: GamePlayer): Resultable {
-        val playerFrame = player.frame()
-        if (player.state().untracked() || playerFrame == null) {
+        val playerFrame = player.frame
+        if (player.state.untracked() || playerFrame == null) {
             return Resultable.ok("already left :)")
         }
 
@@ -73,7 +73,7 @@ open class FramePlayersImpl(
 
         players.remove(player.uuid)
         player.unsafe().frame(null)
-        player.unsafe().state(GamePlayer.State.NOT_TRACED)
+        player.unsafe().state(GamePlayer.State.NOT_TRACKED)
         //TODO: hide visuals
         //TODO: move to lobby server
 
@@ -118,7 +118,7 @@ open class FramePlayersImpl(
         }
 
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
-            val team = player.team()
+            val team = player.team
             if (team == null) {
                 //TODO: send message about this mess
                 return toSpectator(player)
@@ -199,6 +199,6 @@ open class FramePlayersImpl(
     }
 
     private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean {
-        return player.state().untracked() || player.frame() == null
+        return player.state.untracked() || player.frame == null
     }
 }

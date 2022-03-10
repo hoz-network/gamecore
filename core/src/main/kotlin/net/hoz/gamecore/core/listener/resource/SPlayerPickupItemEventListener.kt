@@ -18,7 +18,7 @@ class SPlayerPickupItemEventListener : SEventHandlerFactory<GamePlayerResourcePi
 
     override fun wrapEvent(event: SPlayerPickupItemEvent, priority: EventPriority): GamePlayerResourcePickEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
 
         if (!frame.manage().isRunning()) {
             event.cancelled(true)

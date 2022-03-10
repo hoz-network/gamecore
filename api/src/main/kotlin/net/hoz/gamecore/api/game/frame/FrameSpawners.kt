@@ -40,7 +40,7 @@ interface FrameSpawners : Countable {
      * @return Result of this operation.
      */
     fun remove(spawner: GameSpawner): Resultable {
-        return remove(spawner.id())
+        return remove(spawner.id)
     }
 
     /**
@@ -58,7 +58,7 @@ interface FrameSpawners : Countable {
      * @return true if the [GameSpawner] is in this [GameFrame].
      */
     fun has(spawner: GameSpawner): Boolean {
-        return has(spawner.id())
+        return has(spawner.id)
     }
 
     /**
@@ -75,10 +75,7 @@ interface FrameSpawners : Countable {
     fun findForTeam(team: GameTeam): List<GameSpawner> =
         all()
             .values
-            .filter {
-                val spawnerTeam = it.team()
-                spawnerTeam != null && spawnerTeam == team
-            }
+            .filter { it.team == team }
 
     /**
      * Tries to find a spawner by given item.

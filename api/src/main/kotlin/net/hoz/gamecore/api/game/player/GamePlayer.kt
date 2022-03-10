@@ -13,28 +13,28 @@ interface GamePlayer : PlayerWrapper {
      *
      * @return [NetPlayer] data.
      */
-    fun data(): NetPlayer
+    val data: NetPlayer
 
     /**
      * Gets current state of this player.
      *
      * @return [State] current state.
      */
-    fun state(): State
+    val state: State
 
     /**
      * Gets the active [GameTeam] of this player.
      *
      * @return team if present.
      */
-    fun team(): GameTeam?
+    val team: GameTeam?
 
     /**
      * Gets the active [GameFrame] of this player.
      *
      * @return frame if present.
      */
-    fun frame(): GameFrame?
+    val frame: GameFrame?
 
     @ApiStatus.Internal
     fun unsafe(): Unsafe
@@ -109,10 +109,10 @@ interface GamePlayer : PlayerWrapper {
         /**
          * Probably freshly joined player.
          */
-        NOT_TRACED;
+        NOT_TRACKED;
 
         fun untracked(): Boolean {
-            return this == NOT_TRACED
+            return this == NOT_TRACKED
         }
     }
 }

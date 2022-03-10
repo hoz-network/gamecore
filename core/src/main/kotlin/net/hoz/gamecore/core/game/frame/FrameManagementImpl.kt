@@ -23,7 +23,7 @@ open class FrameManagementImpl(
     override fun prepare(): GroupedResultable {
         if (cycle.isRunning()) {
             cycle.stop()
-            cycle.phases()
+            cycle.phases
                 .values
                 .forEach { it.reset() }
         }
@@ -106,9 +106,9 @@ open class FrameManagementImpl(
     }
 
     override fun isRunning(): Boolean {
-        val phase = cycle.currentPhase() ?: return false
+        val phase = cycle.currentPhase ?: return false
 
-        return when (phase.phaseType()) {
+        return when (phase.phaseType) {
             GamePhase.WAITING,
             GamePhase.LOADING,
             GamePhase.DISABLED -> true

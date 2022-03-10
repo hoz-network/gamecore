@@ -18,7 +18,7 @@ class SPlayerBlockBreakEventListener
 
     override fun wrapEvent(event: SPlayerBlockBreakEvent, priority: EventPriority): GamePlayerBlockBreakEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
         if (!frame.manage().isRunning()) {
             return null
         }

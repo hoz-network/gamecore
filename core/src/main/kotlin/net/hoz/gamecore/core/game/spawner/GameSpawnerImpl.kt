@@ -13,11 +13,10 @@ import org.screamingsandals.lib.world.LocationHolder
 import java.util.*
 
 class GameSpawnerImpl(
-    private val id: UUID,
-    private var location: LocationHolder,
-    private var useHolograms: Boolean,
-    private var useGlobalValues: Boolean,
-    override var upgradeType: Upgradeable.Type,
+    override val id: UUID,
+    override var location: LocationHolder,
+    override var useHolograms: Boolean,
+    override var useGlobalValues: Boolean,
     override val upgrades: MutableList<Upgrade> = mutableListOf()
 ) : GameSpawner {
     private var manage: GameSpawner.Manage = GameSpawnerManageImpl(this)
@@ -25,14 +24,8 @@ class GameSpawnerImpl(
     private var items: GameSpawner.Items = GameSpawnerItemsImpl(this)
     private var unsafe: GameSpawner.Unsafe = UnsafeImpl(this)
     internal var frame: GameFrame? = null
-    internal var team: GameTeam? = null
-
-    override fun id(): UUID = id
-    override fun team(): GameTeam? = team
-
-    override fun location(): LocationHolder = location
-    override fun useHolograms(): Boolean = useHolograms
-    override fun useGlobalValues(): Boolean = useGlobalValues
+    override var team: GameTeam? = null
+    override var upgradeType: Upgradeable.Type = Upgradeable.Type.SPAWNER
 
     override fun types(): GameSpawner.Types = types
     override fun manage(): GameSpawner.Manage = manage

@@ -23,7 +23,7 @@ interface GameSpawner
      *
      * @return [UUID] id.
      */
-    fun id(): UUID
+    val id: UUID
 
     /**
      * Team of this spawner.
@@ -31,23 +31,26 @@ interface GameSpawner
      *
      * @return [GameTeam] if present.
      */
-    fun team(): GameTeam?
+    val team: GameTeam?
 
     /**
      * Location of where the resources are yeeted to.
      *
      * @return location of the spawner
      */
-    fun location(): LocationHolder
+    val location: LocationHolder
 
     /**
      * Checks if this spawner uses [Hologram] holograms.
      *
      * @return true if the spawner uses holograms.
      */
-    fun useHolograms(): Boolean
+    val useHolograms: Boolean
 
-    fun useGlobalValues(): Boolean
+    /**
+     * Checks if this spawner uses global values or has custom ones.
+     */
+    val useGlobalValues: Boolean
 
     /**
      * Access point for multiple types that can be spawned using this spawner.

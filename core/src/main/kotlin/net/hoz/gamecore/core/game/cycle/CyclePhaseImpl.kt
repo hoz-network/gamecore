@@ -10,58 +10,38 @@ import org.screamingsandals.lib.kotlin.fire
 
 abstract class CyclePhaseImpl(
     protected val cycle: GameCycle,
-    protected val phaseType: GamePhase,
-    protected var nextPhase: GamePhase,
-    protected val frame: GameFrame = cycle.frame()
+    override val phaseType: GamePhase,
+    override var nextPhase: GamePhase,
+    protected val frame: GameFrame = cycle.frame
 ) : CyclePhase {
-    protected val log = KotlinLogging.logger {  }
-    protected var ticksToRun = -1
-    protected var elapsedTicks = 0
+    private val log = KotlinLogging.logger { }
 
-    protected var firstTick = true
-    protected var finished = false
-
-    override fun nextPhase(): GamePhase {
-        return nextPhase
-    }
-
-    override fun nextPhase(phase: GamePhase): CyclePhase {
-        nextPhase = phase
-        return this
-    }
-
-    override fun phaseType(): GamePhase {
-        return phaseType
-    }
-
-    override fun ticksToRun(): Int {
-        return ticksToRun
-    }
-
-    override fun ticksToRun(ticksToRun: Int): CyclePhase {
-        this.ticksToRun = ticksToRun
-        return this
-    }
-
-    override fun elapsedTicks(): Int {
-        return elapsedTicks
-    }
+    override var maxTicks: Int = -1
+    override var elapsedTicks: Int = 0
+    open var firstTick = true
+    open var finished = false
 
     override fun remainingTicks(): Int {
-        return if (ticksToRun == -1 && elapsedTicks == 1) {
-            0
-        } else elapsedTicks - ticksToRun
+        return if (maxTicks == -1) {
+            -1
+        } else elapsedTicks - maxTicks
     }
 
-    override fun firstTick(): Boolean {
-       return firstTick
+    override fun isLastTick(): Boolean {
+        return remainingTicks() == 0
+    }
+
+    override fun isFirstTick(): Boolean {
+        return firstTick
     }
 
     override fun shouldTick(): Boolean {
-        return remainingTicks() > 0
+        return if (isInfinityTicking()) {
+            true
+        } else remainingTicks() > 0
     }
 
-    override fun finished(): Boolean {
+    override fun isFinished(): Boolean {
         return finished
     }
 
@@ -73,27 +53,30 @@ abstract class CyclePhaseImpl(
 
     override fun tick() {
         if (firstTick) {
-            log.debug("First tick, doing doOnFirstTick!")
+            log.debug { "[$phaseType] - Doing first tick." }
             doFirstTick()
 
             elapsedTicks++
-            finished = isCountdownFinished()
+            finished = isLastTick()
             firstTick = false
             return
         }
 
-        log.debug("Doing cycle tick!")
-        GameTickEvent(frame, cycle, this).fire()
+        log.debug { "[$phaseType] - Firing tick event." }
+        if (GameTickEvent(frame, cycle, this).fire().cancelled) {
+            log.debug { "[$phaseType] - Skipping tick, event cancelled." }
+            return
+        }
+
+        log.debug { "[$phaseType] - Doing tick." }
+        doTick()
 
         elapsedTicks++
-        finished = isCountdownFinished()
-        log.debug("Elapsed ticks: {}, hasFinished: {}", elapsedTicks, finished)
-        doTick()
+        finished = isLastTick()
+        log.debug { "[$phaseType] - Tick done, elapsed[$elapsedTicks], finished[$finished]" }
     }
 
-    protected open fun isCountdownFinished(): Boolean {
-        return if (ticksToRun == -1) { //infinity ticking
-            false
-        } else elapsedTicks >= ticksToRun
+    protected open fun isInfinityTicking(): Boolean {
+        return remainingTicks() == -1
     }
 }

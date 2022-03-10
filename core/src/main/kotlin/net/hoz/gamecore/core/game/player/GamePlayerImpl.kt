@@ -9,28 +9,13 @@ import org.screamingsandals.lib.player.PlayerWrapper
 
 class GamePlayerImpl(
     playerWrapper: PlayerWrapper,
-    private var data: NetPlayer
+    override var data: NetPlayer
 ) : ExtendablePlayerWrapper(playerWrapper), GamePlayer {
-    private var team: GameTeam? = null
-    private var frame: GameFrame? = null
-    private var state = GamePlayer.State.NOT_TRACED
     private val unsafe = UnsafeImpl(this)
 
-    override fun data(): NetPlayer {
-       return data
-    }
-
-    override fun state(): GamePlayer.State {
-        return state
-    }
-
-    override fun team(): GameTeam? {
-        return team
-    }
-
-    override fun frame(): GameFrame? {
-        return frame
-    }
+    override var team: GameTeam? = null
+    override var frame: GameFrame? = null
+    override var state = GamePlayer.State.NOT_TRACKED
 
     override fun unsafe(): GamePlayer.Unsafe {
         return unsafe
@@ -42,7 +27,7 @@ class GamePlayerImpl(
         }
 
         override fun state(state: GamePlayer.State) {
-           player.state = state
+            player.state = state
         }
 
         override fun team(team: GameTeam?) {
