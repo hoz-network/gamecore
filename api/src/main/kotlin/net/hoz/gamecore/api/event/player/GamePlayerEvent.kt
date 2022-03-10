@@ -9,9 +9,5 @@ open class GamePlayerEvent(
     open val player: GamePlayer,
     open val frame: GameFrame
 ) : SPlayerEvent {
-
-
-    override fun player(): PlayerWrapper {
-        return player
-    }
+    override fun player(): PlayerWrapper = player
 }

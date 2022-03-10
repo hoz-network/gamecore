@@ -8,4 +8,4 @@ data class StoreCategoryItemRenderEvent(
     val source: ItemRenderEvent,
     val item: StoreItem,
     override var cancelled: Boolean = false
-): SCancellableEventKt
+) : SCancellableEventKt

@@ -11,7 +11,7 @@ import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.service.GameManager
-import net.hoz.gamecore.api.util.GUtil
+import net.hoz.gamecore.api.util.findMatchingOrAvailable
 import java.util.*
 import java.util.function.BiFunction
 
@@ -29,20 +29,32 @@ class GameBuilderArgument<C>(
     GameBuilder::class.java,
     suggestionsProvider
 ) {
+    companion object {
+        fun <C : Any, T : Any> newBuilder(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): Builder<C> = Builder(key.name, gameManager)
+
+        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameBuilder> =
+            newBuilder<C, T>(key, gameManager).asRequired().build()
+
+        fun <C : Any, T : Any> optional(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument<C, GameBuilder> = newBuilder<C, T>(key, gameManager).asOptional().build()
+    }
+
     class Builder<C>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameBuilder>(GameBuilder::class.java, name) {
-
-        override fun build(): CommandArgument<C, GameBuilder> {
-            return GameBuilderArgument(
-                this.isRequired,
-                this.name,
-                this.defaultValue,
-                this.suggestionsProvider,
-                gameManager
-            )
-        }
+        override fun build(): CommandArgument<C, GameBuilder> = GameBuilderArgument(
+            this.isRequired,
+            this.name,
+            this.defaultValue,
+            this.suggestionsProvider,
+            gameManager
+        )
     }
 
     class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameBuilder> {
@@ -74,7 +86,7 @@ class GameBuilderArgument<C>(
                 .all()
                 .map { it.name() }
 
-            return GUtil.findMatchingOrAvailable(input, available, "Create builder first!")
+            return findMatchingOrAvailable(input, available, "Create builder first!")
         }
     }
 
@@ -83,24 +95,4 @@ class GameBuilderArgument<C>(
         errorCaption: Caption,
         vararg captionVariables: CaptionVariable
     ) : ParserException(GameBuilderArgument::class.java, context, errorCaption, *captionVariables)
-
-    companion object {
-        fun <C : Any, T : Any> newBuilder(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): Builder<C> {
-            return Builder(key.name, gameManager)
-        }
-
-        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameBuilder> {
-            return newBuilder<C, T>(key, gameManager).asRequired().build()
-        }
-
-        fun <C : Any, T : Any> optional(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): CommandArgument<C, GameBuilder> {
-            return newBuilder<C, T>(key, gameManager).asOptional().build()
-        }
-    }
 }

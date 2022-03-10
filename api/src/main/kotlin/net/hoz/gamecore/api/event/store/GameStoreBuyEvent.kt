@@ -8,4 +8,4 @@ data class GameStoreBuyEvent(
     val buyEvent: OnTradeEvent,
     val item: StoreItem,
     override var cancelled: Boolean = false
-): SCancellableAsyncEventKt
+) : SCancellableAsyncEventKt

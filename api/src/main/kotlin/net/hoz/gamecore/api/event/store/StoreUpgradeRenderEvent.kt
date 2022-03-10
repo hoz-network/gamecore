@@ -7,5 +7,5 @@ import org.screamingsandals.simpleinventories.events.ItemRenderEvent
 data class StoreUpgradeRenderEvent(
     val source: ItemRenderEvent,
     var upgrade: StoreUpgrade
-): SEvent
+) : SEvent
 

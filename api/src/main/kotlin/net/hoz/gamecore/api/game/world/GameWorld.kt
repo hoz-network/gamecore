@@ -17,14 +17,14 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
      *
      * @return [WorldData] containing data for the arena.
      */
-    fun arenaWorld(): WorldData
+    val arenaWorld: WorldData
 
     /**
      * Gets a [WorldData] for lobby world.
      *
      * @return [WorldData] containing data for the lobby.
      */
-    fun lobbyWorld(): WorldData
+    val lobbyWorld: WorldData
 
     /**
      * Contains custom world data.
@@ -34,81 +34,15 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
      *
      * @return map of current available custom worlds
      */
-    fun customWorlds(): Map<String, WorldData>
-
-    /**
-     * Tries to get the custom world by name.
-     *
-     * @param name name to get the world from
-     * @return [WorldData] world if present.
-     */
-    fun customWorld(name: String?): WorldData?
+    val customWorlds: Map<String, WorldData>
 
     /**
      * The builder of the [GameWorld].
      */
-    interface Builder: Buildable.Builder<GameWorld> {
-        /**
-         * Gets arena world.
-         *
-         * @return arena world if present.
-         */
-        fun arenaWorld(): WorldData?
-
-        /**
-         * Sets arena world
-         *
-         * @param data data to set
-         */
-        fun arenaWorld(data: WorldData)
-
-        /**
-         * Gets lobby world.
-         *
-         * @return arena lobby if present.
-         */
-        fun lobbyWorld(): WorldData?
-
-        /**
-         * Sets lobby world
-         *
-         * @param data data to set
-         */
-        fun lobbyWorld(data: WorldData)
-
-        /**
-         * Adds new custom world.
-         *
-         * @param name key
-         * @param data value
-         */
-        fun addWorld(name: String, data: WorldData)
-
-        /**
-         * Removes custom world, if available.
-         *
-         * @param name name of the custom world (key)
-         * @return true if the world was removed.
-         */
-        fun removeWorld(name: String): Boolean
-
-        /**
-         * Contains custom world data.
-         *
-         *
-         * Key: name of the world
-         *
-         * @return map of current available custom worlds
-         */
-        fun customWorlds(): Map<String, WorldData>
-
-        /**
-         * Tries to get the custom world by name.
-         *
-         * @param name name to get the world from
-         * @return [WorldData] world if present.
-         */
-        fun customWorld(name: String): WorldData?
+    interface Builder : Buildable.Builder<GameWorld> {
+        var arenaWorld: WorldData?
+        var lobbyWorld: WorldData?
+        var customWorlds: MutableMap<String, WorldData>
     }
 
     companion object {
@@ -117,9 +51,7 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
          *
          * @return empty builder
          */
-        fun builder(): Builder {
-            return GameWorldImpl.BuilderImpl()
-        }
+        fun builder(): Builder = GameWorldImpl.BuilderImpl()
 
         /**
          * Creates new builder with default data from [ProtoGameWorld].
@@ -171,7 +103,7 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
                 return LangResultable.fail(GLangKeys.CORE_COMMANDS_ERROR_BUILDER_BORDER_WORLD_IS_DIFFERENT)
             }
 
-            //this is some black magic copied from Misat
+            // this is some black magic copied from Misat
             val min = LocationHolder(
                 border1.x.coerceAtMost(border2.x),
                 border1.y.coerceAtMost(border2.y),

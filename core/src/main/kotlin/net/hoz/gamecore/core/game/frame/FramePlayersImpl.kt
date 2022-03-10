@@ -143,7 +143,7 @@ open class FramePlayersImpl(
         }
 
         val spectatorSpawn = frame.world()
-            .arenaWorld()
+            .arenaWorld
             .spectator()
 
         if (spectatorSpawn == null) {
@@ -166,7 +166,7 @@ open class FramePlayersImpl(
         }
 
         val spectatorSpawn = frame.world()
-            .arenaWorld()
+            .arenaWorld
             .spectator()
 
         if (spectatorSpawn == null) {
@@ -185,7 +185,7 @@ open class FramePlayersImpl(
         }
 
         val lobby = frame.world()
-            .lobbyWorld()
+            .lobbyWorld
             .spawn()
 
         player.teleport(lobby) { player.gameMode = GameModeHolder.of("ADVENTURE") }

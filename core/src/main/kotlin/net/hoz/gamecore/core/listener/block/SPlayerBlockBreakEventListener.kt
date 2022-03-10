@@ -23,7 +23,7 @@ class SPlayerBlockBreakEventListener
             return null
         }
 
-        val world = frame.world().arenaWorld()
+        val world = frame.world().arenaWorld
         val playerLocation = gamePlayer.location
         if (world.isInBorder(playerLocation).isFail) {
             event.cancelled(true)
@@ -45,7 +45,7 @@ class SPlayerBlockBreakEventListener
 
     override fun postProcess(wrappedEvent: GamePlayerBlockBreakEvent, event: SPlayerBlockBreakEvent) {
         val frame = wrappedEvent.frame
-        val world = frame.world().arenaWorld()
+        val world = frame.world().arenaWorld
         val block = event.block()
         val blockLocation = block.location
 

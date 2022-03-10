@@ -11,7 +11,7 @@ abstract class SEventHandlerFactory<W : SEvent, E : SEvent>(
     private val eventClass: Class<E>,
     private val fireAsync: Boolean = true
 ) {
-    private val log = KotlinLogging.logger { }
+    private val log = KotlinLogging.logger {}
     private val eventMap: MutableMap<EventPriority, Consumer<E>> = EnumMap(EventPriority::class.java)
 
     init {
@@ -77,6 +77,6 @@ abstract class SEventHandlerFactory<W : SEvent, E : SEvent>(
     protected abstract fun wrapEvent(event: E, priority: EventPriority): W?
 
     protected open fun postProcess(wrappedEvent: W, event: E) {
-        //to be implemented, but not needed
+        TODO("To be implemented, but not needed")
     }
 }

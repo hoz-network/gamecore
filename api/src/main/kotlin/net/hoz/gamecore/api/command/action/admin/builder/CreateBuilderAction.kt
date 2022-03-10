@@ -9,13 +9,12 @@ import net.hoz.gamecore.api.command.COMMAND_CONFIG_FIELD
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.getOrNull
 import net.hoz.gamecore.api.util.GLangKeys
-import net.hoz.gamecore.api.util.GUtil
+import net.hoz.gamecore.api.util.findMatchingOrAvailable
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.player.PlayerWrapper
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
 class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
-
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
         //TODO: description lang
         commandManager.command(
@@ -80,6 +79,6 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
             .allConfigs()
             .map { it.name }
 
-        return GUtil.findMatchingOrAvailable(input, available)
+        return findMatchingOrAvailable(input, available)
     }
 }

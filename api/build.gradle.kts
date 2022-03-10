@@ -1,7 +1,3 @@
-plugins {
-    kotlin("jvm")
-}
-
 dependencies {
     api("net.hoz.netapi", "client", "1.0.0-SNAPSHOT")
 

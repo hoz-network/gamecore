@@ -5,7 +5,7 @@ import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
-import net.hoz.gamecore.api.util.GUtil
+import net.hoz.gamecore.api.util.toProtoColor
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.world.LocationHolder
@@ -63,7 +63,7 @@ class GameTeamImpl(
     override fun asProto(): ProtoGameTeam {
         val builder = ProtoGameTeam.newBuilder()
             .setName(name)
-            .setColor(GUtil.toProtoColor(color))
+            .setColor(toProtoColor(color))
             .setMaxPlayers(maxPlayers)
             .setSpawn(spawn.asProto())
 

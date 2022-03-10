@@ -17,6 +17,4 @@ data class GamePlayerBlockPlaceEvent(
     val replacedBlockState: BlockStateHolder,
     val itemInHand: Item,
     val replacedBlockStates: Collection<BlockStateHolder>
-) : GamePlayerCancellableEvent(player, frame) {
-
-}
+) : GamePlayerCancellableEvent(player, frame)

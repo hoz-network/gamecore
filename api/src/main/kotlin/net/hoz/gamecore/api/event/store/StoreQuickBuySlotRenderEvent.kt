@@ -7,4 +7,4 @@ import org.screamingsandals.simpleinventories.events.ItemRenderEvent
 data class StoreQuickBuySlotRenderEvent(
     val source: ItemRenderEvent,
     var quickBuySlotItem: StoreQuickBuySlot
-): SEvent
+) : SEvent

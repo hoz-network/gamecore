@@ -13,8 +13,5 @@ data class GamePlayerResourcePickEvent(
     val item: EntityItem,
     private val displayName: ObjectLink<Component>
 ) : GamePlayerCancellableEvent(player, frame) {
-
-    fun getDisplayName(): Component {
-        return displayName.get()
-    }
+    fun getDisplayName(): Component = displayName.get()
 }

@@ -11,5 +11,4 @@ data class GamePlayerBlockBreakEvent(
     override val frame: GameFrame,
     val block: BlockHolder,
     val dropItems: ObjectLink<Boolean>
-) : GamePlayerCancellableEvent(player, frame) {
-}
+) : GamePlayerCancellableEvent(player, frame)
