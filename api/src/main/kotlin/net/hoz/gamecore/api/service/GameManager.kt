@@ -11,7 +11,13 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.*
 
+/**
+ * Everything is about Frames.
+ */
 interface GameManager : Controlled {
+    /**
+     * Provides a connection to backend.
+     */
     fun backend(): NetGameProvider
     fun frames(): Frames
     fun builders(): Builders

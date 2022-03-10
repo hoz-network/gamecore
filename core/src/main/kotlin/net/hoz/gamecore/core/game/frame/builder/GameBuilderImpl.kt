@@ -4,6 +4,7 @@ import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.BuilderSpawners
+import net.hoz.gamecore.api.game.frame.builder.BuilderStores
 import net.hoz.gamecore.api.game.frame.builder.BuilderTeams
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
@@ -30,6 +31,10 @@ class GameBuilderImpl(
     override fun gameManager(): GameManager = gameManager
     override fun teams(): BuilderTeams = teams
     override fun spawners(): BuilderSpawners {
+        TODO("Not yet implemented")
+    }
+
+    override fun stores(): BuilderStores {
         TODO("Not yet implemented")
     }
 

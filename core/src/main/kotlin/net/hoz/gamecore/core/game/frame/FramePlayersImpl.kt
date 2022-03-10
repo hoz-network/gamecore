@@ -26,10 +26,10 @@ open class FramePlayersImpl(
         val playerId = player.uuid
         log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
 
-        if (!player.state.untracked() || player.frame != null) {
+        if (!player.state.untracked() ||  player.frame != null) {
             log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid()}]" }
             //TODO: language
-            Resultable.fail("fucked")
+            return Resultable.fail("Cannot join the player, already in game.")
         }
 
         if (frame.manage().isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {

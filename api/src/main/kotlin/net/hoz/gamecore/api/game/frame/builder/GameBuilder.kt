@@ -36,6 +36,8 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
 
     fun spawners(): BuilderSpawners
 
+    fun stores(): BuilderStores
+
     /**
      * Management of this builder
      *

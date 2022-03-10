@@ -6,6 +6,7 @@ object CommandLang {
 
     val DESCRIPTIONS_BUILDER: Translation = GLangKeys.COMMANDS_KEY.join("descriptions", "builder")
     val ABOUT: Translation = GLangKeys.COMMANDS_KEY.join("about")
+
     val LIST_GAMES_HEADER: Translation = GLangKeys.COMMANDS_KEY.join("list-games", "header")
     val LIST_GAMES_GAME_INFO: Translation = GLangKeys.COMMANDS_KEY.join("list-games", "game-info")
     val LIST_GAMES_NO_AVAILABLE_GAME: Translation =
@@ -44,6 +45,8 @@ object CommandLang {
         GLangKeys.COMMANDS_KEY.join("error", "builder", "border-world-is-different")
     val ERROR_BUILDER_TEAM_ALREADY_EXISTS: Translation =
         GLangKeys.COMMANDS_KEY.join("error", "builder", "team-already-exists")
+    val ERROR_BUILDER_STORE_ALREADY_EXISTS: Translation =
+        GLangKeys.COMMANDS_KEY.join("error", "builder", "store-already-exists")
     val ERROR_BUILDER_TEAM_DOES_NOT_EXISTS: Translation =
         GLangKeys.COMMANDS_KEY.join("error", "builder", "team-does-not-exists")
     val ERROR_BUILDER_TEAM_NEEDS_MORE_PLAYERS: Translation =

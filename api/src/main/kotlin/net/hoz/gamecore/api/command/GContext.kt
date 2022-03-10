@@ -5,6 +5,7 @@ import cloud.commandframework.context.CommandContext
 import cloud.commandframework.keys.CloudKey
 import cloud.commandframework.keys.SimpleCloudKey
 import io.leangen.geantyref.TypeToken
+import net.hoz.api.data.game.StoreHolder
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
@@ -30,6 +31,9 @@ val COMMAND_SPAWNER_TYPE_FIELD: CloudKey<GameSpawnerType> =
 
 val COMMAND_TEAM_BUILDER_FIELD: CloudKey<GameTeamBuilder> =
     SimpleCloudKey.of("gamecore-team-builder", TypeToken.get(GameTeamBuilder::class.java))
+
+val COMMAND_STORE_HOLDER: CloudKey<StoreHolder> =
+    SimpleCloudKey.of("game-core-store-holder", TypeToken.get(StoreHolder::class.java))
 
 fun <C, K : Any> CommandContext<C>.getOrNull(input: CloudKey<K>): K? {
     if (this.contains(input)) {
