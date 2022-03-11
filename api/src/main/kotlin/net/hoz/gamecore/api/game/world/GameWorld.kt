@@ -12,7 +12,7 @@ import org.screamingsandals.lib.world.LocationHolder
 /**
  * Contains information about all required points to run the game.
  */
-interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWorld.Builder> {
+interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWorldBuilder> {
     /**
      * Gets a [WorldData] for arena world.
      *
@@ -36,15 +36,6 @@ interface GameWorld : ProtoWrapper<ProtoGameWorld>, Buildable<GameWorld, GameWor
      * @return map of current available custom worlds
      */
     val customWorlds: Map<String, WorldData>
-
-    /**
-     * The builder of the [GameWorld].
-     */
-    interface Builder : Buildable.Builder<GameWorld> {
-        var arenaWorld: WorldData?
-        var lobbyWorld: WorldData?
-        var customWorlds: MutableMap<String, WorldData>
-    }
 
     companion object {
         /**

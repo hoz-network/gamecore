@@ -26,7 +26,7 @@ open class FramePlayersImpl(
         val playerId = player.uuid
         log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
 
-        if (!player.state.untracked() ||  player.frame != null) {
+        if (!player.state.untracked() || player.frame != null) {
             log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid()}]" }
             //TODO: language
             return Resultable.fail("Cannot join the player, already in game.")
@@ -196,11 +196,8 @@ open class FramePlayersImpl(
         return Resultable.ok()
     }
 
-    override fun audiences(): MutableIterable<Audience> {
-        return players.values
-    }
+    override fun audiences(): MutableIterable<Audience> = players.values
 
-    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean {
-        return player.state.untracked() || player.frame == null
-    }
+    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean =
+        player.state.untracked() || player.frame == null
 }

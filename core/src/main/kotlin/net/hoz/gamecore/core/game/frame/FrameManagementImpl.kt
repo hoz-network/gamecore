@@ -111,8 +111,8 @@ open class FrameManagementImpl(
         return when (phase.phaseType) {
             GamePhase.WAITING,
             GamePhase.LOADING,
-            GamePhase.DISABLED -> true
-            else -> false
+            GamePhase.DISABLED -> false
+            else -> true
         }
     }
 
