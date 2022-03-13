@@ -13,6 +13,4 @@ data class GamePlayerChatEvent(
     var message: ObjectLink<String>,
     var format: ObjectLink<String>,
     val recipients: MutableCollection<PlayerWrapper>
-) : GamePlayerCancellableEvent(player, frame) {
-
-}
+) : GamePlayerCancellableEvent(player, frame)

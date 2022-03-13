@@ -11,20 +11,25 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.*
 
+/**
+ * Everything is about Frames.
+ */
 interface GameManager : Controlled {
+    /**
+     * Provides a connection to backend.
+     */
     fun backend(): NetGameProvider
     fun frames(): Frames
     fun builders(): Builders
 
+    // TODO: add kotlin operators and perhaps property overrides?
     interface Frames {
         fun all(): List<GameFrame>
         fun register(frame: GameFrame): Resultable
         fun save(frame: GameFrame): Mono<Resultable>
         fun remove(uuid: UUID): Boolean
         fun has(uuid: UUID): Boolean
-        fun has(name: String): Boolean {
-            return all().any { it.name().equals(name) }
-        }
+        fun has(name: String): Boolean = all().any { it.name().equals(name) }
 
         fun find(uuid: UUID): GameFrame?
         fun find(name: String): GameFrame?
@@ -34,6 +39,7 @@ interface GameManager : Controlled {
         fun updates(): Flux<ProtoGameFrame>
     }
 
+    // TODO: add kotlin operators and perhaps property overrides?
     interface Builders {
         fun all(): List<GameBuilder>
 
@@ -43,9 +49,7 @@ interface GameManager : Controlled {
 
         fun remove(uuid: UUID): Boolean
         fun has(uuid: UUID): Boolean
-        fun has(name: String): Boolean {
-            return all().any { it.name().equals(name) }
-        }
+        fun has(name: String): Boolean = all().any { it.name().equals(name) }
 
         fun find(name: String): GameBuilder?
     }

@@ -17,48 +17,65 @@ interface CyclePhase {
      * NOTE: this does not represent actual [GameCycle.nextPhase],
      * because that can be changed by [GameCycle.switchPhase]!
      */
-    fun nextPhase(): GamePhase
-
-    /**
-     * Changes the next phase that will be used after this phase finishes.
-     *
-     *
-     * NOTE: this does not represent actual [GameCycle.nextPhase],
-     * because that can be only changed by [GameCycle.switchPhase]!
-     *
-     * @param phase new phase to use after this.
-     */
-    fun nextPhase(phase: GamePhase): CyclePhase
+    var nextPhase: GamePhase
 
     /**
      * What [GamePhase] is this cycle phase for.
      *
      * @return GamePhase that this cycle is for.
      */
-    fun phaseType(): GamePhase
+    val phaseType: GamePhase
 
-    fun ticksToRun(): Int
+    /**
+     * Maximum count of ticks that this phase can run
+     *
+     * NOTE: -1 == infinity ticking.
+     */
+    var maxTicks: Int
 
-    fun ticksToRun(ticksToRun: Int): CyclePhase
+    /**
+     * Count of ticks that already happened.
+     */
+    var elapsedTicks: Int
 
-    fun elapsedTicks(): Int
-
+    /**
+     * Count of remaining ticks to run
+     */
     fun remainingTicks(): Int
 
-    fun lastTick(): Boolean {
-        return remainingTicks() == 0
-    }
+    /**
+     * Checks if this is the last tick.
+     */
+    fun isLastTick(): Boolean
 
-    fun firstTick(): Boolean
+    /**
+     * Checks if this is the first tick
+     */
+    fun isFirstTick(): Boolean
 
+    /**
+     * Checks if the next tick should happen
+     */
     fun shouldTick(): Boolean
 
-    fun finished(): Boolean
+    /**
+     * Checks if the phase has ended.
+     */
+    fun isFinished(): Boolean
 
+    /**
+     * Action to do on first tick.
+     */
     fun doFirstTick()
 
+    /**
+     * Action to do on normal tick.
+     */
     fun doTick()
 
+    /**
+     * Resets the phase to default value.
+     */
     fun reset()
 
     /**

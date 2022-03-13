@@ -20,6 +20,4 @@ data class GamePlayerDeathEvent(
     val newExp: ObjectLink<Int>,
     val droppedExp: ObjectLink<Int>,
     val killer: GamePlayer?
-) : GamePlayerEvent(player, frame) {
-
-}
+) : GamePlayerEvent(player, frame)

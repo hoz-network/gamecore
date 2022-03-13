@@ -24,35 +24,37 @@ open class FramePlayersImpl(
 
     override fun join(player: GamePlayer): Resultable {
         val playerId = player.uuid
-        log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
+        log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid)
 
-        if (!player.state().untracked() || player.frame() != null) {
-            log.debug("Player[$playerId] already has active frame[${player.frame()}], cannot join!")
-            Resultable.fail("fucked")
-            //TODO: already in other game
+        if (!player.state.untracked() || player.frame != null) {
+            log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid}]" }
+            //TODO: language
+            return Resultable.fail("Cannot join the player, already in game.")
         }
 
-        if (frame.manage().isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {
+        if (frame.manage.isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {
             log.debug("[$playerId] - Frame is already running and spectators are disabled, cannot join.")
             return Resultable.fail("This game is running and you cannot join. Sad. :)")
         }
 
-        if (frame.manage().isWaiting()) {
+        if (frame.manage.isWaiting()) {
             if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - GamePlayerPreJoinedGameEvent cancelled joining.", playerId)
-                return Resultable.fail("cancelled by event") //TODO
+                //TODO: language
+                return Resultable.fail("cancelled by event")
             }
         } else {
             if (SpectatorPreJoinGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - SpectatorPreJoinGameEvent cancelled joining.", playerId)
-                return Resultable.fail("cancelled by event") //TODO
+                //TODO: language
+                return Resultable.fail("cancelled by event")
             }
         }
 
         player.unsafe().frame(frame)
         players[playerId] = player
 
-        if (frame.manage().isWaiting()) {
+        if (frame.manage.isWaiting()) {
             GamePlayerJoinedGameEvent(player, frame).fire()
             return toLobby(player)
         }
@@ -62,18 +64,18 @@ open class FramePlayersImpl(
     }
 
     override fun leave(player: GamePlayer): Resultable {
-        val playerFrame = player.frame()
-        if (player.state().untracked() || playerFrame == null) {
+        val playerFrame = player.frame
+        if (player.state.untracked() || playerFrame == null) {
             return Resultable.ok("already left :)")
         }
 
-        if (playerFrame.uuid() != frame.uuid()) {
+        if (playerFrame.uuid != frame.uuid) {
             return Resultable.fail("I cannot leave you ffs")
         }
 
         players.remove(player.uuid)
         player.unsafe().frame(null)
-        player.unsafe().state(GamePlayer.State.NOT_TRACED)
+        player.unsafe().state(GamePlayer.State.NOT_TRACKED)
         //TODO: hide visuals
         //TODO: move to lobby server
 
@@ -95,7 +97,7 @@ open class FramePlayersImpl(
     }
 
     override fun hasEnough(): Boolean {
-        return frame.minPlayers() <= players.size
+        return frame.minPlayers <= players.size
     }
 
     override fun find(uuid: UUID): GamePlayer? {
@@ -118,13 +120,13 @@ open class FramePlayersImpl(
         }
 
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
-            val team = player.team()
+            val team = player.team
             if (team == null) {
                 //TODO: send message about this mess
                 return toSpectator(player)
             }
 
-            val spawn = team.spawn()
+            val spawn = team.spawn
             player.teleport(spawn) { player.gameMode = GameModeHolder.of("SURVIVAL") }
             player.unsafe().state(GamePlayer.State.ALIVE)
             return Resultable.ok()
@@ -143,8 +145,8 @@ open class FramePlayersImpl(
         }
 
         val spectatorSpawn = frame.world()
-            .arenaWorld()
-            .spectator()
+            .arenaWorld
+            .spectator
 
         if (spectatorSpawn == null) {
             //TODO: log
@@ -166,8 +168,8 @@ open class FramePlayersImpl(
         }
 
         val spectatorSpawn = frame.world()
-            .arenaWorld()
-            .spectator()
+            .arenaWorld
+            .spectator
 
         if (spectatorSpawn == null) {
             return Resultable.fail("Spectator spawn not found.")
@@ -185,8 +187,8 @@ open class FramePlayersImpl(
         }
 
         val lobby = frame.world()
-            .lobbyWorld()
-            .spawn()
+            .lobbyWorld
+            .spawn
 
         player.teleport(lobby) { player.gameMode = GameModeHolder.of("ADVENTURE") }
         player.unsafe().state(GamePlayer.State.LOBBY)
@@ -194,11 +196,8 @@ open class FramePlayersImpl(
         return Resultable.ok()
     }
 
-    override fun audiences(): MutableIterable<Audience> {
-        return players.values
-    }
+    override fun audiences(): MutableIterable<Audience> = players.values
 
-    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean {
-        return player.state().untracked() || player.frame() == null
-    }
+    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean =
+        player.state.untracked() || player.frame == null
 }

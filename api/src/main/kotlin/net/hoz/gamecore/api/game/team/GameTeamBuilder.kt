@@ -1,9 +1,7 @@
 package net.hoz.gamecore.api.game.team
 
-import com.iamceph.resulter.core.DataResultable
 import net.hoz.gamecore.api.Buildable
 import net.kyori.adventure.text.format.NamedTextColor
-import org.screamingsandals.lib.utils.Nameable
 import org.screamingsandals.lib.world.LocationHolder
 
 /**
@@ -30,18 +28,4 @@ abstract class GameTeamBuilder(
      * Max players available
      */
     var maxPlayers: Int?
-) : Nameable, Buildable.Builder<GameTeam> {
-
-    override fun name(): String = name
-
-    /**
-     * Creates new [GameTeam] from this builder.
-     *
-     *
-     * NOTE: the team NEEDS to have all properties set, otherwise it is not possible to save the team.
-     * NOTE: this method WILL be called by the GameBuilder, you don't need to do it.
-     *
-     * @return [DataResultable] result of this operation.
-     */
-    abstract override fun build(): DataResultable<GameTeam>
-}
+) : Buildable.Builder<GameTeam>

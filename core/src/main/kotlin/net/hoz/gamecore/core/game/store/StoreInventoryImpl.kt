@@ -36,6 +36,7 @@ class StoreInventoryImpl(
     private var team: GameTeam?
 ) : StoreInventory {
     private val log = KotlinLogging.logger { }
+
     private val upgrades: MutableMap<String, Pair<StoreUpgrade, GenericItemInfo>> = mutableMapOf()
     private val items: MutableMap<String, Pair<StoreItem, GenericItemInfo>> = mutableMapOf()
     private val quickBuySlots: MutableMap<String, Pair<StoreQuickBuySlot, GenericItemInfo>> = mutableMapOf()

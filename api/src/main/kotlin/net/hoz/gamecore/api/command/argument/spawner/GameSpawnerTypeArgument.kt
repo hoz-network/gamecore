@@ -29,20 +29,32 @@ class GameSpawnerTypeArgument<C>(
     GameSpawnerType::class.java,
     suggestionsProvider
 ) {
+    companion object {
+        fun <C : Any, T : Any> newBuilder(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument.Builder<C, GameSpawnerType> = Builder(key.name, gameManager)
+
+        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameSpawnerType> =
+            newBuilder<C, T>(key, gameManager).asRequired().build()
+
+        fun <C : Any, T : Any> optional(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument<C, GameSpawnerType> = newBuilder<C, T>(key, gameManager).asOptional().build()
+    }
+
     class Builder<C>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameSpawnerType>(GameSpawnerType::class.java, name) {
-
-        override fun build(): CommandArgument<C, GameSpawnerType> {
-            return GameSpawnerTypeArgument(
-                this.isRequired,
-                this.name,
-                this.defaultValue,
-                this.suggestionsProvider,
-                gameManager
-            )
-        }
+        override fun build(): CommandArgument<C, GameSpawnerType> = GameSpawnerTypeArgument(
+            this.isRequired,
+            this.name,
+            this.defaultValue,
+            this.suggestionsProvider,
+            gameManager
+        )
     }
 
     class SpawnerTypeParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameSpawnerType> {
@@ -90,24 +102,4 @@ class GameSpawnerTypeArgument<C>(
         errorCaption: Caption,
         vararg captionVariables: CaptionVariable
     ) : ParserException(SpawnerTypeParser::class.java, context, errorCaption, *captionVariables)
-
-    companion object {
-        fun <C : Any, T : Any> newBuilder(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): CommandArgument.Builder<C, GameSpawnerType> {
-            return Builder(key.name, gameManager)
-        }
-
-        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameSpawnerType> {
-            return newBuilder<C, T>(key, gameManager).asRequired().build()
-        }
-
-        fun <C : Any, T : Any> optional(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): CommandArgument<C, GameSpawnerType> {
-            return newBuilder<C, T>(key, gameManager).asOptional().build()
-        }
-    }
 }

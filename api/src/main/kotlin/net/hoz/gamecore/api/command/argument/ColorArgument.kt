@@ -28,22 +28,23 @@ class ColorArgument<C>(
     NamedTextColor::class.java,
     suggestionsProvider
 ) {
-    //Idk why this happens, nullability is OK.
-    @Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
-    class Builder<C>(name: String) : CommandArgument.Builder<C, NamedTextColor>(NamedTextColor::class.java, name) {
+    companion object {
+        fun <C> newBuilder(name: String): CommandArgument.Builder<C, NamedTextColor> = Builder(name)
 
-        override fun build(): CommandArgument<C, NamedTextColor> {
-            return ColorArgument(
-                this.isRequired,
-                this.name,
-                this.defaultValue,
-                this.suggestionsProvider
-            )
-        }
+        fun <C : Any> of(name: String): CommandArgument<C, NamedTextColor> = newBuilder<C>(name).asRequired().build()
+
+        fun <C : Any> optional(name: String): CommandArgument<C, NamedTextColor> = newBuilder<C>(name).asOptional().build()
     }
 
-    //Idk why this happens, nullability is OK.
-    @Suppress("WRONG_NULLABILITY_FOR_JAVA_OVERRIDE")
+    class Builder<C>(name: String) : CommandArgument.Builder<C, NamedTextColor>(NamedTextColor::class.java, name) {
+        override fun build(): CommandArgument<C, NamedTextColor> = ColorArgument(
+            this.isRequired,
+            this.name,
+            this.defaultValue,
+            this.suggestionsProvider
+        )
+    }
+
     class ColorParser<C> : ArgumentParser<C, NamedTextColor> {
         override fun parse(
             context: CommandContext<C>,
@@ -73,18 +74,4 @@ class ColorArgument<C>(
         errorCaption: Caption,
         vararg captionVariables: CaptionVariable
     ) : ParserException(ColorArgument::class.java, context, errorCaption, *captionVariables)
-
-    companion object {
-        fun <C> newBuilder(name: String): CommandArgument.Builder<C, NamedTextColor> {
-            return Builder(name)
-        }
-
-        fun <C : Any> of(name: String): CommandArgument<C, NamedTextColor> {
-            return newBuilder<C>(name).asRequired().build()
-        }
-
-        fun <C : Any> optional(name: String): CommandArgument<C, NamedTextColor> {
-            return newBuilder<C>(name).asOptional().build()
-        }
-    }
 }

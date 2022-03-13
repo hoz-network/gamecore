@@ -14,18 +14,18 @@ class SPlayerMoveEventListener : SEventHandlerFactory<GamePlayerMoveEvent, SPlay
 ) {
     override fun wrapEvent(event: SPlayerMoveEvent, priority: EventPriority): GamePlayerMoveEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
 
-        if (frame.manage().isWaiting()) {
-            val lobby = frame.world().lobbyWorld()
+        if (frame.manage.isWaiting()) {
+            val lobby = frame.world().lobbyWorld
             if (lobby.isInBorder(event.newLocation()).isFail) {
                 event.cancelled(true)
                 return null
             }
         }
 
-        if (frame.manage().isRunning()) {
-            val arena = frame.world().arenaWorld()
+        if (frame.manage.isRunning()) {
+            val arena = frame.world().arenaWorld
             if (arena.isInBorder(event.newLocation()).isFail) {
                 event.cancelled(true)
                 return null

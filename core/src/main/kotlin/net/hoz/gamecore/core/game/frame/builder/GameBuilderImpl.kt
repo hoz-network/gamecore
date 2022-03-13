@@ -4,10 +4,13 @@ import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.BuilderSpawners
+import net.hoz.gamecore.api.game.frame.builder.BuilderStores
 import net.hoz.gamecore.api.game.frame.builder.BuilderTeams
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
+import net.hoz.gamecore.api.game.world.GameWorldBuilder
 import net.hoz.gamecore.api.service.GameManager
+import net.hoz.gamecore.core.game.world.GameWorldBuilderImpl
 import reactor.core.publisher.Mono
 import java.util.*
 
@@ -15,7 +18,8 @@ class GameBuilderImpl(
     private val id: UUID,
     private val name: String,
     private val gameManager: GameManager,
-    private val teams: BuilderTeams = BuilderTeamsImpl()
+    private val teams: BuilderTeams = BuilderTeamsImpl(),
+    private val world: GameWorldBuilder = GameWorldBuilderImpl()
 ) : GameBuilder {
 
     private val manage: GameBuilder.Manage = ManageImpl(this)
@@ -32,6 +36,12 @@ class GameBuilderImpl(
     override fun spawners(): BuilderSpawners {
         TODO("Not yet implemented")
     }
+
+    override fun stores(): BuilderStores {
+        TODO("Not yet implemented")
+    }
+
+    override fun world(): GameWorldBuilder = world
 
     override fun manage(): GameBuilder.Manage = manage
     override fun unsafe(): GameBuilder.Unsafe = unsafe

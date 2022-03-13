@@ -50,7 +50,7 @@ open class GameSpawnerItemsImpl(
             return
         }
 
-        val targets = spawner.location().getNearbyEntitiesByClass(PlayerWrapper::class.java, 1)
+        val targets = spawner.location.getNearbyEntitiesByClass(PlayerWrapper::class.java, 1)
         if (targets.isEmpty()) {
             log.debug { "No players are nearby, spawning on the ground.." }
             spawnItem(type, amountToSpawn)
@@ -98,7 +98,7 @@ open class GameSpawnerItemsImpl(
     }
 
     open fun spawnItem(type: GameSpawnerType, amount: Int) {
-        val spawned = EntityMapper.dropItem(type.item(amount), spawner.location()).orElseThrow()
+        val spawned = EntityMapper.dropItem(type.item(amount), spawner.location).orElseThrow()
         val items = spawnedItems[type] ?: return
 
         items.add(spawned)

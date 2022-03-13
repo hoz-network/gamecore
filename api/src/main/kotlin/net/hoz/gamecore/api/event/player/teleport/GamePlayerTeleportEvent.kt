@@ -10,6 +10,4 @@ data class GamePlayerTeleportEvent(
     override val frame: GameFrame,
     val currentLocation: LocationHolder,
     val newLocation: LocationHolder
-) : GamePlayerEvent(player, frame) {
-
-}
+) : GamePlayerEvent(player, frame)

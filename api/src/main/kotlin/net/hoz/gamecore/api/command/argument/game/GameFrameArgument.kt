@@ -28,20 +28,27 @@ class GameFrameArgument<C>(
     GameFrame::class.java,
     suggestionsProvider
 ) {
+    companion object {
+        fun <C> newBuilder(name: String, gameManager: GameManager): CommandArgument.Builder<C, GameFrame> = Builder(name, gameManager)
+
+        fun <C : Any> of(name: String, gameManager: GameManager): CommandArgument<C, GameFrame> =
+            newBuilder<C>(name, gameManager).asRequired().build()
+
+        fun <C : Any> optional(name: String, gameManager: GameManager): CommandArgument<C, GameFrame> =
+            newBuilder<C>(name, gameManager).asOptional().build()
+    }
+
     class Builder<C>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameFrame>(GameFrame::class.java, name) {
-
-        override fun build(): CommandArgument<C, GameFrame> {
-            return GameFrameArgument(
-                this.isRequired,
-                this.name,
-                this.defaultValue,
-                this.suggestionsProvider,
-                gameManager
-            )
-        }
+        override fun build(): CommandArgument<C, GameFrame> = GameFrameArgument(
+            this.isRequired,
+            this.name,
+            this.defaultValue,
+            this.suggestionsProvider,
+            gameManager
+        )
     }
 
     class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameFrame> {
@@ -82,18 +89,4 @@ class GameFrameArgument<C>(
         errorCaption: Caption,
         vararg captionVariables: CaptionVariable
     ) : ParserException(GameFrameArgument::class.java, context, errorCaption, *captionVariables)
-
-    companion object {
-        fun <C> newBuilder(name: String, gameManager: GameManager): CommandArgument.Builder<C, GameFrame> {
-            return Builder(name, gameManager)
-        }
-
-        fun <C : Any> of(name: String, gameManager: GameManager): CommandArgument<C, GameFrame> {
-            return newBuilder<C>(name, gameManager).asRequired().build()
-        }
-
-        fun <C : Any> optional(name: String, gameManager: GameManager): CommandArgument<C, GameFrame> {
-            return newBuilder<C>(name, gameManager).asOptional().build()
-        }
-    }
 }

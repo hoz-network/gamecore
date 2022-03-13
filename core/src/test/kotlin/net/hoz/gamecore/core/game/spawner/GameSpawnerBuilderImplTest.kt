@@ -48,7 +48,7 @@ internal class GameSpawnerBuilderImplTest {
         assertTrue { typesBuilder.hasData() }
 
         val data = typesBuilder.data()
-        assertNotNull(data.location())
+        assertNotNull(data.location)
         assertTrue { data.types().all().size == 1 }
     }
 }

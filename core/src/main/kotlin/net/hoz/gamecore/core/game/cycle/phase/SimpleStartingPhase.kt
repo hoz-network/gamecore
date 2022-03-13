@@ -10,7 +10,7 @@ abstract class SimpleStartingPhase(
 ) : CyclePhaseImpl(cycle, GamePhase.STARTING, nextPhase) {
 
     override fun shouldTick(): Boolean {
-        if (!frame.players().hasEnough()) {
+        if (!frame.players.hasEnough()) {
             cycle.switchPhase(GamePhase.WAITING)
             return false
         }

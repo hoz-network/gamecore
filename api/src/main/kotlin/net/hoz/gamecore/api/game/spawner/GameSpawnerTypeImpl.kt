@@ -3,7 +3,7 @@ package net.hoz.gamecore.api.game.spawner
 import net.hoz.api.data.GameType
 import net.hoz.api.data.MinecraftColor
 import net.hoz.api.data.game.ProtoSpawnerType
-import net.hoz.gamecore.api.util.GLang
+import net.hoz.gamecore.api.lang.GLang
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.item.Item
 import org.screamingsandals.lib.item.ItemTypeHolder

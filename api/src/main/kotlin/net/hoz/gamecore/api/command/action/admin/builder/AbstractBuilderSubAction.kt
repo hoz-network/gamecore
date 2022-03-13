@@ -5,7 +5,4 @@ import net.hoz.gamecore.api.command.action.AbstractSubAction
 
 abstract class AbstractBuilderSubAction(
     parentAction: AbstractAction
-) : AbstractSubAction(parentAction) {
-
-
-}
+) : AbstractSubAction(parentAction)

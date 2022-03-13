@@ -4,7 +4,7 @@ import mu.KotlinLogging
 import net.hoz.gamecore.api.event.SEventHandlerFactory
 import net.hoz.gamecore.api.event.player.resource.GamePlayerResourcePickEvent
 import net.hoz.gamecore.api.game.player.GamePlayer
-import net.hoz.gamecore.api.util.GLang
+import net.hoz.gamecore.api.lang.GLang
 import org.screamingsandals.lib.event.EventPriority
 import org.screamingsandals.lib.event.player.SPlayerPickupItemEvent
 import org.screamingsandals.lib.kotlin.unwrap
@@ -18,15 +18,15 @@ class SPlayerPickupItemEventListener : SEventHandlerFactory<GamePlayerResourcePi
 
     override fun wrapEvent(event: SPlayerPickupItemEvent, priority: EventPriority): GamePlayerResourcePickEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
 
-        if (!frame.manage().isRunning()) {
+        if (!frame.manage.isRunning()) {
             event.cancelled(true)
             return null
         }
 
         val pickedItem = event.item()
-        val spawner = frame.spawners().findByItem(pickedItem)
+        val spawner = frame.spawners.findByItem(pickedItem)
         if (spawner == null) {
             log.trace("Spawner not found for given item, doing nothing in event ${event.javaClass.simpleName}")
             return null

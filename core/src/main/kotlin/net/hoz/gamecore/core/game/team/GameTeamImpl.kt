@@ -10,33 +10,23 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.world.LocationHolder
 
-class GameTeamImpl(
+data class GameTeamImpl(
     private var name: String,
-    private var color: NamedTextColor,
-    private var spawn: LocationHolder,
-    private var target: LocationHolder?,
-    private var maxPlayers: Int
+    override var color: NamedTextColor,
+    override var spawn: LocationHolder,
+    override var target: LocationHolder?,
+    override var maxPlayers: Int
 ) : GameTeam {
-    private val players: MutableList<GamePlayer> = mutableListOf()
+    override val players: MutableList<GamePlayer> = mutableListOf()
     private var isAlive = false
     private var frame: GameFrame? = null
     private val unsafe = UnsafeImpl(this)
 
-    override fun color(): NamedTextColor = color
-
     override fun coloredName(): Component = Component.text(name).color(color)
-
-    override fun spawn(): LocationHolder = spawn
-
-    override fun target(): LocationHolder? = target
-
-    override fun players(): List<GamePlayer> = players
 
     override fun countPlayers(): Int = players.size
 
     override fun hasPlayer(player: GamePlayer): Boolean = players.contains(player)
-
-    override fun maxPlayers(): Int = maxPlayers
 
     override fun alive(): Boolean = isAlive
 
@@ -91,6 +81,5 @@ class GameTeamImpl(
         override fun frame(frame: GameFrame?) {
             team.frame = frame
         }
-
     }
 }

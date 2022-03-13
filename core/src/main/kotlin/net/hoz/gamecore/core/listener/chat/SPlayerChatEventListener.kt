@@ -14,7 +14,7 @@ class SPlayerChatEventListener : SEventHandlerFactory<GamePlayerChatEvent, SPlay
 ) {
     override fun wrapEvent(event: SPlayerChatEvent, priority: EventPriority): GamePlayerChatEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
+        val frame = gamePlayer.frame ?: return null
 
         return GamePlayerChatEvent(
             gamePlayer,

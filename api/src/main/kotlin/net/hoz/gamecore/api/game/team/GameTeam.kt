@@ -17,28 +17,20 @@ import org.screamingsandals.lib.world.LocationHolder
 /**
  * A team of players.
  */
-interface GameTeam
-    : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
+interface GameTeam : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
     /**
      * Gets the color of this team.
      *
      * @return [NamedTextColor] color.
      */
-    fun color(): NamedTextColor
-
-    /**
-     * Gets colored [GameTeam.name].
-     *
-     * @return colored name.
-     */
-    fun coloredName(): Component
+    val color: NamedTextColor
 
     /**
      * Gets spawn point of this team
      *
      * @return [LocationHolder] if present.
      */
-    fun spawn(): LocationHolder
+    val spawn: LocationHolder
 
     /**
      * Gets target point of this team
@@ -46,18 +38,31 @@ interface GameTeam
      *
      * @return [LocationHolder] if present.
      */
-    fun target(): LocationHolder?
+    val target: LocationHolder?
+
+    /**
+     * Gets max players that this team can have.
+     *
+     * @return max players of this team
+     */
+    val maxPlayers: Int
 
     /**
      * Gets all players that joined this team.
-     *
      *
      * NOTE: this is an immutable copy,
      * changing this will take no effect on actual players in the team.
      *
      * @return [List] of players.
      */
-    fun players(): List<GamePlayer>
+    val players: List<GamePlayer>
+
+    /**
+     * Gets colored [GameTeam.name].
+     *
+     * @return colored name.
+     */
+    fun coloredName(): Component
 
     /**
      * Counts all players in this team.
@@ -75,13 +80,6 @@ interface GameTeam
     fun hasPlayer(player: GamePlayer): Boolean
 
     /**
-     * Gets max players that this team can have.
-     *
-     * @return max players of this team
-     */
-    fun maxPlayers(): Int
-
-    /**
      * Checks if this team is alive
      *
      * @return true if team is alive
@@ -93,15 +91,14 @@ interface GameTeam
      *
      * @return true if the team is full
      */
-    fun isFull(): Boolean = players().size >= maxPlayers()
+    fun isFull(): Boolean = countPlayers() >= maxPlayers
 
     /**
      * Checks if the team is empty
      *
      * @return true if the team is empty
      */
-    fun isEmpty(): Boolean = players().isEmpty()
-
+    fun isEmpty(): Boolean = players.isEmpty()
 
     /**
      * Gets the active [GameFrame] of this team.
@@ -119,9 +116,7 @@ interface GameTeam
     @ApiStatus.Internal
     fun unsafe(): Unsafe
 
-    override fun audiences(): Iterable<Audience> {
-        return players()
-    }
+    override fun audiences(): Iterable<Audience> = players
 
     /**
      * An unsafe operations of the team.

@@ -66,7 +66,7 @@ internal class GameSpawnerItemsImplTest {
 
     @Test
     fun countRemainingToSpawn() {
-        val spawned = items.countSpawned(type)
+
     }
 
     @Test

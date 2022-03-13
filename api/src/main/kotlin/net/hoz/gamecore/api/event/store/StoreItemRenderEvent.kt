@@ -7,4 +7,4 @@ import org.screamingsandals.simpleinventories.events.ItemRenderEvent
 data class StoreItemRenderEvent(
     val source: ItemRenderEvent,
     var item: StoreItem
-): SEvent
+) : SEvent

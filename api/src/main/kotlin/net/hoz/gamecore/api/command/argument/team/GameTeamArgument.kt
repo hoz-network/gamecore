@@ -31,20 +31,32 @@ class GameTeamArgument<C>(
     GameTeamBuilder::class.java,
     suggestionsProvider
 ) {
+    companion object {
+        fun <C : Any, T : Any> newBuilder(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument.Builder<C, GameTeamBuilder> = Builder(key.name, gameManager)
+
+        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameTeamBuilder> =
+            newBuilder<C, T>(key, gameManager).asRequired().build()
+
+        fun <C : Any, T : Any> optional(
+            key: CloudKey<T>,
+            gameManager: GameManager
+        ): CommandArgument<C, GameTeamBuilder> = newBuilder<C, T>(key, gameManager).asOptional().build()
+    }
+
     class Builder<C>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameTeamBuilder>(GameTeamBuilder::class.java, name) {
-
-        override fun build(): CommandArgument<C, GameTeamBuilder> {
-            return GameTeamArgument(
-                this.isRequired,
-                this.name,
-                this.defaultValue,
-                this.suggestionsProvider,
-                gameManager
-            )
-        }
+        override fun build(): CommandArgument<C, GameTeamBuilder> = GameTeamArgument(
+            this.isRequired,
+            this.name,
+            this.defaultValue,
+            this.suggestionsProvider,
+            gameManager
+        )
     }
 
     class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameTeamBuilder> {
@@ -99,24 +111,4 @@ class GameTeamArgument<C>(
         errorCaption: Caption,
         vararg captionVariables: CaptionVariable
     ) : ParserException(GameTeamArgument::class.java, context, errorCaption, *captionVariables)
-
-    companion object {
-        fun <C : Any, T : Any> newBuilder(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): CommandArgument.Builder<C, GameTeamBuilder> {
-            return Builder(key.name, gameManager)
-        }
-
-        fun <C : Any, T : Any> of(key: CloudKey<T>, gameManager: GameManager): CommandArgument<C, GameTeamBuilder> {
-            return newBuilder<C, T>(key, gameManager).asRequired().build()
-        }
-
-        fun <C : Any, T : Any> optional(
-            key: CloudKey<T>,
-            gameManager: GameManager
-        ): CommandArgument<C, GameTeamBuilder> {
-            return newBuilder<C, T>(key, gameManager).asOptional().build()
-        }
-    }
 }

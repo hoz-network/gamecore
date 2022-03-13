@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.frame
 
-import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.GameConfig
@@ -18,14 +17,15 @@ import java.util.*
  *
  * @since 2.0.0
  */
-interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFrame, GameBuilder> {
+interface GameFrame
+    : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFrame, GameBuilder> {
     /**
      * Gets [UUID] of this frame.
      *
      * @return [UUID]
      * @since 2.0.0
      */
-    fun uuid(): UUID
+    val uuid: UUID
 
     /**
      * Gets display name of this frame.
@@ -34,7 +34,7 @@ interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFram
      * @return display name of this frame
      * @since 2.0.0
      */
-    fun displayName(): Component
+    val displayName: Component
 
     /**
      * Gets current configuration of this frame.
@@ -58,15 +58,7 @@ interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFram
      * @return minimal players required to start this frame.
      * @since 2.0.0
      */
-    fun minPlayers(): Int
-
-    /**
-     * Sets new minimal players for this frame.
-     *
-     * @param minPlayers minimal players to start the frame
-     * @since 2.0.0
-     */
-    fun minPlayers(minPlayers: Int): Resultable
+    var minPlayers: Int
 
     /**
      * Gets maximal players that can join this frame.
@@ -74,15 +66,7 @@ interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFram
      * @return maximal players that can join this frame.
      * @since 2.0.0
      */
-    fun maxPlayers(): Int
-
-    /**
-     * Sets new maximal players for this frame.
-     *
-     * @param maxPlayers new maximal
-     * @since 2.0.0
-     */
-    fun maxPlayers(maxPlayers: Int): Resultable
+    var maxPlayers: Int
 
     /**
      * A [GameType] for this frame.
@@ -90,69 +74,37 @@ interface GameFrame : Nameable, ProtoWrapper<ProtoGameFrame>, Buildable<GameFram
      * @return game type.
      * @since 2.0.0
      */
-    fun gameType(): GameType
+    var gameType: GameType
 
     /**
      * Manages this frame, for example starting, stopping, etc.
      *
      * @return [FrameManagement] of this frame.
      */
-    fun manage(): FrameManagement
-
-    /**
-     * Changes the management to new one.
-     *
-     * @param management new management
-     */
-    fun manage(management: FrameManagement)
+    var manage: FrameManagement
 
     /**
      * Checks the integrity of the game.
      *
      * @return current checker
      */
-    fun checker(): FrameChecker
-
-    /**
-     * Changes the checker to new one.
-     *
-     * @param checker new checker
-     */
-    fun checker(checker: FrameChecker)
+    var checker: FrameChecker
 
     /**
      * Manages players in this frame.
      *
      * @return player management.
      */
-    fun players(): FramePlayers
-
-    /**
-     * Changes the player management to new one.
-     *
-     * @param players new player management.
-     */
-    fun players(players: FramePlayers)
+    var players: FramePlayers
 
     /**
      * Gets team management for this frame.
      *
      * @return team management
      */
-    fun teams(): FrameTeams
+    var teams: FrameTeams
 
-    /**
-     * Changes the team management to new one.
-     *
-     * @param teams new team management.
-     */
-    fun teams(teams: FrameTeams)
+    var stores: FrameStores
 
-    fun stores(): FrameStores
-
-    fun stores(stores: FrameStores)
-
-    fun spawners(): FrameSpawners
-
-    fun spawners(spawners: FrameSpawners)
+    var spawners: FrameSpawners
 }

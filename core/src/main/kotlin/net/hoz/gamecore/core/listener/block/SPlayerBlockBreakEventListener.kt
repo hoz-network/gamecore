@@ -18,12 +18,12 @@ class SPlayerBlockBreakEventListener
 
     override fun wrapEvent(event: SPlayerBlockBreakEvent, priority: EventPriority): GamePlayerBlockBreakEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame() ?: return null
-        if (!frame.manage().isRunning()) {
+        val frame = gamePlayer.frame ?: return null
+        if (!frame.manage.isRunning()) {
             return null
         }
 
-        val world = frame.world().arenaWorld()
+        val world = frame.world().arenaWorld
         val playerLocation = gamePlayer.location
         if (world.isInBorder(playerLocation).isFail) {
             event.cancelled(true)
@@ -45,11 +45,11 @@ class SPlayerBlockBreakEventListener
 
     override fun postProcess(wrappedEvent: GamePlayerBlockBreakEvent, event: SPlayerBlockBreakEvent) {
         val frame = wrappedEvent.frame
-        val world = frame.world().arenaWorld()
+        val world = frame.world().arenaWorld
         val block = event.block()
         val blockLocation = block.location
 
-        val regenerator = world.regenerator()
+        val regenerator = world.regenerator
         if (regenerator.wasBlockAddedDuringGame(blockLocation)) {
             regenerator.removeBlock(WorldRegenerator.Type.BUILT, blockLocation)
             return
