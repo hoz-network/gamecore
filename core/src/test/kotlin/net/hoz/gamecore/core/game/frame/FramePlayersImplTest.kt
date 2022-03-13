@@ -42,7 +42,7 @@ internal class FramePlayersImplTest {
         gameFrame = Mockito.mock(GameFrame::class.java)
 
         frameManagement = FrameManagementImpl(manager, gameFrame, cycle)
-        whenever(gameFrame.manage()).thenReturn(frameManagement)
+        whenever(gameFrame.manage).thenReturn(frameManagement)
 
         framePlayers = FramePlayersImpl(gameFrame)
     }

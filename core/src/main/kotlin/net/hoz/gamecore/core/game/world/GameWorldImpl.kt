@@ -14,7 +14,8 @@ internal data class GameWorldImpl(
         GameWorldBuilderImpl(arenaWorld.toBuilder { }, lobbyWorld.toBuilder { }, customWorlds.toMutableMap())
 
     override fun asProto(): ProtoGameWorld {
-        val worlds = customWorlds.entries
+        val worlds = customWorlds
+            .entries
             .associate { Pair(it.key, it.value.asProto()) }
 
         return ProtoGameWorld.newBuilder()

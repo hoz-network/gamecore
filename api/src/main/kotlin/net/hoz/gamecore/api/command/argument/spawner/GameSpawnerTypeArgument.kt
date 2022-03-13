@@ -11,7 +11,7 @@ import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.service.GameManager
-import net.hoz.gamecore.api.util.findMatchingOrAvailable
+import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
@@ -93,7 +93,7 @@ class GameSpawnerTypeArgument<C>(
                 .allSpawners()
                 .map { it.name }
 
-            return findMatchingOrAvailable(input, types, "No spawner type found!")
+            return GUtil.findMatchingOrAvailable(input, types, "No spawner type found!")
         }
     }
 

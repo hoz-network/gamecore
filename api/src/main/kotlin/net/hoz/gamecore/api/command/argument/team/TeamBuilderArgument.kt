@@ -11,7 +11,7 @@ import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
 import net.hoz.gamecore.api.command.COMMAND_GAME_BUILDER_FIELD
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
-import net.hoz.gamecore.api.util.findMatchingOrAvailable
+import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
@@ -95,7 +95,7 @@ class TeamBuilderArgument<C>(
                 .keys
                 .toList()
 
-            return findMatchingOrAvailable(input, available, "No team found!")
+            return GUtil.findMatchingOrAvailable(input, available, "No team found!")
         }
     }
 

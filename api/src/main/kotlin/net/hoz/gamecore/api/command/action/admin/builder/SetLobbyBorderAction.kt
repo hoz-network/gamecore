@@ -2,7 +2,6 @@ package net.hoz.gamecore.api.command.action.admin.builder
 
 import cloud.commandframework.ArgumentDescription
 import cloud.commandframework.Command
-import cloud.commandframework.arguments.standard.BooleanArgument
 import cloud.commandframework.arguments.standard.EnumArgument
 import cloud.commandframework.keys.CloudKey
 import cloud.commandframework.keys.SimpleCloudKey
@@ -10,17 +9,11 @@ import io.leangen.geantyref.TypeToken
 import mu.KotlinLogging
 import net.hoz.api.data.game.ProtoWorldData.BorderType
 import net.hoz.api.data.game.ProtoWorldData.WorldType
-import net.hoz.gamecore.api.command.COMMAND_SPAWNER_TYPE_FIELD
-import net.hoz.gamecore.api.command.COMMAND_TEAM_BUILDER_FIELD
 import net.hoz.gamecore.api.command.action.AbstractAction
-import net.hoz.gamecore.api.command.argument.spawner.GameSpawnerTypeArgument
-import net.hoz.gamecore.api.command.argument.team.GameTeamArgument
 import net.hoz.gamecore.api.command.builderHandler
-import net.hoz.gamecore.api.command.getOrNull
 import net.hoz.gamecore.api.lang.CommandLang
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
-import java.util.*
 
 class SetLobbyBorderAction(
     parentAction: AbstractAction,
@@ -47,24 +40,21 @@ class SetLobbyBorderAction(
                     val borderType = context[BORDER_TYPE]
                     log.debug { "Border[${worldType.name}/${borderType.name}] will be at location: $location" }
 
-                    val world = gameBuilder.world().arenaWorld
-                    if (world == null) {
-
-                    }
-                    val spawner = gameBuilder.spawners()
-                        .add(UUID.randomUUID()) {
-                            this.location = location
-                            this.useHolograms = useHolograms
-                            this.useGlobalValues = useGlobalConfig
-                            this.team = team?.name
-                            types.add(spawnerType)
+                    val world = gameBuilder.world()
+                        .lobby {
+                            when (borderType) {
+                                BorderType.SECOND -> border2 = location
+                                BorderType.FIRST -> border1 = location
+                                BorderType.UNRECOGNIZED -> {
+                                    log.warn { "Cannot set UNRECOGNIZED border type." }
+                                }
+                            }
                         }
 
-                    log.debug { "Created new spawner builder: $spawner" }
+                    log.debug { "Created new ${worldType.name} world builder: $world" }
 
                     //TODO: lang
                     Message.of(CommandLang.SUCCESS_BUILDER_SPAWNER_ADDED)
-                        .placeholder("spawner-name", spawner.id.toString())
                         .resolvePrefix()
                         .send(sender)
                 }

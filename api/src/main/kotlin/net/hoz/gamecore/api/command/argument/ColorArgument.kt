@@ -8,7 +8,7 @@ import cloud.commandframework.captions.CaptionVariable
 import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
-import net.hoz.gamecore.api.util.findMatchingOrAvailable
+import net.hoz.gamecore.api.util.GUtil
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.screamingsandals.lib.utils.AdventureHelper
@@ -65,7 +65,7 @@ class ColorArgument<C>(
                 .map { AdventureHelper.toLegacy(Component.text(it.toString()).color(it)) }
                 .toMutableList()
 
-            return findMatchingOrAvailable(input, available, "No color found!")
+            return GUtil.findMatchingOrAvailable(input, available, "No color found!")
         }
     }
 

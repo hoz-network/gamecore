@@ -32,5 +32,5 @@ internal data class WorldDataImpl(
     }
 
     override fun toBuilder(builder: WorldDataBuilder.() -> Unit): WorldDataBuilder =
-        WorldDataBuilderImpl(regenerator, type, border1, border2, spawn, spectator).also { builder(it) }
+        WorldDataBuilderImpl(type, regenerator, border1, border2, spawn, spectator).also { builder(it) }
 }

@@ -4,9 +4,8 @@ import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoWorldData
 import net.hoz.gamecore.api.Buildable
-import org.screamingsandals.lib.utils.ProtoLocation
+import net.hoz.gamecore.api.util.GUtil
 import org.screamingsandals.lib.world.LocationHolder
-import org.screamingsandals.lib.world.LocationMapper
 
 /**
  * Contains all required world data for the game.
@@ -58,23 +57,9 @@ interface WorldData
     /**
      * Checks if the given location is in the world border
      */
-    fun isInBorder(location: LocationHolder): Resultable = GameWorld.isInBorder(location, border1, border2)
+    fun isInBorder(location: LocationHolder): Resultable = GUtil.isInBorder(location, border1, border2)
 
     companion object {
-        /**
-         * Creates new empty builder.
-         *
-         * @return empty builder
-         */
-        fun builder(): WorldDataBuilder = WorldDataImpl.BuilderImpl()
-//
-        /**
-         * Creates new empty builder with default [ProtoWorldData.WorldType].
-         *
-         * @param type type of the world
-         * @return empty builder with type defined.
-         */
-        fun builder(type: ProtoWorldData.WorldType): WorldDataBuilder = builder().also { it.type = type }
 //
         /**
          * Creates new builder with default data from [ProtoWorldData].
@@ -82,14 +67,14 @@ interface WorldData
          * @param data input to get default data from
          * @return new builder
          */
-        fun builder(data: ProtoWorldData): WorldDataBuilder {
-            val border1 = LocationMapper.resolve(data.border1).orElseThrow()
-            val border2 = LocationMapper.resolve(data.border2).orElseThrow()
-            val spawn = LocationMapper.resolve(data.spawn).orElseThrow()
-            val spectator = if (data.spectator != ProtoLocation.getDefaultInstance()) LocationMapper.resolve(data.spectator).orElseThrow() else null
-            val type = data.type
+       //fun builder(data: ProtoWorldData): WorldDataBuilder {
+       //    val border1 = LocationMapper.resolve(data.border1).orElseThrow()
+       //    val border2 = LocationMapper.resolve(data.border2).orElseThrow()
+       //    val spawn = LocationMapper.resolve(data.spawn).orElseThrow()
+       //    val spectator = if (data.spectator != ProtoLocation.getDefaultInstance()) LocationMapper.resolve(data.spectator).orElseThrow() else null
+       //    val type = data.type
 //
-            return WorldDataImpl.BuilderImpl(WorldRegenerator.regenerator(), border1, border2, spawn, spectator, type)
-        }
+       //    return WorldDataImpl.BuilderImpl(WorldRegenerator.regenerator(), border1, border2, spawn, spectator, type)
+       //}
     }
 }

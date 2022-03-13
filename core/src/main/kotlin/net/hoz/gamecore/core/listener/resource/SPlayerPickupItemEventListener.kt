@@ -20,13 +20,13 @@ class SPlayerPickupItemEventListener : SEventHandlerFactory<GamePlayerResourcePi
         val gamePlayer = event.player().unwrap(GamePlayer::class)
         val frame = gamePlayer.frame ?: return null
 
-        if (!frame.manage().isRunning()) {
+        if (!frame.manage.isRunning()) {
             event.cancelled(true)
             return null
         }
 
         val pickedItem = event.item()
-        val spawner = frame.spawners().findByItem(pickedItem)
+        val spawner = frame.spawners.findByItem(pickedItem)
         if (spawner == null) {
             log.trace("Spawner not found for given item, doing nothing in event ${event.javaClass.simpleName}")
             return null

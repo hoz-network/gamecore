@@ -14,7 +14,6 @@ import net.hoz.gamecore.api.command.builderHandler
 import net.hoz.gamecore.api.lang.CommandLang
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
-import java.util.*
 
 class SetGameBorderAction(
     parentAction: AbstractAction,
@@ -42,20 +41,20 @@ class SetGameBorderAction(
                     log.debug { "Border[${worldType.name}/${borderType.name}] will be at location: $location" }
 
                     val world = gameBuilder.world()
-                    val spawner = gameBuilder.spawners()
-                        .add(UUID.randomUUID()) {
-                            this.location = location
-                            this.useHolograms = useHolograms
-                            this.useGlobalValues = useGlobalConfig
-                            this.team = team?.name
-                            types.add(spawnerType)
+                        .arena {
+                            when (borderType) {
+                                BorderType.SECOND -> border2 = location
+                                BorderType.FIRST -> border1 = location
+                                BorderType.UNRECOGNIZED -> {
+                                    log.warn { "Cannot set UNRECOGNIZED border type." }
+                                }
+                            }
                         }
 
-                    log.debug { "Created new spawner builder: $spawner" }
+                    log.debug { "Created new ${worldType.name} world builder: $world" }
 
                     //TODO: lang
                     Message.of(CommandLang.SUCCESS_BUILDER_SPAWNER_ADDED)
-                        .placeholder("spawner-name", spawner.id.toString())
                         .resolvePrefix()
                         .send(sender)
                 }

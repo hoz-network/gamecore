@@ -15,15 +15,10 @@ class GameWorldBuilderImpl(
 
     override fun arena(block: WorldDataBuilder.() -> Unit) {
         block.invoke(arenaWorld)
-        arenaWorld = WorldDataBuilderImpl(WorldType.ARENA).also(block)
     }
 
     override fun lobby(block: WorldDataBuilder.() -> Unit) {
-        TODO("Not yet implemented")
-    }
-
-    override fun custom(name: String, block: WorldDataBuilder.() -> Unit) {
-        TODO("Not yet implemented")
+        block.invoke(lobbyWorld)
     }
 
     override fun build(): DataResultable<GameWorld> {

@@ -11,7 +11,7 @@ import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.service.GameManager
-import net.hoz.gamecore.api.util.findMatchingOrAvailable
+import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
@@ -86,7 +86,7 @@ class GameBuilderArgument<C>(
                 .all()
                 .map { it.name() }
 
-            return findMatchingOrAvailable(input, available, "Create builder first!")
+            return GUtil.findMatchingOrAvailable(input, available, "Create builder first!")
         }
     }
 
