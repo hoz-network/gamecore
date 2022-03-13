@@ -24,20 +24,20 @@ open class FramePlayersImpl(
 
     override fun join(player: GamePlayer): Resultable {
         val playerId = player.uuid
-        log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid())
+        log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid)
 
-        if (!player.state.untracked() ||  player.frame != null) {
-            log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid()}]" }
+        if (!player.state.untracked() || player.frame != null) {
+            log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid}]" }
             //TODO: language
             return Resultable.fail("Cannot join the player, already in game.")
         }
 
-        if (frame.manage().isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {
+        if (frame.manage.isRunning() && !GConfig.ARE_SPECTATORS_ENABLED(frame)) {
             log.debug("[$playerId] - Frame is already running and spectators are disabled, cannot join.")
             return Resultable.fail("This game is running and you cannot join. Sad. :)")
         }
 
-        if (frame.manage().isWaiting()) {
+        if (frame.manage.isWaiting()) {
             if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled()) {
                 log.debug("[{}] - GamePlayerPreJoinedGameEvent cancelled joining.", playerId)
                 //TODO: language
@@ -54,7 +54,7 @@ open class FramePlayersImpl(
         player.unsafe().frame(frame)
         players[playerId] = player
 
-        if (frame.manage().isWaiting()) {
+        if (frame.manage.isWaiting()) {
             GamePlayerJoinedGameEvent(player, frame).fire()
             return toLobby(player)
         }
@@ -69,7 +69,7 @@ open class FramePlayersImpl(
             return Resultable.ok("already left :)")
         }
 
-        if (playerFrame.uuid() != frame.uuid()) {
+        if (playerFrame.uuid != frame.uuid) {
             return Resultable.fail("I cannot leave you ffs")
         }
 
@@ -97,7 +97,7 @@ open class FramePlayersImpl(
     }
 
     override fun hasEnough(): Boolean {
-        return frame.minPlayers() <= players.size
+        return frame.minPlayers <= players.size
     }
 
     override fun find(uuid: UUID): GamePlayer? {
@@ -196,11 +196,8 @@ open class FramePlayersImpl(
         return Resultable.ok()
     }
 
-    override fun audiences(): MutableIterable<Audience> {
-        return players.values
-    }
+    override fun audiences(): MutableIterable<Audience> = players.values
 
-    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean {
-        return player.state.untracked() || player.frame == null
-    }
+    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean =
+        player.state.untracked() || player.frame == null
 }

@@ -10,7 +10,7 @@ import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.service.GameManager
-import net.hoz.gamecore.api.util.findMatchingOrAvailable
+import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
@@ -80,7 +80,7 @@ class GameFrameArgument<C>(
                 .all()
                 .map { it.name() }
 
-            return findMatchingOrAvailable(input, available, "No frame found!")
+            return GUtil.findMatchingOrAvailable(input, available, "No frame found!")
         }
     }
 

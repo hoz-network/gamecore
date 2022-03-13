@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.6.20-M1" apply false
 
     id("org.screamingsandals.plugin-builder") version "1.0.76"
+    jacoco
 }
 
 allprojects {
@@ -15,6 +16,7 @@ subprojects {
         plugin("idea")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.screamingsandals.plugin-builder")
+        plugin("org.gradle.jacoco")
     }
 
     repositories {
@@ -37,8 +39,12 @@ subprojects {
         testImplementation(kotlin("test"))
     }
 
-    tasks.withType<Test> {
+    tasks.test {
         useJUnitPlatform()
+        finalizedBy(tasks.jacocoTestReport)
+    }
+    tasks.jacocoTestReport {
+        dependsOn(tasks.test)
     }
 
     configurations.all {
