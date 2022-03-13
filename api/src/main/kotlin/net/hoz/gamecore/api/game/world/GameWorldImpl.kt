@@ -3,7 +3,7 @@ package net.hoz.gamecore.api.game.world
 import com.iamceph.resulter.core.DataResultable
 import net.hoz.api.data.game.ProtoGameWorld
 
-internal data class GameWorldImpl(
+internal data class  GameWorldImpl(
     override val arenaWorld: WorldData,
     override val lobbyWorld: WorldData,
     override val customWorlds: Map<String, WorldData>

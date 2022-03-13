@@ -12,7 +12,7 @@ abstract class SimpleInGamePhase(
 
     override fun shouldTick(): Boolean {
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
-            frame.teams()
+            frame.teams
                 .all()
                 .values
                 .forEach { team ->

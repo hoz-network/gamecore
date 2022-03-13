@@ -33,11 +33,11 @@ open class FrameManagementImpl(
             return GroupedResultable.of(phaseChange)
         }
 
-        frame.maxPlayers(countMaxPlayers())
+        frame.maxPlayers = countMaxPlayers()
 
-        val minPlayers = frame.minPlayers()
+        val minPlayers = frame.minPlayers
         if (minPlayers == 0) {
-            frame.minPlayers(countMinPlayers())
+            frame.minPlayers = countMinPlayers()
         }
 
         return GroupedResultable.of(Resultable.ok())
@@ -54,7 +54,7 @@ open class FrameManagementImpl(
             return prepare
         }
 
-        val checkIntegrity = frame.checker().checkIntegrity()
+        val checkIntegrity = frame.checker.checkIntegrity()
         if (checkIntegrity.isFail) {
             cycle.switchPhase(GamePhase.DISABLED)
             return checkIntegrity
@@ -117,15 +117,15 @@ open class FrameManagementImpl(
     }
 
     override fun isEmpty(): Boolean {
-        return frame.players().count() == 0
+        return frame.players.count() == 0
     }
 
     private fun countMinPlayers(): Int {
-        return frame.maxPlayers() / frame.teams().count()
+        return frame.maxPlayers / frame.teams.count()
     }
 
     private fun countMaxPlayers(): Int {
-        return frame.teams()
+        return frame.teams
             .all()
             .values
             .sumOf { it.maxPlayers }

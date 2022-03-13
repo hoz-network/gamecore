@@ -70,10 +70,10 @@ open class GameCycleImpl(
     override fun stop(): Resultable {
         val task = cycleTask
         if (task != null) {
-            frame.players().leaveAll()
+            frame.players.leaveAll()
 
             //TODO - services.spawnerManager().removeAll(frame);
-            frame.maxPlayers(0)
+            frame.maxPlayers = 0
             switchPhase(GamePhase.DISABLED)
 
             currentPhase = null
@@ -104,7 +104,7 @@ open class GameCycleImpl(
         val currentPhase = this.currentPhase
         if (currentPhase != null && !currentPhase.isFinished()) {
             log.debug("Current phase[{}] is not finished, preparing for tick.", currentPhase.phaseType)
-            if (frame.manage().isWaiting() && frame.manage().isEmpty()) {
+            if (frame.manage.isWaiting() && frame.manage.isEmpty()) {
                 log.debug("Game is waiting and no players are present, skipping tick.")
                 return
             }

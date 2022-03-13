@@ -5,12 +5,10 @@ import net.hoz.gamecore.api.Buildable
 import org.screamingsandals.lib.world.LocationHolder
 
 abstract class WorldDataBuilder(
-    val regenerator: WorldRegenerator,
     val type: ProtoWorldData.WorldType,
+    val regenerator: WorldRegenerator,
     var border1: LocationHolder? = null,
     var border2: LocationHolder? = null,
     var spawn: LocationHolder? = null,
     var spectator: LocationHolder? = null,
-): Buildable.Builder<WorldData> {
-    constructor(data: ProtoWorldData): this
-}
+): Buildable.Builder<WorldData>
