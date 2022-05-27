@@ -51,6 +51,15 @@ class AddTeamAction(parentAction: AbstractAction) : AbstractBuilderSubAction(par
                         return@builderHandler
                     }
 
+                    if (maxPlayers < 1) {
+                        Message.of(CommandLang.ERROR_BUILDER_TEAM_NEEDS_MORE_PLAYERS)
+                            .placeholder("name", teamName)
+                            .placeholder("players", maxPlayers.toString())
+                            .resolvePrefix()
+                            .send(sender)
+                        return@builderHandler;
+                    }
+
                     val team = gameBuilder.teams()
                         .add(teamName) {
                             this.color = color

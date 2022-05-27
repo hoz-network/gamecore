@@ -10,7 +10,7 @@ import net.hoz.gamecore.api.game.frame.FramePlayers
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 import net.kyori.adventure.audience.Audience
 import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.player.gamemode.GameModeHolder

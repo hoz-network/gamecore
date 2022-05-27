@@ -11,4 +11,9 @@ abstract class WorldDataBuilder(
     var border2: LocationHolder? = null,
     var spawn: LocationHolder? = null,
     var spectator: LocationHolder? = null,
-): Buildable.Builder<WorldData>
+): Buildable.Builder<WorldData> {
+
+    override fun toString(): String {
+        return "WorldDataBuilder(type=$type, regenerator=$regenerator, border1=$border1, border2=$border2, spawn=$spawn, spectator=$spectator)"
+    }
+}

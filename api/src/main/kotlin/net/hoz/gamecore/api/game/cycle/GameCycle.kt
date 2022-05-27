@@ -48,7 +48,7 @@ interface GameCycle : Buildable.Builder<Tasker.TaskBuilder> {
     /**
      * Changes next phase
      */
-    fun switchPhase(newPhase: GamePhase): Resultable
+    fun switchPhase(nextPhase: GamePhase): Resultable
 
     /**
      * Does a tick for currently running phase.

@@ -19,8 +19,8 @@ import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 import java.util.*
 
+private val log = KotlinLogging.logger {}
 class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
-    private val log = KotlinLogging.logger {}
     private val USE_HOLOGRAMS: CloudKey<Boolean> =
         SimpleCloudKey.of("game-core-spawner-use-holograms", TypeToken.get(Boolean::class.java))
     private val USE_GLOBAL_CONFIG: CloudKey<Boolean> =

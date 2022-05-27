@@ -1,4 +1,4 @@
-package net.hoz.gamecore.core.util
+package net.hoz.gamecore.api.util
 
 import net.hoz.gamecore.api.game.frame.GameFrame
 import org.screamingsandals.lib.block.BlockTypeHolder

@@ -37,6 +37,6 @@ open class FrameTeamsImpl(
     }
 
     override fun all(): Map<String, GameTeam> {
-        TODO("Not yet implemented")
+        return teams
     }
 }

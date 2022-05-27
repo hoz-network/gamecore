@@ -1,16 +1,13 @@
-package net.hoz.gamecore.core.game.cycle.phase
+package net.hoz.gamecore.api.game.cycle.impl
 
 import net.hoz.api.data.game.GamePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
-import net.hoz.gamecore.core.game.cycle.CyclePhaseImpl
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 
-abstract class SimpleInGamePhase(
-    cycle: GameCycle,
-    nextPhase: GamePhase
-) : CyclePhaseImpl(cycle, GamePhase.IN_GAME, nextPhase) {
+abstract class SimpleInGamePhase(cycle: GameCycle) :
+    AbstractCyclePhase(cycle, GamePhase.IN_GAME, GamePhase.DEATH_MATCH) {
 
-    override fun shouldTick(): Boolean {
+    override fun doPreTick(): Boolean {
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
             frame.teams
                 .all()
@@ -23,6 +20,6 @@ abstract class SimpleInGamePhase(
                 }
         }
 
-        return true
+        return super.doPreTick()
     }
 }

@@ -4,7 +4,7 @@ import net.hoz.gamecore.api.event.SEventHandlerFactory
 import net.hoz.gamecore.api.event.player.block.GamePlayerBlockBreakEvent
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.world.WorldRegenerator
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.event.EventPriority
 import org.screamingsandals.lib.event.player.SPlayerBlockBreakEvent
 import org.screamingsandals.lib.kotlin.unwrap

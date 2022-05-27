@@ -54,11 +54,6 @@ interface CyclePhase {
     fun isFirstTick(): Boolean
 
     /**
-     * Checks if the next tick should happen
-     */
-    fun shouldTick(): Boolean
-
-    /**
      * Checks if the phase has ended.
      */
     fun isFinished(): Boolean
@@ -67,6 +62,17 @@ interface CyclePhase {
      * Action to do on first tick.
      */
     fun doFirstTick()
+
+    /**
+     * Action to do on last tick.
+     */
+    fun doOnLastTick()
+
+    /**
+     * Fires an action that happens before the tick.
+     * If this returns false, the actual tick WON'T happen.
+     */
+    fun doPreTick(): Boolean
 
     /**
      * Action to do on normal tick.

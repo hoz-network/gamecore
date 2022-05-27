@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.20-M1" apply false
+    kotlin("jvm") version "1.6.21" apply false
 
     id("org.screamingsandals.plugin-builder") version "1.0.76"
     jacoco

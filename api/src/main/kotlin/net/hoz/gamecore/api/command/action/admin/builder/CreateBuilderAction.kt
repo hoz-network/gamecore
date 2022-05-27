@@ -29,11 +29,6 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                 )
                 .argument(StringArgument.of(COMMAND_ARENA_NAME_FIELD.name))
                 .handler {
-                    if (!it.contains(COMMAND_ARENA_NAME_FIELD)) {
-                        //TODO: message
-                        return@handler
-                    }
-
                     val sender = it.sender
                     val arenaName = it[COMMAND_ARENA_NAME_FIELD]
                     val configName = it.getOrNull(COMMAND_CONFIG_FIELD)

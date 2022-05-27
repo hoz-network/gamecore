@@ -3,6 +3,7 @@ package net.hoz.gamecore.api.service
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import net.hoz.api.data.game.ProtoGameFrame
+import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.netapi.api.Controlled
@@ -37,6 +38,11 @@ interface GameManager : Controlled {
         fun load(name: String): Mono<DataResultable<GameFrame>>
         fun build(data: ProtoGameFrame): Mono<DataResultable<GameFrame>>
         fun updates(): Flux<ProtoGameFrame>
+
+        /**
+         *
+         */
+        fun supplyInitialPhases(phases: Collection<CyclePhase>)
     }
 
     // TODO: add kotlin operators and perhaps property overrides?

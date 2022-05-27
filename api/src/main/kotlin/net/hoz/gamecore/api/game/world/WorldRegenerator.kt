@@ -16,8 +16,4 @@ interface WorldRegenerator {
     enum class Type {
         BUILT, DESTROYED, INTERACTED
     }
-
-    companion object {
-        fun regenerator(): WorldRegenerator = WorldRegeneratorImpl()
-    }
 }

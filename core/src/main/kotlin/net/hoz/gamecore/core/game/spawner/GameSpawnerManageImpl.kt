@@ -3,7 +3,7 @@ package net.hoz.gamecore.core.game.spawner
 import com.iamceph.resulter.core.Resultable
 import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 

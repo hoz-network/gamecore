@@ -9,7 +9,7 @@ import org.screamingsandals.lib.world.LocationHolder
 
 class WorldDataBuilderImpl(
     type: ProtoWorldData.WorldType,
-    regenerator: WorldRegenerator = WorldRegenerator.regenerator(),
+    regenerator: WorldRegenerator = WorldRegeneratorImpl(),
     border1: LocationHolder? = null,
     border2: LocationHolder? = null,
     spawn: LocationHolder? = null,

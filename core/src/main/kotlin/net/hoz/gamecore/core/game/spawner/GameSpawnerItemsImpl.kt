@@ -3,7 +3,7 @@ package net.hoz.gamecore.core.game.spawner
 import mu.KotlinLogging
 import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.entity.EntityItem
 import org.screamingsandals.lib.entity.EntityMapper
 import org.screamingsandals.lib.player.PlayerWrapper

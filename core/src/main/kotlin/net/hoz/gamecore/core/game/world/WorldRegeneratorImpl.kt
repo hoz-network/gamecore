@@ -1,7 +1,8 @@
-package net.hoz.gamecore.api.game.world
+package net.hoz.gamecore.core.game.world
 
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
+import net.hoz.gamecore.api.game.world.WorldRegenerator
 import org.screamingsandals.lib.block.BlockHolder
 import org.screamingsandals.lib.block.BlockMapper
 import org.screamingsandals.lib.block.BlockTypeHolder

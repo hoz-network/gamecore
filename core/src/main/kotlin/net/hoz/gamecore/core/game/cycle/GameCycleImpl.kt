@@ -10,7 +10,7 @@ import net.hoz.gamecore.api.event.game.GamePreTickEvent
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.GameFrame
-import net.hoz.gamecore.core.util.GConfig
+import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
@@ -26,11 +26,11 @@ open class GameCycleImpl(
     override var previousPhase: CyclePhase? = null
     override var cycleTask: TaskerTask? = null
 
-    override fun switchPhase(newPhase: GamePhase): Resultable {
+    override fun switchPhase(nextPhase: GamePhase): Resultable {
         val currentPhaseName = currentPhase?.phaseType?.name ?: "None"
-        log.debug { "Switching phase from[$currentPhaseName] to[${newPhase.name}]" }
+        log.debug { "Switching phase from[$currentPhaseName] to[${nextPhase.name}]" }
 
-        nextPhase = newPhase
+        this.nextPhase = nextPhase
         //TODO: visuals manager
         return Resultable.ok()
     }
@@ -45,7 +45,7 @@ open class GameCycleImpl(
         }
 
         val event = GamePreTickEvent(frame, this, currentPhase).fire()
-        if (event.cancelled() || !currentPhase.shouldTick()) {
+        if (event.cancelled() || !currentPhase.doPreTick()) {
             log.debug("Pre-tick failed for phase [${currentPhase.phaseType}], skipping.")
             return
         }
