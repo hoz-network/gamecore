@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.21" apply false
+    kotlin("jvm") version "1.6.21"
 
     id("org.screamingsandals.plugin-builder") version "1.0.76"
     jacoco
@@ -8,6 +8,12 @@ plugins {
 allprojects {
     group = "net.hoz.gamecore"
     version = "1.0.0-SNAPSHOT"
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
 }
 
 subprojects {
@@ -21,7 +27,7 @@ subprojects {
 
     repositories {
         mavenCentral()
-        maven("https://repo.hoznet.dev/snapshots")
+        maven("https://repo.hoznet.dev/public")
         maven("https://repo.screamingsandals.org/public")
     }
 
@@ -45,9 +51,5 @@ subprojects {
     }
     tasks.jacocoTestReport {
         dependsOn(tasks.test)
-    }
-
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
     }
 }

@@ -3,6 +3,7 @@ package net.hoz.gamecore.core.game.frame
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.GameConfig
 import net.hoz.api.data.game.ProtoGameFrame
+import net.hoz.api.data.game.protoGameFrame
 import net.hoz.gamecore.api.game.frame.*
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.world.GameWorld
@@ -12,6 +13,7 @@ import net.kyori.adventure.text.Component
 import org.screamingsandals.lib.utils.AdventureHelper
 import java.util.*
 
+//TODO: add possibility for custom config - per game config
 class GameFrameImpl(
     override val uuid: UUID,
     private val name: String,
@@ -46,13 +48,24 @@ class GameFrameImpl(
     }
 
     override fun asProto(): ProtoGameFrame {
-        val builder = ProtoGameFrame.newBuilder()
-            .setUuid(uuid.toString())
-            .setName(name)
-            .setDisplayName(AdventureHelper.toJson(displayName))
-            .setConfigName(config.name)
+        val protoTeams = teams.all().values.map { it.asProto() }
+        val protoSpawners = spawners.all().values.map { it.asProto() }
+        val protoStores = stores.all().values.map { it.asProto() }
+        val protoWorld = world.asProto()
 
-        return builder.build()
+        return protoGameFrame {
+            uuid = this@GameFrameImpl.uuid.toString()
+            name = this@GameFrameImpl.name
+            displayName = AdventureHelper.toJson(this@GameFrameImpl.displayName)
+            configName = this@GameFrameImpl.config.name
+            minPlayers = this@GameFrameImpl.minPlayers
+            type = this@GameFrameImpl.gameType
+            world = protoWorld
+
+            teams.addAll(protoTeams)
+            stores.addAll(protoStores)
+            spawners.addAll(protoSpawners)
+        }
     }
 
     override fun toBuilder(builder: GameBuilder.() -> Unit): GameBuilder {

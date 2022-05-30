@@ -1,5 +1,5 @@
 dependencies {
-    api("net.hoz.netapi", "client", "1.0.0-SNAPSHOT")
+    api("net.hoz.netapi", "client", "1.1.0")
 
     api("cloud.commandframework", "cloud-core", "1.6.1")
     api("cloud.commandframework", "cloud-kotlin-extensions", "1.6.1")
