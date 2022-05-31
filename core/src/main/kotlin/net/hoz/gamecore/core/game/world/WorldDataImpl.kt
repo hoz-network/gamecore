@@ -17,6 +17,7 @@ internal data class WorldDataImpl(
     override val spawn: LocationHolder,
     override val spectator: LocationHolder?
 ) : WorldData {
+
     override fun asProto(): ProtoWorldData {
         val builder = ProtoWorldData.newBuilder()
             .setType(type)
@@ -32,5 +33,5 @@ internal data class WorldDataImpl(
     }
 
     override fun toBuilder(builder: WorldDataBuilder.() -> Unit): WorldDataBuilder =
-        WorldDataBuilderImpl(type, regenerator, border1, border2, spawn, spectator).also { builder(it) }
+        WorldDataBuilderImpl(type, border1, border2, spawn, spectator, regenerator).also { builder(it) }
 }

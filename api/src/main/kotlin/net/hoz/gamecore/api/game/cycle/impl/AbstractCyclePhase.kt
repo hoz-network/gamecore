@@ -2,7 +2,7 @@ package net.hoz.gamecore.api.game.cycle.impl
 
 import mu.KotlinLogging
 import net.hoz.api.data.game.GamePhase
-import net.hoz.gamecore.api.event.game.GameTickEvent
+import net.hoz.gamecore.api.event.game.cycle.GameTickEvent
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.GameFrame

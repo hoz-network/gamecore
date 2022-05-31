@@ -39,9 +39,7 @@ interface FramePlayers : ForwardingAudience, Countable {
      * Leaves all players from this frame.
      */
     fun leaveAll() {
-        all()
-            .values
-            .forEach { leave(it) }
+        all().forEach { leave(it) }
     }
 
     /**
@@ -93,7 +91,7 @@ interface FramePlayers : ForwardingAudience, Countable {
      *
      * @return all players joined.
      */
-    fun all(): Map<UUID, GamePlayer>
+    fun all(): List<GamePlayer>
 
     /**
      * Changes player from any [GamePlayer.State] to [GamePlayer.State.ALIVE].
@@ -139,7 +137,5 @@ interface FramePlayers : ForwardingAudience, Countable {
      */
     fun toLobby(player: GamePlayer): Resultable
 
-    override fun count(): Int {
-        return all().size
-    }
+    override fun count(): Int = all().size
 }

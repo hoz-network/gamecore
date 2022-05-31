@@ -71,5 +71,5 @@ interface FrameStores : Countable {
      *
      * @return all stores available.
      */
-    fun all(): Map<String, GameStore>
+    fun all(): List<GameStore>
 }

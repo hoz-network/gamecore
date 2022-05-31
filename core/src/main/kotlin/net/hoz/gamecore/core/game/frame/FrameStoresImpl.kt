@@ -5,8 +5,8 @@ import net.hoz.gamecore.api.game.frame.FrameStores
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.store.GameStore
 
-open class FrameStoresImpl(
-    protected val frame: GameFrame
+internal class FrameStoresImpl(
+    private val frame: GameFrame
 ) : FrameStores {
     override fun add(store: GameStore): Resultable {
         TODO("Not yet implemented")
@@ -28,7 +28,7 @@ open class FrameStoresImpl(
         TODO("Not yet implemented")
     }
 
-    override fun all(): Map<String, GameStore> {
+    override fun all(): List<GameStore> {
         TODO("Not yet implemented")
     }
 

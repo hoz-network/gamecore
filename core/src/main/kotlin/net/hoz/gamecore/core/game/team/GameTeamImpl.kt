@@ -17,9 +17,10 @@ data class GameTeamImpl(
     override var target: LocationHolder?,
     override var maxPlayers: Int
 ) : GameTeam {
+    override var frame: GameFrame? = null
+
     override val players: MutableList<GamePlayer> = mutableListOf()
     private var isAlive = false
-    private var frame: GameFrame? = null
     private val unsafe = UnsafeImpl(this)
 
     override fun coloredName(): Component = Component.text(name).color(color)
@@ -29,8 +30,6 @@ data class GameTeamImpl(
     override fun hasPlayer(player: GamePlayer): Boolean = players.contains(player)
 
     override fun alive(): Boolean = isAlive
-
-    override fun frame(): GameFrame? = frame
 
     override fun toBuilder(builder: GameTeamBuilder.() -> Unit): GameTeamBuilder {
         val data = GameTeamBuilderImpl(

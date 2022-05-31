@@ -1,10 +1,10 @@
 package net.hoz.gamecore.api.game.store
 
+import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameStore
 import net.hoz.api.data.game.StoreHolder
-import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.kyori.adventure.audience.Audience
@@ -18,27 +18,22 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
     /**
      * Location of the store on the map
      */
-    fun location(): LocationHolder
+    val location: LocationHolder
 
     /**
      * Current store data available
      */
-    fun holder(): StoreHolder
+    val holder: StoreHolder
 
     /**
      * Entity type that this stored has
      */
-    fun entityType(): EntityTypeHolder
+    val entityType: EntityTypeHolder
 
     /**
      * Team for this store
      */
-    fun team(): GameTeam?
-
-    /**
-     * Frame of this tore
-     */
-    fun frame(): GameFrame
+    val team: GameTeam?
 
     /**
      * Gets all players that joined this store.
@@ -49,7 +44,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
      *
      * @return [List] of players.
      */
-    fun players(): List<GamePlayer>
+    val players: List<GamePlayer>
 
     /**
      * Checks if this store has given player.
@@ -59,7 +54,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
      */
     fun hasPlayer(player: GamePlayer): Boolean
 
-    fun storeInventory(player: GamePlayer): StoreInventory
+    fun storeInventory(player: GamePlayer): DataResultable<StoreInventory>
 
     fun open(player: GamePlayer): Resultable
 
@@ -72,9 +67,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience
     @ApiStatus.Internal
     fun unsafe(): Unsafe
 
-    override fun audiences(): Iterable<Audience> {
-        return players()
-    }
+    override fun audiences(): Iterable<Audience> = players
 
     interface Unsafe {
         /**

@@ -13,16 +13,15 @@ import net.kyori.adventure.text.Component
 import org.screamingsandals.lib.utils.AdventureHelper
 import java.util.*
 
-//TODO: add possibility for custom config - per game config
 class GameFrameImpl(
+    private val gameManager: GameManager,
     override val uuid: UUID,
     private val name: String,
     override val displayName: Component,
     private val config: GameConfig,
     private val world: GameWorld,
     override var gameType: GameType,
-
-    private val gameManager: GameManager,
+    override var customConfig: Boolean = false
 ) : GameFrame {
 
     override var manage: FrameManagement = FrameManagementImpl(gameManager, this, GameCycleImpl(this))
@@ -35,22 +34,14 @@ class GameFrameImpl(
     override var minPlayers = 0
     override var maxPlayers = 0
 
-    override fun config(): GameConfig {
-        return config
-    }
-
-    override fun world(): GameWorld {
-        return world
-    }
-
-    override fun name(): String {
-        return name
-    }
+    override fun config(): GameConfig = config
+    override fun world(): GameWorld = world
+    override fun name(): String = name
 
     override fun asProto(): ProtoGameFrame {
-        val protoTeams = teams.all().values.map { it.asProto() }
-        val protoSpawners = spawners.all().values.map { it.asProto() }
-        val protoStores = stores.all().values.map { it.asProto() }
+        val protoTeams = teams.all().map { it.asProto() }
+        val protoSpawners = spawners.all().map { it.asProto() }
+        val protoStores = stores.all().map { it.asProto() }
         val protoWorld = world.asProto()
 
         return protoGameFrame {
@@ -61,6 +52,10 @@ class GameFrameImpl(
             minPlayers = this@GameFrameImpl.minPlayers
             type = this@GameFrameImpl.gameType
             world = protoWorld
+
+            if (this@GameFrameImpl.customConfig) {
+                customConfig = this@GameFrameImpl.config
+            }
 
             teams.addAll(protoTeams)
             stores.addAll(protoStores)

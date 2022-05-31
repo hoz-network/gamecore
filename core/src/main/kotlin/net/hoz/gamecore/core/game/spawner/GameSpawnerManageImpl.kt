@@ -7,6 +7,9 @@ import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
+//TODO: holograms
+//TODO: logging
+
 class GameSpawnerManageImpl(
     private val spawner: GameSpawnerImpl
 ) : GameSpawner.Manage {

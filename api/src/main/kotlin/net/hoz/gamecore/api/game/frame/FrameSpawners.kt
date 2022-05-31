@@ -73,9 +73,7 @@ interface FrameSpawners : Countable {
      * Finds a list of spawners for given team
      */
     fun findForTeam(team: GameTeam): List<GameSpawner> =
-        all()
-            .values
-            .filter { it.team == team }
+        all().filter { it.team == team }
 
     /**
      * Tries to find a spawner by given item.
@@ -84,8 +82,34 @@ interface FrameSpawners : Countable {
 
     /**
      * Gets all spawners in this frame.
-     *
-     * @return all spawners available.
      */
-    fun all(): Map<UUID, GameSpawner>
+    fun all(): List<GameSpawner>
+
+    fun start() {
+        all().forEach {
+            val manage = it.manage()
+            if (manage.isRunning()) {
+                manage.stop()
+            }
+            manage.start()
+        }
+    }
+
+    fun stop() {
+        all().forEach {
+            val manage = it.manage()
+            if (!manage.isRunning()) {
+                manage.stop()
+            }
+        }
+    }
+
+    fun destroy() {
+        all().forEach {
+            val manage = it.manage()
+            if (manage.isRunning()) {
+                manage.destroy()
+            }
+        }
+    }
 }

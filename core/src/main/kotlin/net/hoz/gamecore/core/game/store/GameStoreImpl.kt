@@ -1,6 +1,8 @@
 package net.hoz.gamecore.core.game.store
 
+import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
+import com.iamceph.resulter.kotlin.dataResultable
 import net.hoz.api.data.game.ProtoGameStore
 import net.hoz.api.data.game.StoreHolder
 import net.hoz.gamecore.api.game.frame.GameFrame
@@ -13,37 +15,44 @@ import org.screamingsandals.lib.entity.type.EntityTypeHolder
 import org.screamingsandals.lib.world.LocationHolder
 
 class GameStoreImpl(
-    val name: String,
-    val location: LocationHolder,
-    val entityType: EntityTypeHolder,
-    val frame: GameFrame,
-    var holder: StoreHolder,
-    var team: GameTeam? = null,
+    private val name: String,
+    private val teamName: String? = null,
+    override var location: LocationHolder,
+    override var entityType: EntityTypeHolder,
+    override var holder: StoreHolder
 ) : GameStore {
+    internal var frame: GameFrame? = null
+
     private val inventories: MutableMap<GamePlayer, StoreInventoryImpl> = mutableMapOf()
     private var storeEntity: EntityLiving? = null
 
     override fun name(): String = name
-    override fun location(): LocationHolder = location
-    override fun entityType(): EntityTypeHolder = entityType
-    override fun frame(): GameFrame = frame
-    override fun holder(): StoreHolder = holder
-    override fun team(): GameTeam? = team
+    override var team: GameTeam? = null
+    override val players: List<GamePlayer> = inventories.keys.toList()
 
-    override fun open(player: GamePlayer): Resultable = storeInventory(player).open()
-
-    override fun storeInventory(player: GamePlayer): StoreInventory {
-        val inventory = inventories[player]
-        if (inventory != null) {
+    override fun open(player: GamePlayer): Resultable {
+        val inventory = storeInventory(player)
+        if (inventory.isFail) {
             return inventory
         }
 
-        val newInventory = StoreInventoryImpl(player, frame, holder, team)
-        inventories[player] = newInventory
-        return newInventory
+        return inventory.data().open()
     }
 
-    override fun players(): List<GamePlayer> = inventories.keys.toList()
+    override fun storeInventory(player: GamePlayer): DataResultable<StoreInventory> {
+        val frame = this.frame
+            ?: return DataResultable.fail("Frame is not initialized.")
+
+        val inventory = inventories[player]
+        if (inventory != null) {
+            return DataResultable.ok(inventory)
+        }
+
+        return dataResultable {
+            StoreInventoryImpl(player, frame, holder, team)
+                .also { inventories[player] = it }
+        }
+    }
 
     override fun hasPlayer(player: GamePlayer): Boolean = inventories.containsKey(player)
 

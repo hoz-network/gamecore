@@ -2,14 +2,14 @@ package net.hoz.gamecore.api.service
 
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
+import kotlinx.coroutines.flow.SharedFlow
+import net.hoz.api.data.GameType
 import net.hoz.api.data.game.ProtoGameFrame
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.netapi.api.Controlled
 import net.hoz.netapi.client.provider.NetGameProvider
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 import java.util.*
 
 /**
@@ -27,17 +27,16 @@ interface GameManager : Controlled {
     interface Frames {
         fun all(): List<GameFrame>
         fun register(frame: GameFrame): Resultable
-        fun save(frame: GameFrame): Mono<Resultable>
+        suspend fun save(frame: GameFrame): Resultable
         fun remove(uuid: UUID): Boolean
         fun has(uuid: UUID): Boolean
         fun has(name: String): Boolean = all().any { it.name().equals(name) }
 
         fun find(uuid: UUID): GameFrame?
         fun find(name: String): GameFrame?
-        fun load(uuid: UUID): Mono<DataResultable<GameFrame>>
-        fun load(name: String): Mono<DataResultable<GameFrame>>
-        fun build(data: ProtoGameFrame): Mono<DataResultable<GameFrame>>
-        fun updates(): Flux<ProtoGameFrame>
+        suspend fun load(uuid: UUID): DataResultable<GameFrame>
+        suspend fun load(name: String): DataResultable<GameFrame>
+        fun updates(): SharedFlow<ProtoGameFrame>
 
         /**
          *
@@ -49,7 +48,7 @@ interface GameManager : Controlled {
     interface Builders {
         fun all(): List<GameBuilder>
 
-        fun create(name: String, configName: String): DataResultable<GameBuilder>
+        fun create(name: String, configName: String, type: GameType): DataResultable<GameBuilder>
         fun from(data: ProtoGameFrame): DataResultable<GameBuilder>
         fun from(frame: GameFrame): GameBuilder
 

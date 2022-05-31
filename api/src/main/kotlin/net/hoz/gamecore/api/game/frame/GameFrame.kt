@@ -77,34 +77,57 @@ interface GameFrame
     var gameType: GameType
 
     /**
+     * If custom config is configured.
+     */
+    var customConfig: Boolean
+
+    /**
      * Manages this frame, for example starting, stopping, etc.
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
      *
      * @return [FrameManagement] of this frame.
      */
     var manage: FrameManagement
 
     /**
-     * Checks the integrity of the game.
+     * Checks the integrity of this frame
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
      *
      * @return current checker
      */
     var checker: FrameChecker
 
     /**
-     * Manages players in this frame.
+     * Manages players for this frame
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
      *
      * @return player management.
      */
     var players: FramePlayers
 
     /**
-     * Gets team management for this frame.
+     * Manages teams in this frame.
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
      *
      * @return team management
      */
     var teams: FrameTeams
 
+    /**
+     * Manages stores for this frame.
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
+     */
     var stores: FrameStores
 
+    /**
+     * Manages spawners for this frame.
+     *
+     * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
+     */
     var spawners: FrameSpawners
 }

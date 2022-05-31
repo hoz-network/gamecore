@@ -13,10 +13,12 @@ import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.service.GameManager
 import org.screamingsandals.lib.kotlin.fire
 
-open class FrameManagementImpl(
-    protected val manager: GameManager,
-    protected val frame: GameFrame,
-    protected var cycle: GameCycle
+private val log = KotlinLogging.logger { }
+
+internal class FrameManagementImpl(
+    private val manager: GameManager,
+    private val frame: GameFrame,
+    private var cycle: GameCycle
 ) : FrameManagement {
     private val log = KotlinLogging.logger { }
 
@@ -127,7 +129,6 @@ open class FrameManagementImpl(
     private fun countMaxPlayers(): Int {
         return frame.teams
             .all()
-            .values
             .sumOf { it.maxPlayers }
     }
 }

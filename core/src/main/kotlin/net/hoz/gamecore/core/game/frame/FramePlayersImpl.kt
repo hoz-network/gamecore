@@ -16,10 +16,11 @@ import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.player.gamemode.GameModeHolder
 import java.util.*
 
-open class FramePlayersImpl(
-    protected val frame: GameFrame
+private val log = KotlinLogging.logger { }
+
+internal class FramePlayersImpl(
+    private val frame: GameFrame
 ) : FramePlayers {
-    private val log = KotlinLogging.logger { }
     private val players: MutableMap<UUID, GamePlayer> = mutableMapOf()
 
     override fun join(player: GamePlayer): Resultable {
@@ -79,8 +80,6 @@ open class FramePlayersImpl(
         //TODO: hide visuals
         //TODO: move to lobby server
 
-        //TODO: hide visuals
-        //TODO: move to lobby server
         return Resultable.ok()
     }
 
@@ -110,9 +109,7 @@ open class FramePlayersImpl(
             .firstOrNull { it.name == name }
     }
 
-    override fun all(): Map<UUID, GamePlayer> {
-        return players
-    }
+    override fun all(): List<GamePlayer> = players.values.toList()
 
     override fun toAlive(player: GamePlayer): Resultable {
         if (isUntracedOrWithoutGame(player)) {

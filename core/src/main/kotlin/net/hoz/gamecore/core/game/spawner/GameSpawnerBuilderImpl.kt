@@ -1,6 +1,7 @@
 package net.hoz.gamecore.core.game.spawner
 
 import com.iamceph.resulter.core.DataResultable
+import com.iamceph.resulter.kotlin.dataResultable
 import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.spawner.GameSpawnerBuilder
 import net.hoz.gamecore.api.game.spawner.GameSpawnerType
@@ -22,9 +23,9 @@ internal class GameSpawnerBuilderImpl(
             return DataResultable.fail("At-least one spawner type is required!")
         }
 
-        val spawner = GameSpawnerImpl(id, location, useHolograms, useGlobalValues)
-        spawner.types().add(types)
-
-        return DataResultable.ok(spawner)
+        return dataResultable {
+            GameSpawnerImpl(id, location, useHolograms, useGlobalValues)
+                .also { it.types().add(types) }
+        }
     }
 }

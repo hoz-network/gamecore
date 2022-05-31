@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.frame.builder
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
 import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
@@ -9,7 +8,6 @@ import net.hoz.gamecore.api.game.world.GameWorldBuilder
 import net.hoz.gamecore.api.service.GameManager
 import org.jetbrains.annotations.ApiStatus
 import org.screamingsandals.lib.utils.Nameable
-import reactor.core.publisher.Mono
 import java.util.*
 
 /**
@@ -24,9 +22,9 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
      *
      * @return [UUID] of this builder.
      */
-    fun id(): UUID
+    val id: UUID
 
-    fun gameManager(): GameManager
+    val gameManager: GameManager
 
     /**
      * Teams building.
@@ -68,13 +66,6 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
          * @return [GroupedResultable].
          */
         fun checkIntegrity(): GroupedResultable
-
-        /**
-         * Saves this builder to the backend and creates a [GameFrame] from it.
-         *
-         * @return [Mono] with [DataResultable] of this operation.
-         */
-        fun save(): Mono<DataResultable<GameFrame>>
     }
 
     @ApiStatus.Internal

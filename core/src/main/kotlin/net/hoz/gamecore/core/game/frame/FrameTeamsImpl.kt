@@ -1,14 +1,17 @@
 package net.hoz.gamecore.core.game.frame
 
 import com.iamceph.resulter.core.Resultable
+import mu.KotlinLogging
 import net.hoz.gamecore.api.game.frame.FrameTeams
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.team.GameTeam
 
-open class FrameTeamsImpl(
-    protected val frame: GameFrame
+private val log = KotlinLogging.logger { }
+
+internal class FrameTeamsImpl(
+    private val frame: GameFrame
 ) : FrameTeams {
-    protected val teams: MutableMap<String, GameTeam> = mutableMapOf()
+    private val teams: MutableMap<String, GameTeam> = mutableMapOf()
 
     override fun add(team: GameTeam): Resultable {
         if (has(team.name())) {
@@ -36,7 +39,5 @@ open class FrameTeamsImpl(
         return teams[name]
     }
 
-    override fun all(): Map<String, GameTeam> {
-        return teams
-    }
+    override fun all(): List<GameTeam> = teams.values.toList()
 }

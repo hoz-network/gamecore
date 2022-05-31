@@ -11,7 +11,6 @@ abstract class SimpleInGamePhase(cycle: GameCycle) :
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
             frame.teams
                 .all()
-                .values
                 .forEach { team ->
                     if (team.countPlayers() < 1) {
                         //todo fire event

@@ -74,31 +74,21 @@ interface FrameTeams : Countable {
      *
      * @return all teams available.
      */
-    fun all(): Map<String, GameTeam>
+    fun all(): List<GameTeam>
 
     /**
      * Gets all teams that are alive in this frame.
      *
      * @return all teams alive.
      */
-    fun allAlive(): List<GameTeam> {
-        return all()
-            .values
-            .filter { it.alive() }
-    }
+    fun allAlive(): List<GameTeam> = all().filter { it.alive() }
 
     /**
      * Gets all teams that are dead in this frame.
      *
      * @return all teams dead.
      */
-    fun allDead(): List<GameTeam> {
-        return all()
-            .values
-            .filter { !it.alive() }
-    }
+    fun allDead(): List<GameTeam> = all().filter { !it.alive() }
 
-    override fun count(): Int {
-        return all().size
-    }
+    override fun count(): Int = all().size
 }

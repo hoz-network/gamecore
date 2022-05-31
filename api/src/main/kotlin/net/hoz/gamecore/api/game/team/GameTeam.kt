@@ -1,6 +1,5 @@
 package net.hoz.gamecore.api.game.team
 
-import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.game.ProtoGameTeam
 import net.hoz.gamecore.api.Buildable
@@ -17,7 +16,8 @@ import org.screamingsandals.lib.world.LocationHolder
 /**
  * A team of players.
  */
-interface GameTeam : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
+interface GameTeam
+    : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
     /**
      * Gets the color of this team.
      *
@@ -56,6 +56,13 @@ interface GameTeam : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrappe
      * @return [List] of players.
      */
     val players: List<GamePlayer>
+
+    /**
+     * Gets the active [GameFrame] of this team.
+     *
+     * @return frame if present.
+     */
+    val frame: GameFrame?
 
     /**
      * Gets colored [GameTeam.name].
@@ -99,13 +106,6 @@ interface GameTeam : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrappe
      * @return true if the team is empty
      */
     fun isEmpty(): Boolean = players.isEmpty()
-
-    /**
-     * Gets the active [GameFrame] of this team.
-     *
-     * @return frame if present.
-     */
-    fun frame(): GameFrame?
 
     /**
      * Access point for unsafe API.

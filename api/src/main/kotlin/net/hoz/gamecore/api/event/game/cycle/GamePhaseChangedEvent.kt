@@ -1,4 +1,4 @@
-package net.hoz.gamecore.api.event.game
+package net.hoz.gamecore.api.event.game.cycle
 
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.frame.GameFrame

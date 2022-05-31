@@ -4,9 +4,9 @@ import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import mu.KotlinLogging
 import net.hoz.api.data.game.GamePhase
-import net.hoz.gamecore.api.event.game.GamePhaseChangedEvent
-import net.hoz.gamecore.api.event.game.GamePrePhaseChangeEvent
 import net.hoz.gamecore.api.event.game.GamePreTickEvent
+import net.hoz.gamecore.api.event.game.cycle.GamePhaseChangedEvent
+import net.hoz.gamecore.api.event.game.cycle.GamePrePhaseChangeEvent
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.cycle.GameCycle
 import net.hoz.gamecore.api.game.frame.GameFrame
@@ -38,14 +38,14 @@ open class GameCycleImpl(
     override fun doTick() {
         log.debug("Trying to do cycle tick..")
 
-        val currentPhase = this.currentPhase
-        if (currentPhase == null) {
+        val currentPhase = this.currentPhase ?: run {
             log.debug { "Current phase is null, cannot do tick." }
             return
         }
 
-        val event = GamePreTickEvent(frame, this, currentPhase).fire()
-        if (event.cancelled() || !currentPhase.doPreTick()) {
+        if (GamePreTickEvent(frame, this, currentPhase).fire().cancelled
+            || !currentPhase.doPreTick()
+        ) {
             log.debug("Pre-tick failed for phase [${currentPhase.phaseType}], skipping.")
             return
         }
@@ -71,9 +71,10 @@ open class GameCycleImpl(
         val task = cycleTask
         if (task != null) {
             frame.players.leaveAll()
+            frame.spawners.destroy()
 
-            //TODO - services.spawnerManager().removeAll(frame);
             frame.maxPlayers = 0
+
             switchPhase(GamePhase.DISABLED)
 
             currentPhase = null
@@ -128,7 +129,7 @@ open class GameCycleImpl(
                     return
                 }
 
-                if (GamePrePhaseChangeEvent(frame, currentPhase, toSwitch).fire().cancelled()) {
+                if (GamePrePhaseChangeEvent(frame, currentPhase, toSwitch.phaseType).fire().cancelled()) {
                     log.debug("Cannot change phase, cancelled by event.")
                     return
                 }
