@@ -14,7 +14,7 @@ import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class GameFrameArgument<C>(
+class GameFrameArgument<C : Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -29,7 +29,7 @@ class GameFrameArgument<C>(
     suggestionsProvider
 ) {
     companion object {
-        fun <C> newBuilder(name: String, gameManager: GameManager): CommandArgument.Builder<C, GameFrame> = Builder(name, gameManager)
+        fun <C : Any> newBuilder(name: String, gameManager: GameManager): CommandArgument.Builder<C, GameFrame> = Builder(name, gameManager)
 
         fun <C : Any> of(name: String, gameManager: GameManager): CommandArgument<C, GameFrame> =
             newBuilder<C>(name, gameManager).asRequired().build()
@@ -38,7 +38,7 @@ class GameFrameArgument<C>(
             newBuilder<C>(name, gameManager).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C : Any>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameFrame>(GameFrame::class.java, name) {

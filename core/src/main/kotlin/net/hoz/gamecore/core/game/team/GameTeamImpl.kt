@@ -6,13 +6,13 @@ import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.util.GUtil
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.screamingsandals.lib.spectator.Color
+import org.screamingsandals.lib.spectator.Component
 import org.screamingsandals.lib.world.LocationHolder
 
 data class GameTeamImpl(
     private var name: String,
-    override var color: NamedTextColor,
+    override var color: Color,
     override var spawn: LocationHolder,
     override var target: LocationHolder?,
     override var maxPlayers: Int
@@ -23,7 +23,7 @@ data class GameTeamImpl(
     private var isAlive = false
     private val unsafe = UnsafeImpl(this)
 
-    override fun coloredName(): Component = Component.text(name).color(color)
+    override fun coloredName(): Component = Component.text(name).withColor(color)
 
     override fun countPlayers(): Int = players.size
 

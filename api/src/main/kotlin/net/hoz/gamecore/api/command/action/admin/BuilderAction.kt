@@ -1,10 +1,11 @@
 package net.hoz.gamecore.api.command.action.admin
 
-import cloud.commandframework.ArgumentDescription
 import cloud.commandframework.Command
 import cloud.commandframework.CommandManager
-import net.hoz.gamecore.api.command.COMMAND_FRAME_FIELD
+import net.hoz.api.data.game.ProtoWorldData
+import net.hoz.gamecore.api.command.GContext
 import net.hoz.gamecore.api.command.action.AbstractAction
+import net.hoz.gamecore.api.command.action.admin.builder.*
 import net.hoz.gamecore.api.command.argument.game.GameBuilderArgument
 import net.hoz.gamecore.api.service.GameManager
 import org.screamingsandals.lib.sender.CommandSenderWrapper
@@ -14,14 +15,32 @@ class BuilderAction(
     commandManager: CommandManager<CommandSenderWrapper>,
     gameManager: GameManager
 ) : AbstractAction(mainCommandBuilder, commandManager, gameManager) {
-    override fun build() {
-        TODO("Not yet implemented")
+
+    override suspend fun build() {
+        val mainAction = buildMainAction()
+
+        val setAction = mainAction.literal("set")
+        val addAction = mainAction.literal("add")
+        val setLobbyAction = setAction.literal("lobby")
+        val setArenaAction = setAction.literal("arena")
+        val teamAction = setAction.literal("team")
+
+        //create/save
+        CreateBuilderAction(this).build(mainAction)
+
+        //ADD
+        AddSpawnerAction(this).build(addAction)
+        AddStoreAction(this).build(addAction)
+        AddTeamAction(this).build(addAction)
+
+        SetGameBorderAction(this, ProtoWorldData.WorldType.LOBBY).build(setLobbyAction)
+        SetGameBorderAction(this, ProtoWorldData.WorldType.ARENA).build(setArenaAction)
+
     }
 
-    override fun mainAction0(): Command.Builder<CommandSenderWrapper> {
+    fun buildMainAction(): Command.Builder<CommandSenderWrapper> {
         // TODO: lang
-        ArgumentDescription { "" }
-        return mainCommand.literal("builder", ArgumentDescription.of("Entrypoint for creating Frames."))
-            .argument(GameBuilderArgument.of(COMMAND_FRAME_FIELD, gameManager))
+        return mainCommand.literal("builder", { "Entrypoint for creating Frames." })
+            .argument(GameBuilderArgument.of(GContext.COMMAND_FRAME_FIELD, gameManager))
     }
 }

@@ -3,25 +3,22 @@ package net.hoz.gamecore.api.command.action.admin.builder
 import cloud.commandframework.ArgumentDescription
 import cloud.commandframework.Command
 import cloud.commandframework.arguments.standard.EnumArgument
-import cloud.commandframework.keys.CloudKey
-import cloud.commandframework.keys.SimpleCloudKey
-import io.leangen.geantyref.TypeToken
 import mu.KotlinLogging
 import net.hoz.api.data.game.ProtoWorldData.BorderType
 import net.hoz.api.data.game.ProtoWorldData.WorldType
+import net.hoz.gamecore.api.command.GContext.COMMAND_BORDER_TYPE
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.builderHandler
 import net.hoz.gamecore.api.lang.CommandLang
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
+private val log = KotlinLogging.logger {}
+
 class SetGameBorderAction(
     parentAction: AbstractAction,
     private val worldType: WorldType
 ) : AbstractBuilderSubAction(parentAction) {
-    private val log = KotlinLogging.logger {}
-    private val BORDER_TYPE: CloudKey<BorderType> =
-        SimpleCloudKey.of("game-core-border-type", TypeToken.get(BorderType::class.java))
 
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
         commandManager
@@ -29,7 +26,7 @@ class SetGameBorderAction(
                 .argument(
                     EnumArgument.newBuilder<CommandSenderWrapper?, BorderType?>(
                         BorderType::class.java,
-                        BORDER_TYPE.name
+                        COMMAND_BORDER_TYPE.name
                     )
                         .withSuggestionsProvider { _, input -> suggestBorder(input) }
                         .asRequired()
@@ -37,19 +34,28 @@ class SetGameBorderAction(
                 )
                 .builderHandler { sender, gameBuilder, context ->
                     val location = sender.location
-                    val borderType = context[BORDER_TYPE]
+                    val borderType = context[COMMAND_BORDER_TYPE]
                     log.debug { "Border[${worldType.name}/${borderType.name}] will be at location: $location" }
 
-                    val world = gameBuilder.world()
-                        .arena {
+                    val world = when (worldType) {
+                        WorldType.LOBBY -> gameBuilder.world().lobby {
                             when (borderType) {
-                                BorderType.SECOND -> border2 = location
                                 BorderType.FIRST -> border1 = location
-                                BorderType.UNRECOGNIZED -> {
-                                    log.warn { "Cannot set UNRECOGNIZED border type." }
-                                }
+                                BorderType.SECOND -> border2 = location
+                                else -> log.warn { "Cannot set UNRECOGNIZED border type." }
                             }
                         }
+
+                        WorldType.ARENA -> gameBuilder.world().arena {
+                            when (borderType) {
+                                BorderType.FIRST -> border1 = location
+                                BorderType.SECOND -> border2 = location
+                                else -> log.warn { "Cannot set UNRECOGNIZED border type." }
+                            }
+                        }
+
+                        else -> throw UnsupportedOperationException("Unsupported world.")
+                    }
 
                     log.debug { "Created new ${worldType.name} world builder: $world" }
 

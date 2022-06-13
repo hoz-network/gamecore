@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.0"
 
     id("org.screamingsandals.plugin-builder") version "1.0.76"
     jacoco
@@ -32,8 +32,6 @@ subprojects {
     }
 
     dependencies {
-        implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.20")
-
         testImplementation("org.slf4j", "slf4j-simple", "1.7.36")
         testImplementation("org.junit.jupiter", "junit-jupiter-engine", "5.8.2")
         testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0") {

@@ -1,6 +1,7 @@
 package net.hoz.gamecore.api.game.frame.builder
 
 import com.iamceph.resulter.core.GroupedResultable
+import com.iamceph.resulter.core.Resultable
 import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
@@ -55,6 +56,8 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
     fun unsafe(): Unsafe
 
     interface Manage {
+        suspend fun save(): Resultable
+
         /**
          * Discards this builder.
          */

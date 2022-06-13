@@ -4,13 +4,13 @@ import com.iamceph.resulter.core.Resultable
 import net.hoz.gamecore.api.Countable
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
-import net.kyori.adventure.audience.ForwardingAudience
+import org.screamingsandals.lib.spectator.audience.Audience
 import java.util.*
 
 /**
  * Manages players in given [GameFrame].
  */
-interface FramePlayers : ForwardingAudience, Countable {
+interface FramePlayers : Audience.ForwardingToMulti, Countable {
     /**
      * Joins given player to this frame.
      *

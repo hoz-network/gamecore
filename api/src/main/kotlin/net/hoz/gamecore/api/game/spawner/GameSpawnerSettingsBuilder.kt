@@ -15,11 +15,11 @@ class GameSpawnerSettingsBuilder(
     override fun build(): DataResultable<GameSpawnerSettings> {
         val default = default()
         val result = GameSpawnerSettingsImpl(
-            spread = spread ?: default.spread(),
-            max = max ?: default.max(),
-            amount = amount ?: default.amount(),
-            period = period ?: default.period(),
-            timeUnit = timeUnit ?: default.timeUnit()
+            spread = spread ?: default.spread,
+            max = max ?: default.max,
+            amount = amount ?: default.amount,
+            period = period ?: default.period,
+            timeUnit = timeUnit ?: default.timeUnit
         )
 
         return DataResultable.ok(result)

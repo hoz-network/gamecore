@@ -7,30 +7,30 @@ import cloud.commandframework.arguments.parser.ArgumentParser
 import cloud.commandframework.arguments.standard.StringArgument
 import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
-import cloud.commandframework.keys.CloudKey
-import cloud.commandframework.keys.SimpleCloudKey
-import io.leangen.geantyref.TypeToken
 import mu.KotlinLogging
-import net.hoz.gamecore.api.command.*
+import net.hoz.gamecore.api.command.GContext.COMMAND_GAME_BUILDER_FIELD
+import net.hoz.gamecore.api.command.GContext.COMMAND_STORE_HOLDER
+import net.hoz.gamecore.api.command.GContext.COMMAND_STORE_NAME
+import net.hoz.gamecore.api.command.GContext.COMMAND_TEAM_BUILDER_FIELD
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.argument.store.StoreHolderArgument
 import net.hoz.gamecore.api.command.argument.team.TeamBuilderArgument
+import net.hoz.gamecore.api.command.builderHandler
+import net.hoz.gamecore.api.command.getOrNull
 import net.hoz.gamecore.api.lang.CommandLang
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 import java.util.*
 
-class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
-    private val log = KotlinLogging.logger {}
-    private val STORE_NAME: CloudKey<String> =
-        SimpleCloudKey.of("game-core-store-name", TypeToken.get(String::class.java))
+private val log = KotlinLogging.logger {}
 
+class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
         commandManager
             .command(
                 builder.literal("store", ArgumentDescription.of("Adds new team to the fame."))
                     .argument(
-                        StringArgument.newBuilder<CommandSenderWrapper>(STORE_NAME.name)
+                        StringArgument.newBuilder<CommandSenderWrapper>(COMMAND_STORE_NAME.name)
                             .withParser(StoreNameParser())
                             .asRequired()
                             .build()
@@ -38,7 +38,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                     .argument(StoreHolderArgument.of(COMMAND_STORE_HOLDER, gameManager))
                     .argument(TeamBuilderArgument.of(COMMAND_TEAM_BUILDER_FIELD))
                     .builderHandler { sender, gameBuilder, context ->
-                        val storeName = context[STORE_NAME]
+                        val storeName = context[COMMAND_STORE_NAME]
                         val storeHolder = context[COMMAND_STORE_HOLDER]
                         val team = context.getOrNull(COMMAND_TEAM_BUILDER_FIELD)
 
@@ -54,7 +54,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                         val store = gameBuilder.stores()
                             .add(storeName) {
                                 this.holder = storeHolder
-                                this.team = team
+                                this.team = team?.name
                             }
 
                         log.debug { "Created new store builder: $store" }

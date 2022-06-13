@@ -14,35 +14,35 @@ interface GameSpawnerSettings : ProtoWrapper<ProtoSpawnerSettings?> {
      *
      * @return max spread.
      */
-    fun spread(): Double
+    val spread: Double
 
     /**
      * How many resources are we allowed to spawn.
      *
      * @return max resources.
      */
-    fun max(): Int
+    val max: Int
 
     /**
      * How many resources should we spawn at once.
      *
      * @return max amount per one spawn.
      */
-    fun amount(): Int
+    val amount: Int
 
     /**
      * Period of spawning
      *
      * @return spawning period
      */
-    fun period(): Int
+    val period: Int
 
     /**
      * In what time units the [GameSpawnerSettings.period] is.
      *
      * @return time unit.
      */
-    fun timeUnit(): TaskerTime
+    val timeUnit: TaskerTime
 
     /**
      * Creates a builder with values that are set in these settings.

@@ -29,7 +29,7 @@ class GameSpawnerManageImpl(
                 }
                 spawner.items().spawn(it)
             })
-                .repeat(it.settings().period().toLong(), it.settings().timeUnit())
+                .repeat(it.settings.period.toLong(), it.settings.timeUnit)
                 .start()
 
             tasks[it] = task

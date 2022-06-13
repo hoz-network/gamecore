@@ -58,23 +58,4 @@ interface WorldData
      * Checks if the given location is in the world border
      */
     fun isInBorder(location: LocationHolder): Resultable = GUtil.isInBorder(location, border1, border2)
-
-    companion object {
-//
-        /**
-         * Creates new builder with default data from [ProtoWorldData].
-         *
-         * @param data input to get default data from
-         * @return new builder
-         */
-       //fun builder(data: ProtoWorldData): WorldDataBuilder {
-       //    val border1 = LocationMapper.resolve(data.border1).orElseThrow()
-       //    val border2 = LocationMapper.resolve(data.border2).orElseThrow()
-       //    val spawn = LocationMapper.resolve(data.spawn).orElseThrow()
-       //    val spectator = if (data.spectator != ProtoLocation.getDefaultInstance()) LocationMapper.resolve(data.spectator).orElseThrow() else null
-       //    val type = data.type
-//
-       //    return WorldDataImpl.BuilderImpl(WorldRegenerator.regenerator(), border1, border2, spawn, spectator, type)
-       //}
-    }
 }

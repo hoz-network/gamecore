@@ -5,7 +5,7 @@ import net.hoz.api.data.MinecraftColor
 import net.hoz.gamecore.api.lang.CommandLang
 import net.hoz.gamecore.api.lang.CommonLang
 import net.hoz.netapi.client.lang.LangResultable
-import net.kyori.adventure.text.format.NamedTextColor
+import org.screamingsandals.lib.spectator.Color
 import org.screamingsandals.lib.world.LocationHolder
 
 object GUtil {
@@ -26,17 +26,17 @@ object GUtil {
             .toMutableList()
     }
 
-    fun fromProtoColor(minecraftColor: MinecraftColor): NamedTextColor {
-        val textColor = NamedTextColor.NAMES.value(minecraftColor.name)
+    fun fromProtoColor(minecraftColor: MinecraftColor): Color {
+        val textColor = Color.named(minecraftColor.name)
         if (textColor == null) {
             log.warn { "Cannot convert color $minecraftColor to NamedTextColor! Using LIGHT_PURPLE." }
-            return NamedTextColor.LIGHT_PURPLE
+            return Color.LIGHT_PURPLE
         }
 
         return textColor
     }
 
-    fun toProtoColor(color: NamedTextColor): MinecraftColor = MinecraftColor.valueOf(color.toString())
+    fun toProtoColor(color: Color): MinecraftColor = MinecraftColor.valueOf(color.toString())
 
     /**
      * Performs a check if given location is inside border of given points.

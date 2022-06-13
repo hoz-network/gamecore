@@ -4,6 +4,7 @@ import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.Resultable
 import kotlinx.coroutines.flow.SharedFlow
 import net.hoz.api.data.GameType
+import net.hoz.api.data.game.GameConfig
 import net.hoz.api.data.game.ProtoGameFrame
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.frame.GameFrame
@@ -48,7 +49,7 @@ interface GameManager : Controlled {
     interface Builders {
         fun all(): List<GameBuilder>
 
-        fun create(name: String, configName: String, type: GameType): DataResultable<GameBuilder>
+        fun create(name: String, config: GameConfig, type: GameType): DataResultable<GameBuilder>
         fun from(data: ProtoGameFrame): DataResultable<GameBuilder>
         fun from(frame: GameFrame): GameBuilder
 

@@ -7,14 +7,13 @@ import net.hoz.api.data.game.ProtoGameStore
 import net.hoz.api.data.game.StoreHolder
 import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.game.team.GameTeam
-import net.kyori.adventure.audience.Audience
-import net.kyori.adventure.audience.ForwardingAudience
 import org.jetbrains.annotations.ApiStatus
 import org.screamingsandals.lib.entity.type.EntityTypeHolder
+import org.screamingsandals.lib.spectator.audience.Audience
 import org.screamingsandals.lib.utils.Nameable
 import org.screamingsandals.lib.world.LocationHolder
 
-interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, ForwardingAudience {
+interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, Audience.ForwardingToMulti {
     /**
      * Location of the store on the map
      */

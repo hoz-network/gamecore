@@ -9,13 +9,13 @@ import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
-import net.hoz.gamecore.api.command.COMMAND_GAME_BUILDER_FIELD
+import net.hoz.gamecore.api.command.GContext.COMMAND_GAME_BUILDER_FIELD
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class TeamBuilderArgument<C>(
+class TeamBuilderArgument<C : Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -40,7 +40,7 @@ class TeamBuilderArgument<C>(
             newBuilder<C, T>(key).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C : Any>(
         name: String
     ) : CommandArgument.Builder<C, GameTeamBuilder>(GameTeamBuilder::class.java, name) {
         override fun build(): CommandArgument<C, GameTeamBuilder> = TeamBuilderArgument(
@@ -51,7 +51,7 @@ class TeamBuilderArgument<C>(
         )
     }
 
-    class TeamBuilderParser<C>() : ArgumentParser<C, GameTeamBuilder> {
+    class TeamBuilderParser<C : Any> : ArgumentParser<C, GameTeamBuilder> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

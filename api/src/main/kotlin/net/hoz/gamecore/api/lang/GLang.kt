@@ -7,9 +7,9 @@ import net.hoz.gamecore.api.game.spawner.GameSpawnerType
 import net.hoz.gamecore.api.game.store.GameStore
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.netapi.client.lang.NLang
-import net.kyori.adventure.text.Component
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
+import org.screamingsandals.lib.spectator.Component
 import java.text.DecimalFormat
 
 @Suppress("FunctionName", "MemberVisibilityCanBePrivate", "unused") // suppress useless inspections
@@ -63,11 +63,11 @@ object GLang {
     }
 
     fun STORE_INFO(player: CommandSenderWrapper?, store: GameStore): List<Component> {
-        val location = store.location()
-        val team = store.team()
+        val location = store.location
+        val team = store.team
         return Message.of(CommonLang.STORE_INFO)
             .placeholder("identifier", store.name())
-            .placeholder("store-data-identifier", store.holder().name)
+            .placeholder("store-data-identifier", store.holder.name)
             .placeholder("X", NUMBER_FORMAT.format(location.x))
             .placeholder("Y", NUMBER_FORMAT.format(location.y))
             .placeholder("Z", NUMBER_FORMAT.format(location.z))
@@ -75,7 +75,7 @@ object GLang {
                 "team-identifier",
                 if (team != null) team.name() else "none"
             )
-            .placeholder("entity-type", store.entityType().platformName())
+            .placeholder("entity-type", store.entityType.platformName())
             .getFor(player)
     }
 

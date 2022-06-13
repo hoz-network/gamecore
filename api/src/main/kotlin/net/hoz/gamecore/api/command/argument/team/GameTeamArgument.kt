@@ -9,7 +9,7 @@ import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
 import cloud.commandframework.keys.CloudKey
-import net.hoz.gamecore.api.command.COMMAND_GAME_BUILDER_FIELD
+import net.hoz.gamecore.api.command.GContext.COMMAND_GAME_BUILDER_FIELD
 import net.hoz.gamecore.api.command.argument.game.GameFrameArgument
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.service.GameManager
@@ -17,7 +17,7 @@ import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class GameTeamArgument<C>(
+class GameTeamArgument<C : Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -46,7 +46,7 @@ class GameTeamArgument<C>(
         ): CommandArgument<C, GameTeamBuilder> = newBuilder<C, T>(key, gameManager).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C : Any>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameTeamBuilder>(GameTeamBuilder::class.java, name) {
@@ -59,7 +59,7 @@ class GameTeamArgument<C>(
         )
     }
 
-    class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameTeamBuilder> {
+    class GameFrameParser<C : Any>(private val gameManager: GameManager) : ArgumentParser<C, GameTeamBuilder> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

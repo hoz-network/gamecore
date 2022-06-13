@@ -15,7 +15,7 @@ import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class GameSpawnerTypeArgument<C>(
+class GameSpawnerTypeArgument<C : Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -44,7 +44,7 @@ class GameSpawnerTypeArgument<C>(
         ): CommandArgument<C, GameSpawnerType> = newBuilder<C, T>(key, gameManager).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C : Any>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameSpawnerType>(GameSpawnerType::class.java, name) {
@@ -57,7 +57,7 @@ class GameSpawnerTypeArgument<C>(
         )
     }
 
-    class SpawnerTypeParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameSpawnerType> {
+    class SpawnerTypeParser<C : Any>(private val gameManager: GameManager) : ArgumentParser<C, GameSpawnerType> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

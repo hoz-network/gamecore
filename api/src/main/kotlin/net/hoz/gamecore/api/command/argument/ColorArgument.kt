@@ -9,35 +9,34 @@ import cloud.commandframework.context.CommandContext
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException
 import cloud.commandframework.exceptions.parsing.ParserException
 import net.hoz.gamecore.api.util.GUtil
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import org.screamingsandals.lib.utils.AdventureHelper
+import org.screamingsandals.lib.spectator.Color
+import org.screamingsandals.lib.spectator.Component
 import java.util.*
 import java.util.function.BiFunction
 
-class ColorArgument<C>(
+class ColorArgument<C: Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
     suggestionsProvider: BiFunction<CommandContext<C>, String, MutableList<String>>?
-) : CommandArgument<C, NamedTextColor>(
+) : CommandArgument<C, Color>(
     required,
     name,
     ColorParser(),
     defaultValue,
-    NamedTextColor::class.java,
+    Color::class.java,
     suggestionsProvider
 ) {
     companion object {
-        fun <C> newBuilder(name: String): CommandArgument.Builder<C, NamedTextColor> = Builder(name)
+        fun <C : Any> newBuilder(name: String): CommandArgument.Builder<C, Color> = Builder(name)
 
-        fun <C : Any> of(name: String): CommandArgument<C, NamedTextColor> = newBuilder<C>(name).asRequired().build()
+        fun <C : Any> of(name: String): CommandArgument<C, Color> = newBuilder<C>(name).asRequired().build()
 
-        fun <C : Any> optional(name: String): CommandArgument<C, NamedTextColor> = newBuilder<C>(name).asOptional().build()
+        fun <C : Any> optional(name: String): CommandArgument<C, Color> = newBuilder<C>(name).asOptional().build()
     }
 
-    class Builder<C>(name: String) : CommandArgument.Builder<C, NamedTextColor>(NamedTextColor::class.java, name) {
-        override fun build(): CommandArgument<C, NamedTextColor> = ColorArgument(
+    class Builder<C : Any>(name: String) : CommandArgument.Builder<C, Color>(Color::class.java, name) {
+        override fun build(): CommandArgument<C, Color> = ColorArgument(
             this.isRequired,
             this.name,
             this.defaultValue,
@@ -45,15 +44,15 @@ class ColorArgument<C>(
         )
     }
 
-    class ColorParser<C> : ArgumentParser<C, NamedTextColor> {
+    class ColorParser<C : Any> : ArgumentParser<C, Color> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>
-        ): ArgumentParseResult<NamedTextColor> {
+        ): ArgumentParseResult<Color> {
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(ColorParser::class.java, context))
 
-            val color = NamedTextColor.NAMES.value(input)
+            val color = Color.NAMED_VALUES[input]
                 ?: return ArgumentParseResult.failure(ColorParseException(context, Caption.of("Color not found.")))
 
             inputQueue.remove()
@@ -61,8 +60,8 @@ class ColorArgument<C>(
         }
 
         override fun suggestions(context: CommandContext<C>, input: String): MutableList<String> {
-            val available = NamedTextColor.NAMES.values()
-                .map { AdventureHelper.toLegacy(Component.text(it.toString()).color(it)) }
+            val available = Color.NAMED_VALUES
+                .map { Component.text(it.key).withColor(it.value).toLegacy() }
                 .toMutableList()
 
             return GUtil.findMatchingOrAvailable(input, available, "No color found!")

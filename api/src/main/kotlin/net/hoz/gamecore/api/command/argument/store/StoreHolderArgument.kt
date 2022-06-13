@@ -15,7 +15,7 @@ import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class StoreHolderArgument<C>(
+class StoreHolderArgument<C : Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -44,7 +44,7 @@ class StoreHolderArgument<C>(
         ): CommandArgument<C, StoreHolder> = newBuilder<C, T>(key, gameManager).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C : Any>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, StoreHolder>(StoreHolder::class.java, name) {
@@ -57,7 +57,7 @@ class StoreHolderArgument<C>(
         )
     }
 
-    class StoreHolderParser<C>(private val gameManager: GameManager) : ArgumentParser<C, StoreHolder> {
+    class StoreHolderParser<C : Any>(private val gameManager: GameManager) : ArgumentParser<C, StoreHolder> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

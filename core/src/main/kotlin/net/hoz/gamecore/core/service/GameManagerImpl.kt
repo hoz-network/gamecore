@@ -23,4 +23,14 @@ class GameManagerImpl : GameManager {
     override suspend fun initialize() {
         TODO("Not yet implemented")
     }
+
+    fun doSome(manager: GameManager) {
+        manager.frames()
+            .all()
+            .forEach { it.manage.start() }
+
+        manager.builders()
+            .all()
+            .forEach { it.build() }
+    }
 }

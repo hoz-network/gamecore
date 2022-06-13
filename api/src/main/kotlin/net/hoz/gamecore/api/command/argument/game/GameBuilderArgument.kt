@@ -15,7 +15,7 @@ import net.hoz.gamecore.api.util.GUtil
 import java.util.*
 import java.util.function.BiFunction
 
-class GameBuilderArgument<C>(
+class GameBuilderArgument<C: Any>(
     required: Boolean,
     name: String,
     defaultValue: String,
@@ -44,7 +44,7 @@ class GameBuilderArgument<C>(
         ): CommandArgument<C, GameBuilder> = newBuilder<C, T>(key, gameManager).asOptional().build()
     }
 
-    class Builder<C>(
+    class Builder<C: Any>(
         name: String,
         private val gameManager: GameManager
     ) : CommandArgument.Builder<C, GameBuilder>(GameBuilder::class.java, name) {
@@ -57,7 +57,7 @@ class GameBuilderArgument<C>(
         )
     }
 
-    class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameBuilder> {
+    class GameFrameParser<C : Any>(private val gameManager: GameManager) : ArgumentParser<C, GameBuilder> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

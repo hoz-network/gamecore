@@ -1,6 +1,7 @@
 package net.hoz.gamecore.core.game.store
 
 import com.iamceph.resulter.core.Resultable
+import com.iamceph.resulter.kotlin.resultable
 import mu.KotlinLogging
 import net.hoz.api.data.game.*
 import net.hoz.api.data.game.StoreUpgrade.Tier
@@ -62,33 +63,28 @@ class StoreInventoryImpl(
         return Resultable.ok()
     }
 
-    override fun generate(): Resultable {
-        try {
-            inventorySet = SimpleInventoriesCore.builder()
-                .animationsEnabled(true)
-                .genericShop(true)
-                .categoryOptions {
-                    it.prefix(Message.of(holder.name).getForJoined(viewer))
-                        .showPageNumber(false)
-                        .renderFooterStart(55)
-                        .renderHeaderStart(55)
-                        .rows(holder.rows)
-                        .renderActualRows(holder.rows)
-                    if (holder.decorativeItem != StoreItem.getDefaultInstance()) {
-                        it.emptySlotItem(ItemFactory.readStack(holder.decorativeItem))
-                    }
+    override fun generate(): Resultable = resultable {
+        inventorySet = SimpleInventoriesCore.builder()
+            .animationsEnabled(true)
+            .genericShop(true)
+            .categoryOptions {
+                it.prefix(Message.of(holder.name).getForJoined(viewer))
+                    .showPageNumber(false)
+                    .renderFooterStart(55)
+                    .renderHeaderStart(55)
+                    .rows(holder.rows)
+                    .renderActualRows(holder.rows)
+                if (holder.decorativeItem != StoreItem.getDefaultInstance()) {
+                    it.emptySlotItem(ItemFactory.readStack(holder.decorativeItem))
                 }
-                .preClick { onPreClick(it) }
-                .render { onRender(it) }
-                .buy { buyBuilder(it) }
-                .close { closeBuilder(it) }
-                .call { categoryBuilder(it) }
-                .process()
-                .inventorySet
-            return Resultable.ok()
-        } catch (e: Exception) {
-            return Resultable.fail(e)
-        }
+            }
+            .preClick { onPreClick(it) }
+            .render { onRender(it) }
+            .buy { buyBuilder(it) }
+            .close { closeBuilder(it) }
+            .call { categoryBuilder(it) }
+            .process()
+            .inventorySet
     }
 
     override fun category(name: String): StoreCategory? {

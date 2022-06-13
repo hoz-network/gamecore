@@ -7,7 +7,7 @@ import net.hoz.api.data.game.ProtoGameFrame
 import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.world.GameWorld
-import net.kyori.adventure.text.Component
+import org.screamingsandals.lib.spectator.Component
 import org.screamingsandals.lib.utils.Nameable
 import java.util.*
 

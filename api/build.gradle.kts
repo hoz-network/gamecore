@@ -1,9 +1,12 @@
+import net.hoz.gamecore.gradle.Versions
+
 dependencies {
-    api("net.hoz.netapi", "client", "1.1.0")
+    api("net.hoz.netapi", "client", Versions.NETAPI)
 
-    api("cloud.commandframework", "cloud-core", "1.6.1")
-    api("cloud.commandframework", "cloud-kotlin-extensions", "1.6.1")
+    api("cloud.commandframework", "cloud-core", Versions.CLOUD)
+    api("cloud.commandframework", "cloud-kotlin-extensions", Versions.CLOUD)
+    api("cloud.commandframework", "cloud-kotlin-coroutines", Versions.CLOUD)
 
-    api("org.screamingsandals.simpleinventories", "core-common", "2.0.1-SNAPSHOT")
-    api("org.screamingsandals.lib", "hologram-common", "2.0.1-SNAPSHOT")
+    api("org.screamingsandals.simpleinventories", "core-common", Versions.SIMPLEINVENTORIES)
+    api("org.screamingsandals.lib", "hologram-common", Versions.SANDALS)
 }

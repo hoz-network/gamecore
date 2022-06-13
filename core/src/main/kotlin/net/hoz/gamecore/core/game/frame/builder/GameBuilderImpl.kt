@@ -2,7 +2,9 @@ package net.hoz.gamecore.core.game.frame.builder
 
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.GroupedResultable
+import com.iamceph.resulter.core.Resultable
 import com.iamceph.resulter.kotlin.dataResultable
+import com.iamceph.resulter.kotlin.resultable
 import mu.KotlinLogging
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.GameConfig
@@ -16,7 +18,7 @@ import net.hoz.gamecore.api.game.world.GameWorldBuilder
 import net.hoz.gamecore.api.service.GameManager
 import net.hoz.gamecore.core.game.frame.GameFrameImpl
 import net.hoz.gamecore.core.game.world.GameWorldBuilderImpl
-import net.kyori.adventure.text.Component
+import org.screamingsandals.lib.spectator.Component
 import java.util.*
 
 private val log = KotlinLogging.logger { }
@@ -34,8 +36,8 @@ class GameBuilderImpl(
     private val spawners: BuilderSpawners = BuilderSpawnersImpl()
     private val stores: BuilderStores = BuilderStoresImpl()
     private val world: GameWorldBuilder = GameWorldBuilderImpl()
-    private val manage: GameBuilder.Manage = ManageImpl(this)
-    private val unsafe: GameBuilder.Unsafe = UnsafeImpl(this)
+    private val manage: GameBuilder.Manage = ManageImpl()
+    private val unsafe: GameBuilder.Unsafe = UnsafeImpl()
 
     override fun name(): String = name
     override fun world(): GameWorldBuilder = world
@@ -100,8 +102,27 @@ class GameBuilderImpl(
 
     }
 
-    class ManageImpl(builder: GameBuilderImpl) : GameBuilder.Manage {
+    inner class ManageImpl : GameBuilder.Manage {
+        override suspend fun save(): Resultable {
+            val maybeGame = build()
+            if (maybeGame.isFail) {
+                return maybeGame
+            }
+
+            val savedGame = maybeGame.data()
+            val savingResult = gameManager.backend().saveGame(savedGame.asProto())
+            if (savingResult.isFail) {
+                return savingResult
+            }
+
+            return resultable {
+                gameManager.frames().register(savedGame)
+                gameManager.builders().remove(id)
+            }
+        }
+
         override fun destroy() {
+
             //TODO: handle visuals, etc
             TODO("Not yet implemented")
         }
@@ -111,7 +132,7 @@ class GameBuilderImpl(
         }
     }
 
-    class UnsafeImpl(builder: GameBuilderImpl) : GameBuilder.Unsafe {
+    inner class UnsafeImpl : GameBuilder.Unsafe {
         //TODO
         override fun teamHologram(builder: GameTeamBuilder) {
             TODO("Not yet implemented")

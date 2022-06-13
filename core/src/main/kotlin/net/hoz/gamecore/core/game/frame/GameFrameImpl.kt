@@ -9,8 +9,7 @@ import net.hoz.gamecore.api.game.frame.builder.GameBuilder
 import net.hoz.gamecore.api.game.world.GameWorld
 import net.hoz.gamecore.api.service.GameManager
 import net.hoz.gamecore.core.game.cycle.GameCycleImpl
-import net.kyori.adventure.text.Component
-import org.screamingsandals.lib.utils.AdventureHelper
+import org.screamingsandals.lib.spectator.Component
 import java.util.*
 
 class GameFrameImpl(
@@ -47,7 +46,7 @@ class GameFrameImpl(
         return protoGameFrame {
             uuid = this@GameFrameImpl.uuid.toString()
             name = this@GameFrameImpl.name
-            displayName = AdventureHelper.toJson(this@GameFrameImpl.displayName)
+            displayName = this@GameFrameImpl.displayName.toJavaJson()
             configName = this@GameFrameImpl.config.name
             minPlayers = this@GameFrameImpl.minPlayers
             type = this@GameFrameImpl.gameType

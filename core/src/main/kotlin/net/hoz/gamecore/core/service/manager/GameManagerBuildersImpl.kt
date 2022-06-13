@@ -3,6 +3,7 @@ package net.hoz.gamecore.core.service.manager
 import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.kotlin.dataResultable
 import net.hoz.api.data.GameType
+import net.hoz.api.data.game.GameConfig
 import net.hoz.api.data.game.ProtoGameFrame
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.GameBuilder
@@ -17,17 +18,11 @@ class GameManagerBuildersImpl(
 
     override fun all(): List<GameBuilder> = builders.values.toList()
 
-    override fun create(name: String, configName: String, type: GameType): DataResultable<GameBuilder> {
+    override fun create(name: String, config: GameConfig, type: GameType): DataResultable<GameBuilder> {
         if (builders.containsKey(name)) {
             return DataResultable.fail("Builder already exists.")
         }
 
-        val maybeConfig = manager.backend().oneConfig(configName)
-        if (maybeConfig.isFail) {
-            return maybeConfig.transform()
-        }
-
-        val config = maybeConfig.data()
         return dataResultable {
             GameBuilderImpl(manager, UUID.randomUUID(), name, type, config)
                 .also {

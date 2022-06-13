@@ -3,8 +3,8 @@ package net.hoz.gamecore.api.event.player.resource
 import net.hoz.gamecore.api.event.player.GamePlayerCancellableEvent
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
-import net.kyori.adventure.text.Component
 import org.screamingsandals.lib.entity.EntityItem
+import org.screamingsandals.lib.spectator.Component
 import org.screamingsandals.lib.utils.ObjectLink
 
 data class GamePlayerResourcePickEvent(

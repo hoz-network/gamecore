@@ -5,11 +5,10 @@ import net.hoz.api.data.game.ProtoGameTeam
 import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
-import net.kyori.adventure.audience.Audience
-import net.kyori.adventure.audience.ForwardingAudience
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.jetbrains.annotations.ApiStatus
+import org.screamingsandals.lib.spectator.Color
+import org.screamingsandals.lib.spectator.Component
+import org.screamingsandals.lib.spectator.audience.Audience
 import org.screamingsandals.lib.utils.Nameable
 import org.screamingsandals.lib.world.LocationHolder
 
@@ -17,13 +16,13 @@ import org.screamingsandals.lib.world.LocationHolder
  * A team of players.
  */
 interface GameTeam
-    : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, ForwardingAudience {
+    : Nameable, Buildable<GameTeam, GameTeamBuilder>, ProtoWrapper<ProtoGameTeam>, Audience.ForwardingToMulti {
     /**
      * Gets the color of this team.
      *
-     * @return [NamedTextColor] color.
+     * @return [Color] color.
      */
-    val color: NamedTextColor
+    val color: Color
 
     /**
      * Gets spawn point of this team

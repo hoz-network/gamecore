@@ -1,7 +1,7 @@
 package net.hoz.gamecore.api.game.team
 
 import net.hoz.gamecore.api.Buildable
-import net.kyori.adventure.text.format.NamedTextColor
+import org.screamingsandals.lib.spectator.Color
 import org.screamingsandals.lib.world.LocationHolder
 
 /**
@@ -15,7 +15,7 @@ abstract class GameTeamBuilder(
     /**
      * Color of the team
      */
-    var color: NamedTextColor?,
+    var color: Color?,
     /**
      * Spawn location of the team
      */

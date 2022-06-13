@@ -136,7 +136,7 @@ interface GameSpawner
          * @return spawner type if present.
          */
         fun resolve(material: ItemTypeHolder): GameSpawnerType? {
-            return all().values.first { it.material().compare(material) }
+            return all().values.first { it.material.compare(material) }
         }
     }
 

@@ -28,7 +28,7 @@ open class GameSpawnerItemsImpl(
         }
 
         val remainingToSpawn = countRemainingToSpawn(type)
-        var amount = type.settings().amount()
+        var amount = type.settings.amount
 
         if (remainingToSpawn == -1) {
             log.debug { "Remaining to spawn is unlimited." }
@@ -78,7 +78,7 @@ open class GameSpawnerItemsImpl(
         val items = spawnedItems[type] ?: return true
         items.removeIf { it.isDead }
 
-        val maxSpawned = type.settings().max()
+        val maxSpawned = type.settings.max
         return if (maxSpawned == -1) {
             false
         } else items.size < maxSpawned
@@ -91,10 +91,10 @@ open class GameSpawnerItemsImpl(
 
     open fun countRemainingToSpawn(type: GameSpawnerType): Int {
         val spawned = countSpawned(type)
-        val maxSpawned = type.settings().max()
+        val maxSpawned = type.settings.max
         return if (maxSpawned == -1) {
             return -1
-        } else type.settings().max() - spawned
+        } else type.settings.max - spawned
     }
 
     open fun spawnItem(type: GameSpawnerType, amount: Int) {
