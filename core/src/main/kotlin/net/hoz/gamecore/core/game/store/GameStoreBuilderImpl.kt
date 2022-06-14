@@ -21,7 +21,7 @@ internal class GameStoreBuilderImpl(
     companion object {
         fun fromProto(data: ProtoGameStore, holder: StoreHolder): GameStoreBuilderImpl = GameStoreBuilderImpl(
             data.name,
-            LocationMapper.resolve(data.location).orElseThrow(),
+            LocationMapper.resolve(data.location).orElse(null),
             holder,
             EntityTypeHolder.of(data.entityType),
             data.teamId

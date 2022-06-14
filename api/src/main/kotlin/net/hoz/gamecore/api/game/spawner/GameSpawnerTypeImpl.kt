@@ -23,7 +23,7 @@ internal data class GameSpawnerTypeImpl(
 
 ) : GameSpawnerType {
 
-    override fun item(amount: Int, target: PlayerWrapper?): Item {
+    override fun item(amount: Int, target: PlayerWrapper?): Item? {
         val builder = ItemFactory.builder()
             .type(material)
 
@@ -35,7 +35,7 @@ internal data class GameSpawnerTypeImpl(
 
         builder.amount(amount)
         //TODO: item data
-        return builder.build().orElseThrow()
+        return builder.build().orElse(null)
     }
 
     override fun name(): String {

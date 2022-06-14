@@ -38,7 +38,7 @@ class SetGameBorderAction(
                     log.debug { "Border[${worldType.name}/${borderType.name}] will be at location: $location" }
 
                     val world = when (worldType) {
-                        WorldType.LOBBY -> gameBuilder.world().lobby {
+                        WorldType.LOBBY -> gameBuilder.world.lobby {
                             when (borderType) {
                                 BorderType.FIRST -> border1 = location
                                 BorderType.SECOND -> border2 = location
@@ -46,7 +46,7 @@ class SetGameBorderAction(
                             }
                         }
 
-                        WorldType.ARENA -> gameBuilder.world().arena {
+                        WorldType.ARENA -> gameBuilder.world.arena {
                             when (borderType) {
                                 BorderType.FIRST -> border1 = location
                                 BorderType.SECOND -> border2 = location

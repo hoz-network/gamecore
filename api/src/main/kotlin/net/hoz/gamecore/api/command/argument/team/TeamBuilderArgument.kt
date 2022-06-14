@@ -68,7 +68,7 @@ class TeamBuilderArgument<C : Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(TeamBuilderParser::class.java, context))
 
-            val available = builder.teams().all()
+            val available = builder.teams.all()
             if (available.isEmpty()) {
                 return ArgumentParseResult.failure(
                     TeamBuilderParseException(context, Caption.of("No team is registered!"))
@@ -90,7 +90,7 @@ class TeamBuilderArgument<C : Any>(
             }
 
             val builder = context[COMMAND_GAME_BUILDER_FIELD]
-            val available = builder.teams()
+            val available = builder.teams
                 .all()
                 .keys
                 .toList()

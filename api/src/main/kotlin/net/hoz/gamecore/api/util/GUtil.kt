@@ -7,6 +7,14 @@ import net.hoz.gamecore.api.lang.CommonLang
 import net.hoz.netapi.client.lang.LangResultable
 import org.screamingsandals.lib.spectator.Color
 import org.screamingsandals.lib.world.LocationHolder
+import java.util.*
+
+fun MinecraftColor.fromProto(): Color {
+    return Color.named(this.name)
+        ?: throw UnsupportedOperationException("Cannot convert color,")
+}
+
+fun Color.toProto(): MinecraftColor = MinecraftColor.valueOf(this.toString())
 
 object GUtil {
     private val log = KotlinLogging.logger {}
@@ -25,18 +33,6 @@ object GUtil {
             .ifEmpty { available }
             .toMutableList()
     }
-
-    fun fromProtoColor(minecraftColor: MinecraftColor): Color {
-        val textColor = Color.named(minecraftColor.name)
-        if (textColor == null) {
-            log.warn { "Cannot convert color $minecraftColor to NamedTextColor! Using LIGHT_PURPLE." }
-            return Color.LIGHT_PURPLE
-        }
-
-        return textColor
-    }
-
-    fun toProtoColor(color: Color): MinecraftColor = MinecraftColor.valueOf(color.toString())
 
     /**
      * Performs a check if given location is inside border of given points.

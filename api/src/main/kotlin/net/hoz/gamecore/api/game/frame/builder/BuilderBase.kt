@@ -1,6 +1,7 @@
 package net.hoz.gamecore.api.game.frame.builder
 
 import com.iamceph.resulter.core.DataResultable
+import net.hoz.gamecore.api.ProtoBuildable
 
 /**
  * Base for building spawners, teams, etc.

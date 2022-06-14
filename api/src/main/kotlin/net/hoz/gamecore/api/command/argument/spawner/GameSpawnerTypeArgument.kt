@@ -65,7 +65,7 @@ class GameSpawnerTypeArgument<C : Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(SpawnerTypeParser::class.java, context))
 
-            val availableTypes = gameManager.backend().allSpawners()
+            val availableTypes = gameManager.backend.allSpawners()
             if (availableTypes.isEmpty()) {
                 return ArgumentParseResult.failure(
                     SpawnerTypeParseException(context, Caption.of("No types are available in backend!"))
@@ -89,7 +89,7 @@ class GameSpawnerTypeArgument<C : Any>(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): MutableList<String> {
-            val types = gameManager.backend()
+            val types = gameManager.backend
                 .allSpawners()
                 .map { it.name }
 

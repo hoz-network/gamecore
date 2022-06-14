@@ -18,9 +18,8 @@ private val log = KotlinLogging.logger { }
 internal class FrameManagementImpl(
     private val manager: GameManager,
     private val frame: GameFrame,
-    private var cycle: GameCycle
+    override var cycle: GameCycle
 ) : FrameManagement {
-    private val log = KotlinLogging.logger { }
 
     override fun prepare(): GroupedResultable {
         if (cycle.isRunning()) {
@@ -91,20 +90,6 @@ internal class FrameManagementImpl(
             log.warn("Exception occurred while stopping the game! {}", e.message, e)
             return Resultable.fail("Cannot stop the game because of Exception!", e)
         }
-    }
-
-    override fun cycle(): GameCycle {
-        return cycle
-    }
-
-    override fun cycle(cycle: GameCycle): Resultable {
-        val result = cycle.stop()
-        if (result.isFail) {
-            return result
-        }
-
-        this.cycle = cycle
-        return Resultable.ok()
     }
 
     override fun isRunning(): Boolean {

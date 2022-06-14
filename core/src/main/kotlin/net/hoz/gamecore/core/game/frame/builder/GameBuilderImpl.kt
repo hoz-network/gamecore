@@ -25,31 +25,25 @@ private val log = KotlinLogging.logger { }
 
 class GameBuilderImpl(
     override val gameManager: GameManager,
-    override val id: UUID,
+    override val uuid: UUID,
     private val name: String,
     private val type: GameType,
     private val config: GameConfig,
     private val fromProto: Boolean = false
 ) : GameBuilder {
 
-    private val teams: BuilderTeams = BuilderTeamsImpl()
-    private val spawners: BuilderSpawners = BuilderSpawnersImpl()
-    private val stores: BuilderStores = BuilderStoresImpl()
-    private val world: GameWorldBuilder = GameWorldBuilderImpl()
-    private val manage: GameBuilder.Manage = ManageImpl()
+    override val teams: BuilderTeams = BuilderTeamsImpl()
+    override val spawners: BuilderSpawners = BuilderSpawnersImpl()
+    override val stores: BuilderStores = BuilderStoresImpl()
+    override var world: GameWorldBuilder = GameWorldBuilderImpl()
+    override val manage: GameBuilder.Manage = ManageImpl()
     private val unsafe: GameBuilder.Unsafe = UnsafeImpl()
 
     override fun name(): String = name
-    override fun world(): GameWorldBuilder = world
-
-    override fun manage(): GameBuilder.Manage = manage
     override fun unsafe(): GameBuilder.Unsafe = unsafe
-    override fun teams(): BuilderTeams = teams
-    override fun spawners(): BuilderSpawners = spawners
-    override fun stores(): BuilderStores = stores
 
     override fun build(): DataResultable<GameFrame> {
-        log.debug { "Trying to build frame [$id - $name]" }
+        log.debug { "Trying to build frame [$uuid - $name]" }
         val integrity = manage.checkIntegrity()
         if (integrity.isFail) {
             log.debug { "Building failed - ${integrity.message()}" }
@@ -92,7 +86,7 @@ class GameBuilderImpl(
         return dataResultable {
             manage.destroy()
 
-            GameFrameImpl(gameManager, id, name, Component.text(name), config, builtWorld.data(), type)
+            GameFrameImpl(gameManager, uuid, name, Component.text(name), config, builtWorld.data(), type)
                 .also { frame ->
                     frame.teams.add(builtTeams.values.map { it.data() })
                     frame.stores.add(builtStores.values.map { it.data() })
@@ -110,14 +104,14 @@ class GameBuilderImpl(
             }
 
             val savedGame = maybeGame.data()
-            val savingResult = gameManager.backend().saveGame(savedGame.asProto())
+            val savingResult = gameManager.backend.saveGame(savedGame.asProto())
             if (savingResult.isFail) {
                 return savingResult
             }
 
             return resultable {
-                gameManager.frames().register(savedGame)
-                gameManager.builders().remove(id)
+                gameManager.frames.register(savedGame)
+                gameManager.builders.remove(uuid)
             }
         }
 

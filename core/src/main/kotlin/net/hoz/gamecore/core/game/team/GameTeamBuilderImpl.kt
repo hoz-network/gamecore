@@ -6,6 +6,7 @@ import net.hoz.api.data.game.ProtoGameTeam
 import net.hoz.gamecore.api.game.team.GameTeam
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.util.GUtil
+import net.hoz.gamecore.api.util.fromProto
 import org.screamingsandals.lib.spectator.Color
 import org.screamingsandals.lib.world.LocationHolder
 import org.screamingsandals.lib.world.LocationMapper
@@ -21,9 +22,9 @@ class GameTeamBuilderImpl(
     companion object {
         fun fromProto(data: ProtoGameTeam): GameTeamBuilder = GameTeamBuilderImpl(
             data.name,
-            GUtil.fromProtoColor(data.color),
-            LocationMapper.resolve(data.spawn).orElseThrow(),
-            LocationMapper.resolve(data.target).orElseThrow(),
+            data.color.fromProto(),
+            LocationMapper.resolve(data.spawn).orElse(null),
+            LocationMapper.resolve(data.target).orElse(null),
             data.maxPlayers
         )
     }

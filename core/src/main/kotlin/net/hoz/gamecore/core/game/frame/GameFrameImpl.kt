@@ -17,8 +17,8 @@ class GameFrameImpl(
     override val uuid: UUID,
     private val name: String,
     override val displayName: Component,
-    private val config: GameConfig,
-    private val world: GameWorld,
+    override val config: GameConfig,
+    override val world: GameWorld,
     override var gameType: GameType,
     override var customConfig: Boolean = false
 ) : GameFrame {
@@ -33,8 +33,6 @@ class GameFrameImpl(
     override var minPlayers = 0
     override var maxPlayers = 0
 
-    override fun config(): GameConfig = config
-    override fun world(): GameWorld = world
     override fun name(): String = name
 
     override fun asProto(): ProtoGameFrame {
@@ -63,7 +61,7 @@ class GameFrameImpl(
     }
 
     override fun toBuilder(builder: GameBuilder.() -> Unit): GameBuilder {
-        val data = gameManager.builders().from(this)
+        val data = gameManager.builders.from(this)
         builder.invoke(data)
         return data
     }

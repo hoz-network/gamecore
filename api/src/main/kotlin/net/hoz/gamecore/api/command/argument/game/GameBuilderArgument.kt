@@ -65,7 +65,7 @@ class GameBuilderArgument<C: Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(GameFrameParser::class.java, context))
 
-            val available = gameManager.builders().all()
+            val available = gameManager.builders.all()
             if (available.isEmpty()) {
                 return ArgumentParseResult.failure(
                     GameBuilderParseException(context, Caption.of("No builder is registered!"))
@@ -82,7 +82,7 @@ class GameBuilderArgument<C: Any>(
         }
 
         override fun suggestions(context: CommandContext<C>, input: String): MutableList<String> {
-            val available = gameManager.builders()
+            val available = gameManager.builders
                 .all()
                 .map { it.name() }
 

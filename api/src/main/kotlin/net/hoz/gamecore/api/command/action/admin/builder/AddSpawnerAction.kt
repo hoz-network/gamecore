@@ -38,7 +38,7 @@ class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(
 
                     log.debug { "Trying to create new spawner builder.." }
 
-                    val spawner = gameBuilder.spawners()
+                    val spawner = gameBuilder.spawners
                         .add(UUID.randomUUID()) {
                             this.location = location
                             this.useHolograms = useHolograms

@@ -20,9 +20,9 @@ interface GameManager : Controlled {
     /**
      * Provides a connection to backend.
      */
-    fun backend(): NetGameProvider
-    fun frames(): Frames
-    fun builders(): Builders
+    val backend: NetGameProvider
+    val frames: Frames
+    val builders: Builders
 
     // TODO: add kotlin operators and perhaps property overrides?
     interface Frames {
@@ -37,6 +37,7 @@ interface GameManager : Controlled {
         fun find(name: String): GameFrame?
         suspend fun load(uuid: UUID): DataResultable<GameFrame>
         suspend fun load(name: String): DataResultable<GameFrame>
+        fun load(protoGameFrame: ProtoGameFrame): DataResultable<GameFrame>
         fun updates(): SharedFlow<ProtoGameFrame>
 
         /**

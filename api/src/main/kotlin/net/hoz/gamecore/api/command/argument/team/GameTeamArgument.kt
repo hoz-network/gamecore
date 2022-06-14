@@ -75,7 +75,7 @@ class GameTeamArgument<C : Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(GameFrameParser::class.java, context))
 
-            val available = builder.teams().all()
+            val available = builder.teams.all()
             if (available.isEmpty()) {
                 return ArgumentParseResult.failure(
                     GameTeamParseException(context, Caption.of("No Frame is registered!"))
@@ -97,7 +97,7 @@ class GameTeamArgument<C : Any>(
             }
 
             val builder = context[COMMAND_GAME_BUILDER_FIELD]
-            val available = builder.teams()
+            val available = builder.teams
                 .all()
                 .keys
                 .toList()

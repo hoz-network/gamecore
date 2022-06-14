@@ -17,7 +17,7 @@ class GameSpawnerManageImpl(
     var running = false
 
     override fun start(): Resultable {
-        val frame = spawner.frame ?: return Resultable.fail("GameFrame is not initialized!")
+        val frame = spawner.frame
         val team = spawner.team
         val types = spawner.types().all().values
 

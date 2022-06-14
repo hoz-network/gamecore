@@ -27,7 +27,7 @@ class SaveAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parent
                     val gameBuilder = it.getOrNull(GContext.COMMAND_GAME_BUILDER_FIELD)
                         ?: return@suspendingHandler
 
-                    val isReady = gameBuilder.manage().checkIntegrity()
+                    val isReady = gameBuilder.manage.checkIntegrity()
                     if (isReady.isFail) {
                         log.debug { "Cannot save GameBuilder because ${isReady.messages()}" }
 
@@ -41,7 +41,7 @@ class SaveAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parent
                             }
                     }
 
-                    val saved = gameBuilder.manage().save()
+                    val saved = gameBuilder.manage.save()
                     if (saved.isFail) {
                         //TODO: lang
                         Message.of(CommandLang.ERROR_BUILDER_GAME_CANNOT_BE_SAVED)

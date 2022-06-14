@@ -57,7 +57,13 @@ open class GameSpawnerItemsImpl(
         } else {
             targets.forEach {
                 log.debug { "Adding item[${type.name()}] to inventory of player[${it.uuid}]" }
-                it.playerInventory.addItem(type.item(amountToSpawn, it))
+                val item = type.item(amountToSpawn, it)
+                if (item == null) {
+                    //todo: better logging
+                    log.warn { "Cannot create Item for spawner!" }
+                    return
+                }
+                it.playerInventory.addItem(item)
             }
         }
     }

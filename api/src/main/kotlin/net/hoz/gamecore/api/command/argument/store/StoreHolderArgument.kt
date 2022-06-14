@@ -65,7 +65,7 @@ class StoreHolderArgument<C : Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(StoreHolderParser::class.java, context))
 
-            val availableTypes = gameManager.backend().allStores()
+            val availableTypes = gameManager.backend.allStores()
             if (availableTypes.isEmpty()) {
                 return ArgumentParseResult.failure(
                     StoreHolderParseException(context, Caption.of("No holders are available in backend!"))
@@ -82,7 +82,7 @@ class StoreHolderArgument<C : Any>(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): MutableList<String> {
-            val types = gameManager.backend()
+            val types = gameManager.backend
                 .allStores()
                 .map { it.name }
 

@@ -7,11 +7,11 @@ import net.hoz.api.data.game.ProtoGameFrame
 import net.hoz.gamecore.api.game.cycle.CyclePhase
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.service.GameManager
+import net.hoz.gamecore.api.service.PhaseManager
 import java.util.*
 
-internal class GameManagerFramesImpl(
-    private val manager: GameManager,
-    private val initialPhases: List<CyclePhase>
+class GameManagerFramesImpl(
+    private val manager: GameManager
 ) : GameManager.Frames {
     private val frames: MutableMap<UUID, GameFrame> = mutableMapOf()
 
@@ -26,7 +26,7 @@ internal class GameManagerFramesImpl(
         return Resultable.ok()
     }
 
-    override suspend fun save(frame: GameFrame): Resultable = manager.backend().saveGame(frame.asProto())
+    override suspend fun save(frame: GameFrame): Resultable = manager.backend.saveGame(frame.asProto())
 
     override fun remove(uuid: UUID): Boolean = frames.remove(uuid) != null
     override fun has(uuid: UUID): Boolean = frames.containsKey(uuid)
@@ -35,9 +35,20 @@ internal class GameManagerFramesImpl(
     override fun find(name: String): GameFrame? = frames.values
         .firstOrNull { it.name() == name }
 
-    override suspend fun load(uuid: UUID): DataResultable<GameFrame> = buildFrame(manager.backend().loadGame(uuid))
+    override suspend fun load(uuid: UUID): DataResultable<GameFrame> = manager.backend
+        .loadGame(uuid)
+        .flatMap { load(it) }
 
-    override suspend fun load(name: String): DataResultable<GameFrame> = buildFrame(manager.backend().loadGame(name))
+    override suspend fun load(name: String): DataResultable<GameFrame> = manager.backend
+        .loadGame(name)
+        .flatMap { load(it) }
+
+    override fun load(protoGameFrame: ProtoGameFrame): DataResultable<GameFrame> {
+        return manager.builders
+            .from(protoGameFrame)
+            .flatMap { it.build() }
+            .ifOk { frames[it.uuid] = it }
+    }
 
     override fun updates(): SharedFlow<ProtoGameFrame> {
         TODO("Not yet implemented")
@@ -46,8 +57,4 @@ internal class GameManagerFramesImpl(
     override fun supplyInitialPhases(phases: Collection<CyclePhase>) {
         TODO("Not yet implemented")
     }
-
-    private fun buildFrame(input: DataResultable<ProtoGameFrame>): DataResultable<GameFrame> =
-        input.flatMap { manager.builders().from(it) }
-            .flatMap { it.build() }
 }

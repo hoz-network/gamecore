@@ -42,7 +42,7 @@ interface GameFrame
      * @return [GameConfig]
      * @since 2.0.0
      */
-    fun config(): GameConfig
+    val config: GameConfig
 
     /**
      * Gets current [GameWorld] that contains worlds for this frame.
@@ -50,7 +50,7 @@ interface GameFrame
      * @return holder of the worlds :P
      * @since 2.0.0
      */
-    fun world(): GameWorld
+    val world: GameWorld
 
     /**
      * Gets minimal players required to start this frame.

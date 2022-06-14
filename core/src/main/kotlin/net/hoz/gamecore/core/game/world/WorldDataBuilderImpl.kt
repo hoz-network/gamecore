@@ -21,11 +21,11 @@ class WorldDataBuilderImpl(
     companion object {
         fun fromProto(data: ProtoWorldData): WorldDataBuilder = WorldDataBuilderImpl(
             data.type,
-            LocationMapper.resolve(data.border1).orElseThrow(),
-            LocationMapper.resolve(data.border2).orElseThrow(),
-            LocationMapper.resolve(data.spawn).orElseThrow(),
+            LocationMapper.resolve(data.border1).orElse(null),
+            LocationMapper.resolve(data.border2).orElse(null),
+            LocationMapper.resolve(data.spawn).orElse(null),
             if (data.spectator != ProtoLocation.getDefaultInstance()) LocationMapper.resolve(data.spectator)
-                .orElseThrow()
+                .orElse(null)
             else null
         )
     }

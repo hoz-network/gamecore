@@ -43,7 +43,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                         val team = context.getOrNull(COMMAND_TEAM_BUILDER_FIELD)
 
                         log.debug { "Trying to create new team builder.." }
-                        if (gameBuilder.stores().has(storeName)) {
+                        if (gameBuilder.stores.has(storeName)) {
                             Message.of(CommandLang.ERROR_BUILDER_STORE_ALREADY_EXISTS)
                                 .placeholder("name", storeName)
                                 .resolvePrefix()
@@ -51,7 +51,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                             return@builderHandler
                         }
 
-                        val store = gameBuilder.stores()
+                        val store = gameBuilder.stores
                             .add(storeName) {
                                 this.holder = storeHolder
                                 this.team = team?.name
@@ -82,7 +82,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                 )
 
             val builder = commandContext[COMMAND_GAME_BUILDER_FIELD]
-            if (builder.stores().has(input)) {
+            if (builder.stores.has(input)) {
                 inputQueue.remove()
                 return ArgumentParseResult.failure(UnsupportedOperationException("Store already exists."))
             }

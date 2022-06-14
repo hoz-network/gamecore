@@ -59,7 +59,7 @@ class GameFrameArgument<C : Any>(
             val input = inputQueue.peek()
                 ?: return ArgumentParseResult.failure(NoInputProvidedException(GameFrameParser::class.java, context))
 
-            val available = gameManager.frames().all()
+            val available = gameManager.frames.all()
             if (available.isEmpty()) {
                 return ArgumentParseResult.failure(
                     GameFrameParseException(context, Caption.of("No Frame is registered!"))
@@ -76,7 +76,7 @@ class GameFrameArgument<C : Any>(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): MutableList<String> {
-            val available = gameManager.frames()
+            val available = gameManager.frames
                 .all()
                 .map { it.name() }
 

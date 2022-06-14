@@ -36,7 +36,7 @@ class AddTeamAction(parentAction: AbstractAction) : AbstractBuilderSubAction(par
                     val maxPlayers = context[COMMAND_TEAM_MAX_PLAYERS]
 
                     log.debug { "Trying to create new team builder.." }
-                    if (gameBuilder.teams().has(teamName)) {
+                    if (gameBuilder.teams.has(teamName)) {
                         Message.of(CommandLang.ERROR_BUILDER_TEAM_ALREADY_EXISTS)
                             .placeholder("name", teamName)
                             .resolvePrefix()
@@ -53,7 +53,7 @@ class AddTeamAction(parentAction: AbstractAction) : AbstractBuilderSubAction(par
                         return@builderHandler;
                     }
 
-                    val team = gameBuilder.teams()
+                    val team = gameBuilder.teams
                         .add(teamName) {
                             this.color = color
                             this.maxPlayers = maxPlayers

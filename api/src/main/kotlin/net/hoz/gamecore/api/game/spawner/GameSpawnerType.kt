@@ -4,7 +4,7 @@ import com.iamceph.resulter.core.DataResultable
 import com.iamceph.resulter.core.pack.ProtoWrapper
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.ProtoSpawnerType
-import net.hoz.gamecore.api.util.GUtil
+import net.hoz.gamecore.api.util.fromProto
 import org.screamingsandals.lib.item.Item
 import org.screamingsandals.lib.item.ItemTypeHolder
 import org.screamingsandals.lib.lang.Translation
@@ -50,14 +50,14 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
      * @param target target player - used for translations
      * @return [Item] built item.
      */
-    fun item(amount: Int, target: PlayerWrapper?): Item
+    fun item(amount: Int, target: PlayerWrapper?): Item?
 
     /**
      * Gets one item.
      *
      * @return [Item] built item.
      */
-    fun item(): Item {
+    fun item(): Item? {
         return item(1)
     }
 
@@ -67,7 +67,7 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
      * @param amount amount of items in stack
      * @return [Item] built item.
      */
-    fun item(amount: Int): Item {
+    fun item(amount: Int): Item? {
         return item(amount, null)
     }
 
@@ -77,7 +77,7 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
      * @param target target for translation
      * @return [Item] built item.
      */
-    fun item(target: PlayerWrapper?): Item {
+    fun item(target: PlayerWrapper?): Item? {
         return item(1, target)
     }
 
@@ -108,7 +108,7 @@ interface GameSpawnerType : Nameable, ProtoWrapper<ProtoSpawnerType> {
                         Translation.of(type.nameTranslation),
                         type.name,
                         ItemTypeHolder.of(type.material),
-                        GUtil.fromProtoColor(type.color),
+                        type.color.fromProto(),
                         type.type,
                         it,
                         true //TODO

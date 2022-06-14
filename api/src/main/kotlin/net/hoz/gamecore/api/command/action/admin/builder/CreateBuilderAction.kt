@@ -40,8 +40,8 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                     val configName = it[COMMAND_CONFIG_FIELD]
                     val gameType = it[COMMAND_GAME_TYPE]
 
-                    if (gameManager.frames().has(arenaName)
-                        || gameManager.builders().has(arenaName)
+                    if (gameManager.frames.has(arenaName)
+                        || gameManager.builders.has(arenaName)
                     ) {
                         Message.of(CommandLang.ERROR_BUILDER_ALREADY_EXISTS)
                             .resolvePrefix()
@@ -49,7 +49,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                         return@handler
                     }
 
-                    val config = gameManager.backend().oneConfig(configName)
+                    val config = gameManager.backend.oneConfig(configName)
                     if (config.isFail) {
                         Message.of(CommandLang.ERROR_BUILDER_FAILED_CREATING)
                             .placeholder("error", "Invalid config identifier $configName")
@@ -60,7 +60,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                     }
 
 
-                    val gameBuilder = gameManager.builders().create(arenaName, config.data(), gameType)
+                    val gameBuilder = gameManager.builders.create(arenaName, config.data(), gameType)
                     if (gameBuilder.isFail) {
                         Message.of(CommandLang.ERROR_BUILDER_FAILED_CREATING)
                             .placeholder("error", gameBuilder.message())
@@ -81,7 +81,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
 
     private fun suggestConfig(input: String): List<String> {
         if (input.isEmpty()) return listOf()
-        val available = gameManager.backend()
+        val available = gameManager.backend
             .allConfigs()
             .map { it.name }
 

@@ -23,7 +23,7 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
      *
      * @return [UUID] of this builder.
      */
-    val id: UUID
+    val uuid: UUID
 
     val gameManager: GameManager
 
@@ -32,20 +32,20 @@ interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
      *
      * @return [BuilderTeams]
      */
-    fun teams(): BuilderTeams
+    val teams: BuilderTeams
 
-    fun spawners(): BuilderSpawners
+    val spawners: BuilderSpawners
 
-    fun stores(): BuilderStores
+    val stores: BuilderStores
 
-    fun world(): GameWorldBuilder
+    var world: GameWorldBuilder
 
     /**
      * Management of this builder
      *
      * @return [Manage]
      */
-    fun manage(): Manage
+    val manage: Manage
 
     /**
      * Internal unsafe operations.

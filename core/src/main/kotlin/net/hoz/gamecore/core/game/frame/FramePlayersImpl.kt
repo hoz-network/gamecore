@@ -141,7 +141,7 @@ internal class FramePlayersImpl(
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
-        val spectatorSpawn = frame.world()
+        val spectatorSpawn = frame.world
             .arenaWorld
             .spectator
 
@@ -164,7 +164,7 @@ internal class FramePlayersImpl(
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
-        val spectatorSpawn = frame.world()
+        val spectatorSpawn = frame.world
             .arenaWorld
             .spectator
 
@@ -183,7 +183,7 @@ internal class FramePlayersImpl(
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
-        val lobby = frame.world()
+        val lobby = frame.world
             .lobbyWorld
             .spawn
 

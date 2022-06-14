@@ -6,6 +6,4 @@ import net.hoz.gamecore.api.game.team.GameTeamBuilder
 /**
  * Manages teams in [GameBuilder]
  */
-interface BuilderTeams : BuilderBase<GameTeamBuilder, GameTeam, String> {
-
-}
+interface BuilderTeams : BuilderBase<GameTeamBuilder, GameTeam, String>

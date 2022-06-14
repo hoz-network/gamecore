@@ -19,12 +19,12 @@ class GameSpawnerImpl(
     override var useGlobalValues: Boolean,
     override val upgrades: MutableList<Upgrade> = mutableListOf()
 ) : GameSpawner {
+    internal lateinit var frame: GameFrame
 
     private var manage: GameSpawner.Manage = GameSpawnerManageImpl(this)
     private var types: GameSpawner.Types = GameSpawnerTypesImpl(this)
     private var items: GameSpawner.Items = GameSpawnerItemsImpl(this)
     private var unsafe: GameSpawner.Unsafe = UnsafeImpl(this)
-    internal lateinit var frame: GameFrame
     override var team: GameTeam? = null
     override var upgradeType: Upgradeable.Type = Upgradeable.Type.SPAWNER
 

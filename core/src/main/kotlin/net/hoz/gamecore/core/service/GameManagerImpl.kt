@@ -1,36 +1,32 @@
 package net.hoz.gamecore.core.service
 
+import com.google.inject.Inject
+import mu.KotlinLogging
 import net.hoz.gamecore.api.service.GameManager
+import net.hoz.gamecore.core.service.manager.GameManagerBuildersImpl
+import net.hoz.gamecore.core.service.manager.GameManagerFramesImpl
 import net.hoz.netapi.client.provider.NetGameProvider
 
-class GameManagerImpl : GameManager {
-    override fun backend(): NetGameProvider {
-        TODO("Not yet implemented")
-    }
+private val log = KotlinLogging.logger {  }
 
-    override fun frames(): GameManager.Frames {
-        TODO("Not yet implemented")
-    }
-
-    override fun builders(): GameManager.Builders {
-        TODO("Not yet implemented")
-    }
+class GameManagerImpl @Inject constructor(
+    override val backend: NetGameProvider
+) : GameManager {
+    override val frames = GameManagerFramesImpl(this)
+    override val builders = GameManagerBuildersImpl(this)
 
     override fun dispose() {
-        TODO("Not yet implemented")
+        frames.all()
+            .forEach { it.manage.stop() }
     }
 
     override suspend fun initialize() {
-        TODO("Not yet implemented")
-    }
+        backend.allGames()
+            .forEach {
+                val id = it.uuid
+                val loaded = frames.load(it)
 
-    fun doSome(manager: GameManager) {
-        manager.frames()
-            .all()
-            .forEach { it.manage.start() }
-
-        manager.builders()
-            .all()
-            .forEach { it.build() }
+                log.info { "Loading of game[$id] - $loaded" }
+            }
     }
 }
