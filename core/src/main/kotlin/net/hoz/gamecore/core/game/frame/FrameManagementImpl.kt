@@ -93,12 +93,14 @@ internal class FrameManagementImpl(
     }
 
     override fun isRunning(): Boolean {
-        val phase = cycle.currentPhase ?: return false
+        val phase = cycle.currentPhase
+            ?: return false
 
         return when (phase.phaseType) {
             GamePhase.WAITING,
             GamePhase.LOADING,
             GamePhase.DISABLED -> false
+
             else -> true
         }
     }

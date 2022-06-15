@@ -29,6 +29,7 @@ class GameFrameImpl(
     override var teams: FrameTeams = FrameTeamsImpl(this)
     override var stores: FrameStores = FrameStoresImpl(this)
     override var spawners: FrameSpawners = FrameSpawnersImpl(this)
+    override var entities: FrameEntities = FrameEntitiesImpl()
 
     override var minPlayers = 0
     override var maxPlayers = 0

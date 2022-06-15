@@ -15,11 +15,11 @@ import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
+private val log = KotlinLogging.logger { }
+
 open class GameCycleImpl(
     override var frame: GameFrame
 ) : GameCycle {
-    private val log = KotlinLogging.logger { }
-
     override val phases: MutableMap<GamePhase, CyclePhase> = mutableMapOf()
     override var nextPhase: GamePhase = GamePhase.LOADING
     override var currentPhase: CyclePhase? = null
@@ -69,20 +69,18 @@ open class GameCycleImpl(
 
     override fun stop(): Resultable {
         val task = cycleTask
-        if (task != null) {
-            frame.players.leaveAll()
-            frame.spawners.destroy()
+            ?: return Resultable.ok()
 
-            frame.maxPlayers = 0
+        frame.players.leaveAll()
+        frame.spawners.destroy()
 
-            switchPhase(GamePhase.DISABLED)
+        frame.maxPlayers = 0
 
-            currentPhase = null
-            task.cancel()
-            //TODO - result
-            return Resultable.ok()
-        }
+        switchPhase(GamePhase.DISABLED)
 
+        currentPhase = null
+        task.cancel()
+        //TODO - result
         return Resultable.ok()
     }
 
@@ -150,6 +148,7 @@ open class GameCycleImpl(
 
                 GamePhaseChangedEvent(frame, currentPhase, previousPhase).fire()
             }
+
             else -> {
                 log.warn("Unexpected phase [{}], stopping the game {}", nextPhase, frame.name())
                 //unknown phase, stop and log

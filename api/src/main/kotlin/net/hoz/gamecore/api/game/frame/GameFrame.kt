@@ -130,4 +130,6 @@ interface GameFrame
      * CHANGE ONLY IF THE FRAME IS NOT STARTED, OTHERWISE U R FUCCKED.
      */
     var spawners: FrameSpawners
+
+    var entities: FrameEntities
 }

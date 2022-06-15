@@ -22,8 +22,8 @@ private val log = KotlinLogging.logger {}
 class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
         //TODO: description lang
-        commandManager.command(
-            builder.literal("create", ArgumentDescription.of("Creates new builder"))
+        commandManager
+            .command(builder.literal("create", ArgumentDescription.of("Creates new builder"))
                 .senderType(PlayerWrapper::class)
                 .argument(
                     StringArgument.newBuilder<CommandSenderWrapper>(COMMAND_CONFIG_FIELD.name)
@@ -76,7 +76,7 @@ class CreateBuilderAction(parentAction: AbstractAction) : AbstractBuilderSubActi
                         .send(sender)
                 }
                 .build()
-        )
+            )
     }
 
     private fun suggestConfig(input: String): List<String> {

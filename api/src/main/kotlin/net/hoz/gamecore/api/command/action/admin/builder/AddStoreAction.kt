@@ -52,7 +52,7 @@ class AddStoreAction(parentAction: AbstractAction) : AbstractBuilderSubAction(pa
                         }
 
                         val store = gameBuilder.stores
-                            .add(storeName) {
+                            .builder(storeName) {
                                 this.holder = storeHolder
                                 this.team = team?.name
                             }

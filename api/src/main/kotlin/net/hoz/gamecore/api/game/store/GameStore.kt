@@ -73,7 +73,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, Audience.Forwardin
          * Adds player to this team.
          * NOTE: this is an internal API, use this at your own risk.
          *
-         * @param player player to add
+         * @param player player to builder
          */
         fun addPlayer(player: GamePlayer)
 
@@ -81,7 +81,7 @@ interface GameStore : Nameable, ProtoWrapper<ProtoGameStore>, Audience.Forwardin
          * Removes player from this team.
          * NOTE: this is an internal API, use this at your own risk.
          *
-         * @param player player to add
+         * @param player player to builder
          */
         fun removePlayer(player: GamePlayer)
 

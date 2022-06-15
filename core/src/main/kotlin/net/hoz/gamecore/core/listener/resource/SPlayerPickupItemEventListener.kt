@@ -7,6 +7,7 @@ import net.hoz.gamecore.api.game.player.GamePlayer
 import net.hoz.gamecore.api.lang.GLang
 import org.screamingsandals.lib.event.EventPriority
 import org.screamingsandals.lib.event.player.SPlayerPickupItemEvent
+import org.screamingsandals.lib.kotlin.cancelled
 import org.screamingsandals.lib.kotlin.unwrap
 import org.screamingsandals.lib.utils.ObjectLink
 
@@ -18,10 +19,11 @@ class SPlayerPickupItemEventListener : SEventHandlerFactory<GamePlayerResourcePi
 
     override fun wrapEvent(event: SPlayerPickupItemEvent, priority: EventPriority): GamePlayerResourcePickEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame ?: return null
+        val frame = gamePlayer.frame
+            ?: return null
 
         if (!frame.manage.isRunning()) {
-            event.cancelled(true)
+            event.cancelled = true
             return null
         }
 

@@ -8,6 +8,7 @@ import com.iamceph.resulter.kotlin.resultable
 import mu.KotlinLogging
 import net.hoz.api.data.GameType
 import net.hoz.api.data.game.GameConfig
+import net.hoz.gamecore.api.event.game.GameSavedEvent
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.frame.builder.BuilderSpawners
 import net.hoz.gamecore.api.game.frame.builder.BuilderStores
@@ -18,6 +19,7 @@ import net.hoz.gamecore.api.game.world.GameWorldBuilder
 import net.hoz.gamecore.api.service.GameManager
 import net.hoz.gamecore.core.game.frame.GameFrameImpl
 import net.hoz.gamecore.core.game.world.GameWorldBuilderImpl
+import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.spectator.Component
 import java.util.*
 
@@ -32,9 +34,9 @@ class GameBuilderImpl(
     private val fromProto: Boolean = false
 ) : GameBuilder {
 
-    override val teams: BuilderTeams = BuilderTeamsImpl()
-    override val spawners: BuilderSpawners = BuilderSpawnersImpl()
-    override val stores: BuilderStores = BuilderStoresImpl()
+    override val teams: BuilderTeams = BuilderTeamsImpl(this)
+    override val spawners: BuilderSpawners = BuilderSpawnersImpl(this)
+    override val stores: BuilderStores = BuilderStoresImpl(this)
     override var world: GameWorldBuilder = GameWorldBuilderImpl()
     override val manage: GameBuilder.Manage = ManageImpl()
     private val unsafe: GameBuilder.Unsafe = UnsafeImpl()
@@ -108,6 +110,8 @@ class GameBuilderImpl(
             if (savingResult.isFail) {
                 return savingResult
             }
+
+           GameSavedEvent(savedGame).fire()
 
             return resultable {
                 gameManager.frames.register(savedGame)

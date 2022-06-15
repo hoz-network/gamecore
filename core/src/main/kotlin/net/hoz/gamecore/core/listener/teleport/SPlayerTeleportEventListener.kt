@@ -14,7 +14,8 @@ class SPlayerTeleportEventListener : SEventHandlerFactory<GamePlayerTeleportEven
 
     override fun wrapEvent(event: SPlayerTeleportEvent, priority: EventPriority): GamePlayerTeleportEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame ?: return null
+        val frame = gamePlayer.frame
+            ?: return null
 
         return GamePlayerTeleportEvent(
             gamePlayer,

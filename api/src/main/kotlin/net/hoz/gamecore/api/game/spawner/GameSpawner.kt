@@ -254,7 +254,7 @@ interface GameSpawner
          * NOTE: by default implementation, this stops the spawner
          * and starts it with new type settings!
          *
-         * @param type type to add
+         * @param type type to builder
          * @return result of this operation
          */
         fun addType(type: GameSpawnerType): Resultable

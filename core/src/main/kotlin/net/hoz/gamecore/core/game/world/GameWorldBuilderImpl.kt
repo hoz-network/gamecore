@@ -31,11 +31,11 @@ class GameWorldBuilderImpl(
     }
 
     override fun arena(block: WorldDataBuilder.() -> Unit) {
-        block.invoke(arenaWorld)
+        arenaWorld.block()
     }
 
     override fun lobby(block: WorldDataBuilder.() -> Unit) {
-        block.invoke(lobbyWorld)
+        lobbyWorld.block()
     }
 
     override fun build(): DataResultable<GameWorld> {

@@ -20,7 +20,7 @@ class BuilderAction(
         val mainAction = buildMainAction()
 
         val setAction = mainAction.literal("set")
-        val addAction = mainAction.literal("add")
+        val addAction = mainAction.literal("builder")
         val setLobbyAction = setAction.literal("lobby")
         val setArenaAction = setAction.literal("arena")
         val teamAction = setAction.literal("team")
@@ -33,8 +33,15 @@ class BuilderAction(
         AddStoreAction(this).build(addAction)
         AddTeamAction(this).build(addAction)
 
+        //SET
         SetGameBorderAction(this, ProtoWorldData.WorldType.LOBBY).build(setLobbyAction)
         SetGameBorderAction(this, ProtoWorldData.WorldType.ARENA).build(setArenaAction)
+        SetSpawnAction(this, ProtoWorldData.WorldType.LOBBY).build(setLobbyAction)
+        SetSpawnAction(this, ProtoWorldData.WorldType.ARENA).build(setArenaAction)
+        SetSpectatorSpawnAction(this, ProtoWorldData.WorldType.LOBBY).build(setLobbyAction)
+        SetSpectatorSpawnAction(this, ProtoWorldData.WorldType.ARENA).build(setArenaAction)
+
+        SetTeamSpawnAction(this).build(teamAction)
 
     }
 

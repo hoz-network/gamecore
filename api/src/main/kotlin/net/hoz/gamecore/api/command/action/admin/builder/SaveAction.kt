@@ -19,8 +19,8 @@ private val log = KotlinLogging.logger {}
 class SaveAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
 
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
-        commandManager.command(
-            builder.literal("save", ArgumentDescription.of("Saves given frame."))
+        commandManager
+            .command(builder.literal("save", ArgumentDescription.of("Saves given frame."))
                 .senderType(PlayerWrapper::class.java)
                 .suspendingHandler(handler = {
                     val sender = it.player()

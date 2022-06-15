@@ -1,7 +1,6 @@
-package net.hoz.gamecore.api.game.frame.builder
+package net.hoz.gamecore.api.game.frame.builder.base
 
 import com.iamceph.resulter.core.DataResultable
-import net.hoz.gamecore.api.ProtoBuildable
 
 /**
  * Base for building spawners, teams, etc.
@@ -11,12 +10,24 @@ import net.hoz.gamecore.api.ProtoBuildable
  * @param <ID> ID of the instance
  */
 interface BuilderBase<B, R, ID> {
+    val keys: Set<ID>
+        get() = all().keys
+    val values: Collection<B>
+        get() = all().values
+
     /**
      * All instances that are in this builder.
      *
      * @return map of instances
      */
     fun all(): Map<ID, B>
+
+    /**
+     * Adds new instance to this builder.
+     *
+     * @return false if the instance already exists
+     */
+    fun builder(id: ID, block: B.() -> Unit): B
 
     /**
      * Tries to find given instance by name in this builder.
@@ -33,13 +44,6 @@ interface BuilderBase<B, R, ID> {
      * @return true if the builder has an instance
      */
     fun has(id: ID): Boolean
-
-    /**
-     * Adds new instance to this builder.
-     *
-     * @return false if the instance already exists
-     */
-    fun add(id: ID, builder: B.() -> Unit): B
 
     /**
      * Removes given instance from this builder.

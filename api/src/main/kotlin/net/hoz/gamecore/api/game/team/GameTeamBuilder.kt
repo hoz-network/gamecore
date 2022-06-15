@@ -2,6 +2,7 @@ package net.hoz.gamecore.api.game.team
 
 import net.hoz.gamecore.api.Buildable
 import org.screamingsandals.lib.spectator.Color
+import org.screamingsandals.lib.spectator.Component
 import org.screamingsandals.lib.world.LocationHolder
 
 /**
@@ -28,4 +29,9 @@ abstract class GameTeamBuilder(
      * Max players available
      */
     var maxPlayers: Int?
-) : Buildable.Builder<GameTeam>
+) : Buildable.Builder<GameTeam> {
+
+    fun coloredName(): Component {
+        return Component.text(name).withColor(color)
+    }
+}

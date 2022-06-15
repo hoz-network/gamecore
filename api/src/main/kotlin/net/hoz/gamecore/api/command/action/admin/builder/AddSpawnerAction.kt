@@ -19,6 +19,7 @@ import org.screamingsandals.lib.sender.CommandSenderWrapper
 import java.util.*
 
 private val log = KotlinLogging.logger {}
+
 class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parentAction) {
     override fun build(builder: Command.Builder<CommandSenderWrapper>) {
         commandManager
@@ -39,7 +40,7 @@ class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(
                     log.debug { "Trying to create new spawner builder.." }
 
                     val spawner = gameBuilder.spawners
-                        .add(UUID.randomUUID()) {
+                        .builder(UUID.randomUUID()) {
                             this.location = location
                             this.useHolograms = useHolograms
                             this.useGlobalValues = useGlobalConfig

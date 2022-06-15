@@ -7,6 +7,7 @@ import net.hoz.gamecore.api.game.world.WorldRegenerator
 import net.hoz.gamecore.api.util.GConfig
 import org.screamingsandals.lib.event.EventPriority
 import org.screamingsandals.lib.event.player.SPlayerBlockBreakEvent
+import org.screamingsandals.lib.kotlin.cancelled
 import org.screamingsandals.lib.kotlin.unwrap
 import org.screamingsandals.lib.utils.ObjectLink
 
@@ -18,7 +19,8 @@ class SPlayerBlockBreakEventListener
 
     override fun wrapEvent(event: SPlayerBlockBreakEvent, priority: EventPriority): GamePlayerBlockBreakEvent? {
         val gamePlayer = event.player().unwrap(GamePlayer::class)
-        val frame = gamePlayer.frame ?: return null
+        val frame = gamePlayer.frame
+            ?: return null
         if (!frame.manage.isRunning()) {
             return null
         }
@@ -61,6 +63,6 @@ class SPlayerBlockBreakEventListener
             return
         }
 
-        event.cancelled(true)
+        event.cancelled = true
     }
 }

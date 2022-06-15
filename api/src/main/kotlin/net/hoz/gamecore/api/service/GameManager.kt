@@ -24,7 +24,7 @@ interface GameManager : Controlled {
     val frames: Frames
     val builders: Builders
 
-    // TODO: add kotlin operators and perhaps property overrides?
+    // TODO: builder kotlin operators and perhaps property overrides?
     interface Frames {
         fun all(): List<GameFrame>
         fun register(frame: GameFrame): Resultable
@@ -46,7 +46,7 @@ interface GameManager : Controlled {
         fun supplyInitialPhases(phases: Collection<CyclePhase>)
     }
 
-    // TODO: add kotlin operators and perhaps property overrides?
+    // TODO: builder kotlin operators and perhaps property overrides?
     interface Builders {
         fun all(): List<GameBuilder>
 

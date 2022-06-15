@@ -54,7 +54,7 @@ class AddTeamAction(parentAction: AbstractAction) : AbstractBuilderSubAction(par
                     }
 
                     val team = gameBuilder.teams
-                        .add(teamName) {
+                        .builder(teamName) {
                             this.color = color
                             this.maxPlayers = maxPlayers
                         }

@@ -92,7 +92,7 @@ class GameManagerBuildersImpl(
         return GroupedResultable.of(teams.map {
             val id = it.name
             return@map resultable {
-                builder.teams.add(id) {
+                builder.teams.builder(id) {
                     color = it.color.fromProto()
                     spawn = LocationMapper.resolve(it.spawn).orElse(null)
                     target = LocationMapper.resolve(it.target).orElse(null)
@@ -108,7 +108,7 @@ class GameManagerBuildersImpl(
             val convertedTypes = convertSpawnerTypes(it.typesList)
 
             return@map resultable {
-                builder.spawners.add(id) {
+                builder.spawners.builder(id) {
                     if (it.team.isNotEmpty()) {
                         team = it.team
                     }
@@ -130,7 +130,7 @@ class GameManagerBuildersImpl(
             }
 
             return@map resultable {
-                builder.stores.add(id) {
+                builder.stores.builder(id) {
                     if (it.teamId.isNotEmpty()) {
                         team = it.teamId
                     }

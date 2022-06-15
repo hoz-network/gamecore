@@ -9,7 +9,9 @@ import net.hoz.api.data.game.ProtoWorldData.WorldType
 import net.hoz.gamecore.api.command.GContext.COMMAND_BORDER_TYPE
 import net.hoz.gamecore.api.command.action.AbstractAction
 import net.hoz.gamecore.api.command.builderHandler
+import net.hoz.gamecore.api.event.builder.world.GameWorldBorderSetEvent
 import net.hoz.gamecore.api.lang.CommandLang
+import org.screamingsandals.lib.kotlin.fire
 import org.screamingsandals.lib.lang.Message
 import org.screamingsandals.lib.sender.CommandSenderWrapper
 
@@ -38,26 +40,20 @@ class SetGameBorderAction(
                     log.debug { "Border[${worldType.name}/${borderType.name}] will be at location: $location" }
 
                     val world = when (worldType) {
-                        WorldType.LOBBY -> gameBuilder.world.lobby {
-                            when (borderType) {
-                                BorderType.FIRST -> border1 = location
-                                BorderType.SECOND -> border2 = location
-                                else -> log.warn { "Cannot set UNRECOGNIZED border type." }
-                            }
-                        }
+                        WorldType.LOBBY -> gameBuilder.world.lobbyWorld
+                        WorldType.ARENA -> gameBuilder.world.arenaWorld
+                        else -> throw UnsupportedOperationException("World not found.")
+                    }
 
-                        WorldType.ARENA -> gameBuilder.world.arena {
-                            when (borderType) {
-                                BorderType.FIRST -> border1 = location
-                                BorderType.SECOND -> border2 = location
-                                else -> log.warn { "Cannot set UNRECOGNIZED border type." }
-                            }
-                        }
-
-                        else -> throw UnsupportedOperationException("Unsupported world.")
+                    when (borderType) {
+                        BorderType.FIRST -> world.border1 = location
+                        BorderType.SECOND -> world.border2 = location
+                        else -> log.warn { "Cannot set UNRECOGNIZED border type." }
                     }
 
                     log.debug { "Created new ${worldType.name} world builder: $world" }
+
+                    GameWorldBorderSetEvent(world, gameBuilder, location, borderType).fire()
 
                     //TODO: lang
                     Message.of(CommandLang.SUCCESS_BUILDER_SPAWNER_ADDED)

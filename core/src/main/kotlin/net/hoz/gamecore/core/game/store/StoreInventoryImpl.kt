@@ -184,15 +184,16 @@ class StoreInventoryImpl(
         event.properties
             .forEach {
                 val data = it.propertyData.node("identifier").string
-                if (data == null) {
-                    log.debug { "No data found in OnTradeEvent" }
-                    return
-                }
+                    ?: run {
+                        log.debug { "No data found in OnTradeEvent" }
+                        return
+                    }
 
                 val item = item(data)
                 if (item != null) {
                     GameStoreBuyEvent(event, item).fire()
                 }
+
                 val upgrade = upgrade(data)
                 if (upgrade != null) {
                     GameStoreUpgradeBuyEvent(event, upgrade).fire()
@@ -223,7 +224,7 @@ class StoreInventoryImpl(
             .map { "$$it" }
             .toMutableList()
 
-        //add main category too
+        //builder main category too
         modifiedCategoryNames.add("main")
 
         //prepare categories and build items for them
@@ -277,7 +278,7 @@ class StoreInventoryImpl(
                 .row(location.row)
                 .property(buildItemProperty(item))
 
-            //add prices from proto
+            //builder prices from proto
             item.pricesList.forEach { price ->
                 itemInfo.price(Price.of(price.count, price.currencyName))
             }
