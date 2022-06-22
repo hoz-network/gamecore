@@ -100,7 +100,6 @@ internal class FrameManagementImpl(
             GamePhase.WAITING,
             GamePhase.LOADING,
             GamePhase.DISABLED -> false
-
             else -> true
         }
     }

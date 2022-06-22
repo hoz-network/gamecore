@@ -6,6 +6,7 @@ import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
 import net.hoz.gamecore.api.game.player.GamePlayer
 import org.jetbrains.annotations.ApiStatus
+import org.screamingsandals.lib.hologram.Hologram
 import org.screamingsandals.lib.spectator.Color
 import org.screamingsandals.lib.spectator.Component
 import org.screamingsandals.lib.spectator.audience.Audience

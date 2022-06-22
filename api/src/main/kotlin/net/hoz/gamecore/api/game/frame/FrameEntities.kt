@@ -10,7 +10,7 @@ interface FrameEntities {
     /**
      * List of all entities present in the game.
      */
-    val entities: List<GameEntity>
+    val entities: Map<Int, GameEntity>
 
     /**
      * Adds new entity into the game.

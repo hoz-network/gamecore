@@ -1,33 +1,29 @@
 package net.hoz.gamecore.core.game.frame
 
-import net.hoz.gamecore.api.game.entity.EntityType
 import net.hoz.gamecore.api.game.entity.GameEntity
 import net.hoz.gamecore.api.game.frame.FrameEntities
 import org.screamingsandals.lib.entity.EntityBasic
 
 class FrameEntitiesImpl : FrameEntities {
-    override val entities: MutableList<GameEntity> = mutableListOf()
+    override val entities: MutableMap<Int, GameEntity> = mutableMapOf()
 
     override fun add(entity: GameEntity) {
-        if (entities.contains(entity)) {
+        if (entities.contains(entity.id)) {
             return
         }
-        entities.add(entity)
+        entities[entity.id] = entity
     }
 
     override fun remove(entity: GameEntity) {
-        entities.removeIf {
-            it.entity == entity.entity
-        }
-        entity.entity.remove()
+        entities.remove(entity.id)?.entity?.remove()
     }
 
     override fun has(entity: EntityBasic): Boolean {
-        return entities.any { it.entity == entity }
+        return entities.contains(entity.entityId)
     }
 
     override fun removeAll() {
-        entities.forEach { it.entity.remove() }
+        entities.values.forEach { it.entity.remove() }
         entities.clear()
     }
 }
