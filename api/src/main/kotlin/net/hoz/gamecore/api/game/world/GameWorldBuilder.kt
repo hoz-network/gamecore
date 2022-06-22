@@ -2,6 +2,9 @@ package net.hoz.gamecore.api.game.world
 
 import net.hoz.gamecore.api.Buildable
 
+/**
+ * Builder for the [WorldData].
+ */
 abstract class GameWorldBuilder(
     var arenaWorld: WorldDataBuilder,
     var lobbyWorld: WorldDataBuilder,

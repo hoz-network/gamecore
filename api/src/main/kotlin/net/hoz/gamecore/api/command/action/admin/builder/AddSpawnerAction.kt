@@ -29,7 +29,7 @@ class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(
                 .argument(BooleanArgument.optional(COMMAND_SPAWNER_USE_HOLOGRAMS.name, true))
                 .argument(BooleanArgument.optional(COMMAND_SPAWNER_USE_GLOBAL_CONFIG.name, true))
                 .builderHandler { sender, gameBuilder, context ->
-                    val location = sender.location
+                    val location = sender.location.clone()
                     log.debug { "Spawner location will be: $location" }
 
                     val spawnerType = context[COMMAND_SPAWNER_TYPE_FIELD]
@@ -40,7 +40,7 @@ class AddSpawnerAction(parentAction: AbstractAction) : AbstractBuilderSubAction(
                     log.debug { "Trying to create new spawner builder.." }
 
                     val spawner = gameBuilder.spawners
-                        .builder(UUID.randomUUID()) {
+                        .builder {
                             this.location = location
                             this.useHolograms = useHolograms
                             this.useGlobalValues = useGlobalConfig

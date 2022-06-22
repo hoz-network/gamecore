@@ -1,5 +1,8 @@
 package net.hoz.gamecore.api.game.frame.builder.base
 
+/**
+ * Default implementation of the [BuilderBase].
+ */
 abstract class BuilderBaseImpl<B, R, ID> : BuilderBase<B, R, ID> {
     protected val builders: MutableMap<ID, B> = mutableMapOf()
 

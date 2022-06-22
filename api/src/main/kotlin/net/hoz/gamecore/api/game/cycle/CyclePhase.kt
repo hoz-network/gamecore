@@ -4,25 +4,19 @@ import net.hoz.api.data.game.GamePhase
 import org.jetbrains.annotations.ApiStatus
 
 /**
- * Actual implementation of [GamePhase].
+ * This is the implementation of the [GamePhase].
+ * Implementation of this is responsible for handling given phase.
  *
- *
- * This handles ticking. //TODO
+ * This contains: logic for ticking, switching to another phase and so on.
  */
 interface CyclePhase {
     /**
-     * Phase that should be next after this phase finishes.
-     *
-     *
-     * NOTE: this does not represent actual [GameCycle.nextPhase],
-     * because that can be changed by [GameCycle.switchPhase]!
+     * Phase that should be used next after this phase finishes.
      */
     var nextPhase: GamePhase
 
     /**
-     * What [GamePhase] is this cycle phase for.
-     *
-     * @return GamePhase that this cycle is for.
+     * Current phase type.
      */
     val phaseType: GamePhase
 
@@ -39,22 +33,22 @@ interface CyclePhase {
     var elapsedTicks: Int
 
     /**
-     * Count of remaining ticks to run
+     * Count of remaining ticks to run.
      */
     fun remainingTicks(): Int
 
     /**
-     * Checks if this is the last tick.
+     * Returns true if this is the last tick.
      */
     fun isLastTick(): Boolean
 
     /**
-     * Checks if this is the first tick
+     * Returns true if this is the first tick.
      */
     fun isFirstTick(): Boolean
 
     /**
-     * Checks if the phase has ended.
+     * Returns true if this the phase is finished.
      */
     fun isFinished(): Boolean
 
@@ -69,8 +63,7 @@ interface CyclePhase {
     fun doOnLastTick()
 
     /**
-     * Fires an action that happens before the tick.
-     * If this returns false, the actual tick WON'T happen.
+     * Runs check-logic if the next tick can actually happen.
      */
     fun doPreTick(): Boolean
 
@@ -80,7 +73,7 @@ interface CyclePhase {
     fun doTick()
 
     /**
-     * Resets the phase to default value.
+     * Resets the phase to new-like state.
      */
     fun reset()
 

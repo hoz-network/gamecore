@@ -6,12 +6,13 @@ import org.screamingsandals.lib.utils.ReceiverConsumer
 import java.util.*
 import java.util.function.Consumer
 
+private val log = KotlinLogging.logger {}
+
 abstract class SEventHandlerFactory<W : SEvent, E : SEvent>(
     private val wrapperClass: Class<W>,
     private val eventClass: Class<E>,
-    private val fireAsync: Boolean = true
+    private val fireAsync: Boolean = false
 ) {
-    private val log = KotlinLogging.logger {}
     private val eventMap: MutableMap<EventPriority, Consumer<E>> = EnumMap(EventPriority::class.java)
 
     init {

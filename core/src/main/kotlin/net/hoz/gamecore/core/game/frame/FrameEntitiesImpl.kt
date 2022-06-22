@@ -1,5 +1,6 @@
 package net.hoz.gamecore.core.game.frame
 
+import net.hoz.gamecore.api.game.entity.EntityType
 import net.hoz.gamecore.api.game.entity.GameEntity
 import net.hoz.gamecore.api.game.frame.FrameEntities
 import org.screamingsandals.lib.entity.EntityBasic

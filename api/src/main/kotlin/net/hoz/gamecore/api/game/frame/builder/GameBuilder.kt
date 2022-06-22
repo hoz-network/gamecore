@@ -4,6 +4,7 @@ import com.iamceph.resulter.core.GroupedResultable
 import com.iamceph.resulter.core.Resultable
 import net.hoz.gamecore.api.Buildable
 import net.hoz.gamecore.api.game.frame.GameFrame
+import net.hoz.gamecore.api.game.spawner.GameSpawner
 import net.hoz.gamecore.api.game.team.GameTeamBuilder
 import net.hoz.gamecore.api.game.world.GameWorldBuilder
 import net.hoz.gamecore.api.service.GameManager
@@ -12,32 +13,38 @@ import org.screamingsandals.lib.utils.Nameable
 import java.util.*
 
 /**
- * Entry point for building [GameFrame]s.
+ * Builder for the [GameFrame].
  */
 interface GameBuilder : Nameable, Buildable.Builder<GameFrame> {
     /**
-     * [UUID] of this builder.
-     *
-     *
-     * NOTE: this [UUID] will be also used for [GameFrame].
-     *
-     * @return [UUID] of this builder.
+     * Returns [UUID] of this builder.
+     * This UUID is final and is also used for the GameFrame.
      */
     val uuid: UUID
 
+    /**
+     * instance of the [GameManager].
+     */
     val gameManager: GameManager
 
     /**
-     * Teams building.
-     *
-     * @return [BuilderTeams]
+     * Entrypoint for team builder.
      */
     val teams: BuilderTeams
 
+    /**
+     * Entrypoint for spawner builder.
+     */
     val spawners: BuilderSpawners
 
+    /**
+     * Entrypoint for stores builder.
+     */
     val stores: BuilderStores
 
+    /**
+     * Entrypoint for world builder.
+     */
     var world: GameWorldBuilder
 
     /**

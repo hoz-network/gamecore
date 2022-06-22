@@ -87,7 +87,7 @@ internal class FrameManagementImpl(
 
             return result
         } catch (e: Exception) {
-            log.warn("Exception occurred while stopping the game! {}", e.message, e)
+            log.warn("Exception occurred while stopping the game! ${e.message}", e)
             return Resultable.fail("Cannot stop the game because of Exception!", e)
         }
     }

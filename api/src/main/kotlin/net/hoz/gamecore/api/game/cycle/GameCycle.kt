@@ -7,6 +7,12 @@ import net.hoz.gamecore.api.game.frame.GameFrame
 import org.screamingsandals.lib.tasker.Tasker
 import org.screamingsandals.lib.tasker.task.TaskerTask
 
+/**
+ * GameCycle runs the logic behind ticking.
+ * The purpose of GameCycle is to handle ticking. This abstraction allows you to build custom logic behind the phases.
+ *
+ * Cycle is started when the Frame is loaded, stop when the Frame is [GamePhase.DISABLED].
+ */
 interface GameCycle : Buildable.Builder<Tasker.TaskBuilder> {
     /**
      * The [GameFrame] that this cycle is used for.
@@ -33,15 +39,11 @@ interface GameCycle : Buildable.Builder<Tasker.TaskBuilder> {
 
     /**
      * Currently running phase.
-     *
-     * @return currently running phase or null if none
      */
     val currentPhase: CyclePhase?
 
     /**
      * Previously ran phase.
-     *
-     * @return previously ran phase or null if none
      */
     val previousPhase: CyclePhase?
 

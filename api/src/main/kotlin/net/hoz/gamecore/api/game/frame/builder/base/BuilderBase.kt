@@ -5,9 +5,9 @@ import com.iamceph.resulter.core.DataResultable
 /**
  * Base for building spawners, teams, etc.
  *
- * @param <B> builder
- * @param <R> result
- * @param <ID> ID of the instance
+ * [B] - builder type
+ * [R] - type of result after building
+ * [ID] - id type of the builder
  */
 interface BuilderBase<B, R, ID> {
     val keys: Set<ID>
@@ -16,42 +16,32 @@ interface BuilderBase<B, R, ID> {
         get() = all().values
 
     /**
-     * All instances that are in this builder.
-     *
-     * @return map of instances
+     * All builders created.
      */
     fun all(): Map<ID, B>
 
     /**
-     * Adds new instance to this builder.
-     *
-     * @return false if the instance already exists
+     * Creates new builder by [ID] IF NOT ALREADY EXISTS.
      */
     fun builder(id: ID, block: B.() -> Unit): B
 
     /**
-     * Tries to find given instance by name in this builder.
-     *
-     * @param id) id of the instance
-     * @return instance if present.
+     * Tries to find builder by [ID].
      */
     fun find(id: ID): B?
 
     /**
-     * Checks if this builder has an instance with given name.
-     *0
-     * @param id id to find for
-     * @return true if the builder has an instance
+     * Checks if builder with [ID] already exists
      */
     fun has(id: ID): Boolean
 
     /**
-     * Removes given instance from this builder.
-     *
-     * @param id id of the builder
-     * @return false if the instance never existed
+     * Removes builder with [ID].
      */
     fun remove(id: ID): Boolean
 
+    /**
+     * Builds all builders.
+     */
     fun build(): Map<ID, DataResultable<R>>
 }
