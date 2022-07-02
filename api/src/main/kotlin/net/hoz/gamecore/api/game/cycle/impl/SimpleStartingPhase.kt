@@ -8,8 +8,7 @@ abstract class SimpleStartingPhase(cycle: GameCycle) :
 
     override fun doPreTick(): Boolean {
         if (!frame.players.hasEnough()) {
-            //TODO: it should not tick, update visuals here
-            //that we dont have enough players
+            cycle.switchPhase(GamePhase.WAITING)
             return false
         }
 

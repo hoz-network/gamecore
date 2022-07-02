@@ -35,10 +35,6 @@ class SaveAction(parentAction: AbstractAction) : AbstractBuilderSubAction(parent
                             .placeholder("game-name", gameBuilder.name())
                             .resolvePrefix()
                             .send(sender)
-                        isReady.messages()
-                            .forEach { message ->
-                                //TODO
-                            }
                     }
 
                     val saved = gameBuilder.manage.save()

@@ -45,7 +45,7 @@ internal class FrameManagementImpl(
     }
 
     override fun start(): Resultable {
-        if (GamePreStartEvent(frame).fire().cancelled()) {
+        if (GamePreStartEvent(frame).fire().cancelled) {
             return Resultable.fail("Cancelled by event.")
         }
 

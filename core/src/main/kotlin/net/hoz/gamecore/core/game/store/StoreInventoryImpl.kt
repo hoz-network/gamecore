@@ -56,7 +56,12 @@ class StoreInventoryImpl(
     override fun selectedCategory(): StoreCategory? = selectedCategory
 
     override fun open(): Resultable {
-        val inventory = inventorySet ?: return Resultable.fail("Inventory is not generated!")
+        if (inventorySet == null) {
+            generate()
+        }
+
+        val inventory = inventorySet
+            ?: return Resultable.fail("Inventory is not generated!")
 
         inventory.openInventory(viewer)
         isOpened = true

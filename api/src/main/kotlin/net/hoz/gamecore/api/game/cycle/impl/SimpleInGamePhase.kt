@@ -7,6 +7,14 @@ import net.hoz.gamecore.api.util.GConfig
 abstract class SimpleInGamePhase(cycle: GameCycle) :
     AbstractCyclePhase(cycle, GamePhase.IN_GAME, GamePhase.DEATH_MATCH) {
 
+    override fun doFirstTick() {
+        //reset starting phase after the game started
+        cycle.phases[GamePhase.STARTING]?.reset()
+
+        //TODO: start spawners
+        //TODO: start stores
+    }
+
     override fun doPreTick(): Boolean {
         if (GConfig.ARE_TEAMS_ENABLED(frame)) {
             frame.teams

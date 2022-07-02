@@ -12,6 +12,7 @@ import net.hoz.gamecore.api.game.store.StoreInventory
 import net.hoz.gamecore.api.game.team.GameTeam
 import org.screamingsandals.lib.entity.EntityLiving
 import org.screamingsandals.lib.entity.type.EntityTypeHolder
+import org.screamingsandals.lib.hologram.Hologram
 import org.screamingsandals.lib.world.LocationHolder
 
 class GameStoreImpl(
@@ -24,6 +25,7 @@ class GameStoreImpl(
     internal var frame: GameFrame? = null
 
     private val inventories: MutableMap<GamePlayer, StoreInventoryImpl> = mutableMapOf()
+    private val storeNames: MutableMap<GamePlayer, Hologram> = mutableMapOf()
     private var storeEntity: EntityLiving? = null
 
     override fun name(): String = name
@@ -62,5 +64,32 @@ class GameStoreImpl(
 
     override fun asProto(): ProtoGameStore {
         TODO("Not yet implemented")
+    }
+
+    internal class UnsafeImpl : GameStore.Unsafe {
+        override fun addPlayer(player: GamePlayer) {
+            TODO("Not yet implemented")
+        }
+
+        override fun removePlayer(player: GamePlayer) {
+            TODO("Not yet implemented")
+        }
+
+        override fun update(data: StoreHolder) {
+            TODO("Not yet implemented")
+        }
+
+        override fun create() {
+            TODO("Not yet implemented")
+        }
+
+        override fun repaint() {
+            TODO("Not yet implemented")
+        }
+
+        override fun destroy() {
+            TODO("Not yet implemented")
+        }
+
     }
 }

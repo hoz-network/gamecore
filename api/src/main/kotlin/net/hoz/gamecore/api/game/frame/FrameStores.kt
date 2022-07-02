@@ -72,4 +72,6 @@ interface FrameStores : Countable {
      * @return all stores available.
      */
     fun all(): List<GameStore>
+
+    override fun count(): Int = all().size
 }

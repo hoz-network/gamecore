@@ -36,12 +36,12 @@ open class GameCycleImpl(
     }
 
     override fun doTick() {
-        log.debug("Trying to do cycle tick..")
-
-        val currentPhase = this.currentPhase ?: run {
-            log.debug { "Current phase is null, cannot do tick." }
-            return
-        }
+        log.debug { "Trying to do cycle tick.." }
+        val currentPhase = this.currentPhase
+            ?: run {
+                log.debug { "Current phase is null, cannot do tick." }
+                return
+            }
 
         if (GamePreTickEvent(frame, this, currentPhase).fire().cancelled
             || !currentPhase.doPreTick()
@@ -121,36 +121,34 @@ open class GameCycleImpl(
             GamePhase.ENDING,
             GamePhase.RESTART -> {
                 val toSwitch = phases[nextPhase]
-                if (toSwitch == null) {
-                    log.warn("New phase[{}] is not defined in GameCycle, stopping.", nextPhase)
-                    stop()
-                    return
-                }
+                    ?: run {
+                        log.warn("New phase[{}] is not defined in GameCycle, stopping.", nextPhase)
+                        stop()
+                        return
+                    }
 
-                if (GamePrePhaseChangeEvent(frame, currentPhase, toSwitch.phaseType).fire().cancelled()) {
+                if (GamePrePhaseChangeEvent(frame, currentPhase, toSwitch.phaseType).fire().cancelled) {
                     log.debug("Cannot change phase, cancelled by event.")
                     return
                 }
 
                 //change previous phase to current
                 this.previousPhase = currentPhase
-                val previousPhase = this.previousPhase
-
                 //change current phase to next one
                 this.currentPhase = toSwitch
                 //determine next phase available
                 this.nextPhase = toSwitch.nextPhase
 
                 //do not reset starting phase
-                if (previousPhase != null && previousPhase.phaseType != GamePhase.STARTING) {
-                    previousPhase.reset()
+                if (previousPhase?.phaseType != GamePhase.STARTING) {
+                    previousPhase?.reset()
                 }
 
                 GamePhaseChangedEvent(frame, currentPhase, previousPhase).fire()
             }
 
             else -> {
-                log.warn("Unexpected phase [{}], stopping the game {}", nextPhase, frame.name())
+                log.warn { "Unexpected phase[$nextPhase] - stopping the game[${frame.name()}]" }
                 //unknown phase, stop and log
                 stop()
             }

@@ -51,7 +51,7 @@ class GameFrameArgument<C : Any>(
         )
     }
 
-    class GameFrameParser<C>(private val gameManager: GameManager) : ArgumentParser<C, GameFrame> {
+    class GameFrameParser<C : Any>(private val gameManager: GameManager) : ArgumentParser<C, GameFrame> {
         override fun parse(
             context: CommandContext<C>,
             inputQueue: Queue<String>

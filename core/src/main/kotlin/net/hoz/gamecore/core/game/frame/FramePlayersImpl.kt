@@ -25,7 +25,7 @@ internal class FramePlayersImpl(
 
     override fun join(player: GamePlayer): Resultable {
         val playerId = player.uuid
-        log.debug("[{}] - Joining to frame[{}].", playerId, frame.uuid)
+        log.debug { "$playerId - joining into frame ${frame.uuid}" }
 
         if (!player.state.untracked() || player.frame != null) {
             log.debug { "[$playerId] - cannot join the player, already joined to frame[${player.frame?.uuid}]" }
@@ -39,7 +39,7 @@ internal class FramePlayersImpl(
         }
 
         if (frame.manage.isWaiting()) {
-            if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled()) {
+            if (GamePlayerPreJoinedGameEvent(player, frame).fire().cancelled) {
                 log.debug("[{}] - GamePlayerPreJoinedGameEvent cancelled joining.", playerId)
                 //TODO: language
                 return Resultable.fail("cancelled by event")
@@ -112,7 +112,7 @@ internal class FramePlayersImpl(
     override fun all(): List<GamePlayer> = players.values.toList()
 
     override fun toAlive(player: GamePlayer): Resultable {
-        if (isUntracedOrWithoutGame(player)) {
+        if (isUntrackedOrWithoutGame(player)) {
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
@@ -137,7 +137,7 @@ internal class FramePlayersImpl(
     }
 
     override fun toViewer(player: GamePlayer): Resultable {
-        if (isUntracedOrWithoutGame(player)) {
+        if (isUntrackedOrWithoutGame(player)) {
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
@@ -160,7 +160,7 @@ internal class FramePlayersImpl(
     }
 
     override fun toSpectator(player: GamePlayer): Resultable {
-        if (isUntracedOrWithoutGame(player)) {
+        if (isUntrackedOrWithoutGame(player)) {
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
@@ -179,7 +179,7 @@ internal class FramePlayersImpl(
     }
 
     override fun toLobby(player: GamePlayer): Resultable {
-        if (isUntracedOrWithoutGame(player)) {
+        if (isUntrackedOrWithoutGame(player)) {
             return Resultable.fail("Player is not traced and is not in game.")
         }
 
@@ -195,6 +195,6 @@ internal class FramePlayersImpl(
 
     override fun audiences(): MutableIterable<Audience> = players.values
 
-    private fun isUntracedOrWithoutGame(player: GamePlayer): Boolean =
+    private fun isUntrackedOrWithoutGame(player: GamePlayer): Boolean =
         player.state.untracked() || player.frame == null
 }

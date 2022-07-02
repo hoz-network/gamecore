@@ -16,13 +16,13 @@ import java.text.DecimalFormat
 object GLang {
     val NUMBER_FORMAT: DecimalFormat = DecimalFormat("#.##")
 
-    fun WORLD_TYPE(player: CommandSenderWrapper, type: ProtoWorldData.WorldType): Component {
+    fun worldType(player: CommandSenderWrapper, type: ProtoWorldData.WorldType): Component {
         //TODO: translation
         return Component.empty()
         //return Message.of(type.getTranslation()).getForJoined(player)
     }
 
-    fun WORLD_TYPE(type: ProtoWorldData.WorldType): Component {
+    fun worldType(type: ProtoWorldData.WorldType): Component {
         //TODO: translation
         return Component.empty()
         //return Message.of(type.getTranslation()).getForAnyoneJoined()
@@ -44,13 +44,13 @@ object GLang {
         return Message.of(NLang.COMMON_FALSE).forAnyoneJoined
     }
 
-    fun TRUE_FALSE(player: CommandSenderWrapper, result: Resultable): Component {
+    fun result(player: CommandSenderWrapper, result: Resultable): Component {
         return if (result.isFail) {
             FALSE(player)
         } else TRUE(player)
     }
 
-    fun TEAM_INFO(player: CommandSenderWrapper, team: GameTeam): List<Component> {
+    fun teamInfo(player: CommandSenderWrapper, team: GameTeam): List<Component> {
         val spawn = team.spawn
         return Message.of(CommonLang.TEAM_INFO)
             .placeholder("identifier", team.coloredName())
@@ -62,7 +62,7 @@ object GLang {
             .getFor(player)
     }
 
-    fun STORE_INFO(player: CommandSenderWrapper?, store: GameStore): List<Component> {
+    fun storeInfo(player: CommandSenderWrapper?, store: GameStore): List<Component> {
         val location = store.location
         val team = store.team
         return Message.of(CommonLang.STORE_INFO)
@@ -79,19 +79,19 @@ object GLang {
             .getFor(player)
     }
 
-    fun SPAWNER_TYPE(player: CommandSenderWrapper?, spawner: GameSpawner): Component {
+    fun spawnerType(player: CommandSenderWrapper?, spawner: GameSpawner): Component {
         //TODO
         return Component.empty()
         //return Message.of(type.()).getForJoined(player).color(type.color())
     }
 
-    fun SPAWNER_TYPE(player: CommandSenderWrapper?, type: GameSpawnerType): Component {
+    fun spawnerType(player: CommandSenderWrapper?, type: GameSpawnerType): Component {
         //TODO
         return Component.empty()
         //return Message.of(type.()).getForJoined(player).color(type.color())
     }
 
-    fun SPAWNER_INFO(player: CommandSenderWrapper?, spawner: GameSpawner): List<Component> {
+    fun spawnerInfo(player: CommandSenderWrapper?, spawner: GameSpawner): List<Component> {
         return emptyList()
         //val location = spawner.location()
         //val type = spawner.types()

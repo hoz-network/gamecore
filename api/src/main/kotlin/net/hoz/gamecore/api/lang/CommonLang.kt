@@ -3,6 +3,7 @@ package net.hoz.gamecore.api.lang
 import org.screamingsandals.lib.lang.Translation
 
 object CommonLang {
+    val NO_PERMISSIONS: Translation = GLangKeys.COMMON_KEY.join("no-permissions")
     val ARENA_WORLD: Translation = GLangKeys.COMMON_KEY.join("arena-world")
     val LOBBY_WORLD: Translation = GLangKeys.COMMON_KEY.join("lobby-world")
     val UNKNOWN_BORDER_VALUE: Translation = GLangKeys.COMMON_KEY.join("unknown-border-value")

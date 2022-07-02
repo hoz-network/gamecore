@@ -30,7 +30,7 @@ internal data class GameSpawnerTypeImpl(
         if (target == null) {
             builder.displayName(Component.fromJavaJson(name))
         } else {
-            builder.displayName(GLang.SPAWNER_TYPE(target, this))
+            builder.displayName(GLang.spawnerType(target, this))
         }
 
         builder.amount(amount)

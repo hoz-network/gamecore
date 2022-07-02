@@ -22,22 +22,13 @@ internal class FrameTeamsImpl(
         return Resultable.ok()
     }
 
-    override fun add(teams: Collection<GameTeam>) {
-        teams.forEach { add(it) }
-    }
-
     override fun remove(name: String): Resultable {
         teams.remove(name)
         return Resultable.ok()
     }
 
-    override fun has(name: String): Boolean {
-        return teams.containsKey(name)
-    }
-
-    override fun find(name: String): GameTeam? {
-        return teams[name]
-    }
-
+    override fun add(teams: Collection<GameTeam>) = teams.forEach { add(it) }
+    override fun has(name: String): Boolean = teams.containsKey(name)
+    override fun find(name: String): GameTeam? = teams[name]
     override fun all(): List<GameTeam> = teams.values.toList()
 }

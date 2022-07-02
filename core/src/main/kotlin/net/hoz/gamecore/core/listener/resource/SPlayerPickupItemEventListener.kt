@@ -38,7 +38,7 @@ class SPlayerPickupItemEventListener : SEventHandlerFactory<GamePlayerResourcePi
             gamePlayer,
             frame,
             pickedItem,
-            ObjectLink.of({ GLang.SPAWNER_TYPE(gamePlayer, spawner) }, { pickedItem.customName = it })
+            ObjectLink.of({ GLang.spawnerType(gamePlayer, spawner) }, { pickedItem.customName = it })
         )
     }
 

@@ -8,6 +8,5 @@ pluginManagement {
 
 rootProject.name = "gamecore"
 
-include("api")
-include("core")
+include("api", "core", "guice")
 
